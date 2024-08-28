@@ -20,8 +20,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* <Route index element={<HomePage />} /> */}
+          <Route index element={<Navigate replace to="/app/lists" />} />
           <Route path="/app" element={<AppLayout />}>
-            <Route index element={<Navigate replace to="lists" />} />
+            {/* <Route index element={<Navigate replace to="lists" />} /> */}
             <Route path="lists" element={<PostList />} />
             <Route path="editor" element={<PostEditor />} />
             <Route path="viewer" element={<PostViewer />} />
