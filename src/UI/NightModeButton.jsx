@@ -1,3 +1,4 @@
+import {useState} from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -23,11 +24,11 @@ const Button = styled.button`
 `;
 
 function NightModeButton() {
+  const [isNightMode, setIsNightMode] = useState(false);
   return (
     <Container>
-      <Button>
-        {/* <ion-icon name="sunny-outline"></ion-icon> */}
-        <ion-icon name="moon-outline"></ion-icon>
+      <Button onClick={() => setIsNightMode(!isNightMode)}>
+        <ion-icon name={`${isNightMode ? "sunny" : "moon"}-outline`} />
       </Button>
     </Container>
   );
