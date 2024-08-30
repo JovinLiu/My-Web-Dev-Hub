@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 // import {usePosts} from "../Contexts/PostsContext";
 const Container = styled.div`
@@ -45,12 +45,25 @@ const Button = styled.button`
 `;
 
 function SearchBar() {
-  const [keywords, setKeywords] = useState("");
+  const [query, setQuery] = useState("");
+  const inputEl = useRef(null);
   // const {searchQuery, viewMode, searchedPosts, dispatch} = usePosts();
 
   // function handleSearchQueryChange(e) {
   //   dispatch({type: "setSearchQuery", payload: e.target.value});
   // }
+
+  useEffect(function () {
+    const callBack = (e) => {
+      if (e.code === "Enter") inputEl.current.focus();
+      if (e.code === "Escape") {
+        inputEl.current.blur();
+        setQuery("");
+      }
+    };
+    document.addEventListener("keydown", callBack);
+    return removeEventListener("keydown", callBack);
+  }, []);
 
   return (
     <Container>
@@ -59,10 +72,10 @@ function SearchBar() {
         <IconContainer left="1.5rem">
           <ion-icon name="search-outline"></ion-icon>
         </IconContainer>
-        <Input placeholder="Search Posts..." value={keywords} onChange={(e) => setKeywords(e.target.value)} />
+        <Input placeholder="Search Posts..." value={query} onChange={(e) => setQuery(e.target.value)} ref={inputEl} />
         <IconContainer right="1rem">
-          {keywords && (
-            <Button onClick={() => setKeywords("")}>
+          {query && (
+            <Button onClick={() => setQuery("")}>
               <ion-icon name="close-circle-outline"></ion-icon>
             </Button>
           )}

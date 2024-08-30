@@ -54,8 +54,10 @@ function MenuList() {
     "Github"
   ];
 
+  const categoryLength = categories.join("").length;
+
   return (
-    <Menus>
+    <Menus length={categoryLength}>
       <Menus.Action actionCode="left">
         <MenuButton>
           <ion-icon name="caret-back-outline" />

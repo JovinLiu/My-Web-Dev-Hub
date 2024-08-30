@@ -18,10 +18,25 @@ const ListContainer = styled.div`
 const MenusContext = createContext();
 
 //Parent Compound Component
-function Menus({children}) {
+function Menus({children, length}) {
   const [position, setPosition] = useState(0);
-  const scrollToLeft = () => setPosition(position + 15);
-  const scrollToRight = () => setPosition(position - 15);
+  const scrollToLeft = () => setPosition((prev) => Math.min(prev + 15, 0));
+  const scrollToRight = () => setPosition((prev) => Math.max(prev - 15, -length));
+
+  // useEffect(() => {
+  //   const callBack = (e) => {
+  //     if (e.code === "ArrowLeft") {
+  //       scrollToLeft();
+  //     }
+  //     if (e.code === "ArrowRight") {
+  //       scrollToRight();
+  //     }
+  //   };
+
+  //   document.addEventListener("keydown", callBack);
+
+  //   return () => document.removeEventListener("keydown", callBack);
+  // }, []);
 
   return (
     <MenusContext.Provider value={{position, scrollToLeft, scrollToRight}}>
@@ -32,10 +47,10 @@ function Menus({children}) {
 
 //Action Button
 function Action({children, actionCode}) {
-  const {position, scrollToLeft, scrollToRight} = useContext(MenusContext);
+  const {scrollToLeft, scrollToRight} = useContext(MenusContext);
 
-  if (actionCode === "left" && position <= -10) return cloneElement(children, {onClick: scrollToLeft});
-  if (actionCode === "right" && position >= -130) return cloneElement(children, {onClick: scrollToRight});
+  if (actionCode === "left") return cloneElement(children, {onClick: scrollToLeft});
+  if (actionCode === "right") return cloneElement(children, {onClick: scrollToRight});
 }
 
 //Menu Window
