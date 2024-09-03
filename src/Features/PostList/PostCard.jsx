@@ -1,12 +1,23 @@
 /* eslint-disable react/prop-types */
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 import {Link} from "react-router-dom";
-import CardTop from "../../UI/CardTop";
+import CardTop from "./CardTop";
 import Icon from "../../UI/Icon";
-import TitleContainer from "../../UI/TitleContainer";
+import TitleContainer from "./TitleContainer";
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translate3D(0, 100%,0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3D(0, 0 ,0);
+  }
+`;
 
 const StyledCardWithLink = styled(Link)`
-  width: 100%;
+  width: ${(props) => props.width}px;
   height: 20rem;
   color: var(--color-grey-700);
   background-color: var(--color-grey-200);
@@ -16,11 +27,17 @@ const StyledCardWithLink = styled(Link)`
   justify-content: space-between;
   overflow: hidden;
   justify-self: stretch;
+  flex-grow: 1;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 5px 5px 10px rgb(170, 170, 170);
+  box-shadow: 5px 5px 10px var(--color-grey-400);
   text-decoration: none;
-  &: hover {
+  animation-name: ${fadeIn};
+  animation-duration: ${(props) => Math.cbrt(props.fadeInTime) / 2}s;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+
+  &:hover {
     transform: scale(1.03);
   }
 `;
@@ -50,16 +67,25 @@ const CreatedAt = styled.span`
   font-size: 1.2rem;
 `;
 
-function PostCard({post}) {
+function PostCard({post, fadeInTime}) {
   const category = post.category.toLowerCase();
 
+  function calcWidth() {
+    return (Math.random() * 500).toFixed(0) * 1;
+  }
+
+  let width = calcWidth();
+  while (width < 200 || width > 350) {
+    width = calcWidth();
+  }
+
   function shortTimeFormat(date) {
-    const dateArr = date.split(", ");
-    return dateArr[1] + " at " + dateArr[2];
+    const arr = date.split(", ");
+    return arr[1] + " at " + arr[2];
   }
 
   return (
-    <StyledCardWithLink to={`/app/viewer/`}>
+    <StyledCardWithLink to={`/app/viewer/`} width={width} fadeInTime={fadeInTime}>
       <CardTop category={category} />
       <TextContainer>{post.body.slice(0, 200)}</TextContainer>
       <TitleContainer category={category}>

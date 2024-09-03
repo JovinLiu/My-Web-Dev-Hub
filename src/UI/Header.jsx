@@ -6,38 +6,43 @@ import AddPostButton from "./AddPostButton";
 import Logo from "./Logo";
 import NightModeButton from "./NightModeButton";
 
-const StyledHeader = styled.header`
+const HeaderContainer = styled.div`
   background-color: var(--color-grey-800);
-  grid-column: 1/-1;
-  display: flex;
-  align-items: center;
-  gap: 5rem;
-  height: 6rem;
 `;
 
-const ButtonContainer = styled.div`
-  display: inline-flex;
+const StyledHeader = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 6rem;
+  max-width: 180rem;
+  margin: auto;
+`;
+
+const FeatureContainer = styled.div`
+  display: flex;
   gap: 2rem;
   height: 3.5rem;
-  margin-left: auto;
   margin-right: 3rem;
 `;
 
 function Header() {
   return (
-    <StyledHeader>
-      <nav>
-        <Link to="/">
-          <Logo />
-        </Link>
-      </nav>
-      <MenuList />
-      <SearchBar />
-      <ButtonContainer>
-        <AddPostButton />
-        <NightModeButton />
-      </ButtonContainer>
-    </StyledHeader>
+    <HeaderContainer>
+      <StyledHeader>
+        <nav>
+          <Link to="/">
+            <Logo />
+          </Link>
+        </nav>
+        <MenuList />
+        <FeatureContainer>
+          <SearchBar />
+          <AddPostButton />
+          <NightModeButton />
+        </FeatureContainer>
+      </StyledHeader>
+    </HeaderContainer>
   );
 }
 

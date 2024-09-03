@@ -23,13 +23,15 @@ const Spinner = styled.div`
   border-radius: 50%;
   border: 13px solid var(--color-blue-1);
   animation: ${rotateA} 0.8s infinite linear alternate, ${rotateB} 1.6s infinite linear;
+  position: absolute;
+  top: 30rem;
+  left: 40%;
 `;
 
 const FullScreen = styled.div`
-  height: 100vh;
-  position: absolute;
-  top: 40%;
-  left: 50%;
+  position: relative;
+  height: 100%;
+  width: 150rem;
 `;
 
 function Loader() {

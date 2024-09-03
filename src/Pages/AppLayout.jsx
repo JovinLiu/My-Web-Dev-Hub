@@ -4,10 +4,17 @@ import SideBar from "../UI/SideBar";
 import styled from "styled-components";
 
 const StyledAppLayout = styled.div`
-  display: grid;
-  grid-template-columns: 20rem 1fr;
-  grid-template-rows: auto 1fr;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Div = styled.div`
+  max-width: 180rem;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  overflow: scroll;
 `;
 
 const Main = styled.main`
@@ -15,7 +22,6 @@ const Main = styled.main`
   padding: 4rem;
   margin: 0 auto;
   overflow: scroll;
-  width: 100%;
 `;
 
 //functions outside of Component
@@ -23,10 +29,14 @@ function AppLayout() {
   return (
     <StyledAppLayout>
       <Header />
-      <SideBar />
-      <Main>
-        <Outlet />
-      </Main>
+      <Div>
+        <SideBar />
+        <Main>
+          <section>
+            <Outlet />
+          </section>
+        </Main>
+      </Div>
     </StyledAppLayout>
   );
 }

@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 const MenuContainer = styled.div`
   width: 58rem;
-  margin-left: 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
