@@ -5,32 +5,27 @@ import PostEditor from "./Pages/PostEditor";
 import PostViewer from "./Pages/PostViewer";
 import PageNotFound from "./Pages/PageNotFound";
 import GlobalStyles from "./Styles/GlobalStyles";
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {Provider} from "react-redux";
+import {store} from "./store.js";
 
 function App() {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {staleTime: 0}
-    }
-  });
-
   return (
-    <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
           {/* <Route index element={<HomePage />} /> */}
-          <Route index element={<Navigate replace to="/app/lists" />} />
+          <Route index element={<Navigate replace to="/app/posts" />} />
           <Route path="/app" element={<AppLayout />}>
             {/* <Route index element={<Navigate replace to="lists" />} /> */}
-            <Route path="lists" element={<PostList />} />
+            <Route path="posts" element={<PostList />} />
             <Route path="editor" element={<PostEditor />} />
             <Route path="viewer" element={<PostViewer />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
-    </QueryClientProvider>
+    </Provider>
   );
 }
 

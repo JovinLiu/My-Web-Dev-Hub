@@ -9,10 +9,10 @@ import NightModeButton from "./NightModeButton";
 const StyledHeader = styled.header`
   background-color: var(--color-grey-800);
   grid-column: 1/-1;
-  height: 6rem;
   display: flex;
   align-items: center;
   gap: 5rem;
+  height: 6rem;
 `;
 
 const ButtonContainer = styled.div`
