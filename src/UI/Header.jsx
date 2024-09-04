@@ -11,6 +11,7 @@ const HeaderContainer = styled.div`
 `;
 
 const StyledHeader = styled.header`
+  grid-template-columns: 1/-1;
   display: flex;
   align-items: center;
   justify-content: space-between;

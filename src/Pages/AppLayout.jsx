@@ -19,9 +19,9 @@ const Div = styled.div`
 
 const Main = styled.main`
   background-color: var(--color-grey-400);
-  padding: 4rem;
   margin: 0 auto;
   overflow: scroll;
+  width: 100%;
 `;
 
 //functions outside of Component
@@ -30,12 +30,12 @@ function AppLayout() {
     <StyledAppLayout>
       <Header />
       <Div>
-        <SideBar />
         <Main>
           <section>
             <Outlet />
           </section>
         </Main>
+        <SideBar />
       </Div>
     </StyledAppLayout>
   );

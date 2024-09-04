@@ -1,17 +1,17 @@
 import styled from "styled-components";
-import {useGetAllPostsQuery} from "../Utils/data";
-import PostCard from "../Features/PostList/PostCard";
-import Loader from "../UI/Loader";
+import {useGetAllPostsQuery} from "../../Utils/data";
+import PostCard from "./PostCard";
+import Loader from "../../UI/Loader";
 import {useEffect, useRef} from "react";
 
 const Container = styled.div`
   margin: auto;
-  padding: 4rem;
+  padding: 4rem 4rem 2rem 4rem;
   color: white;
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
-  max-width: 150rem;
+  margin-right: auto;
 `;
 
 function PostList() {

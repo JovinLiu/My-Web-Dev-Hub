@@ -1,8 +1,8 @@
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import AppLayout from "./Pages/AppLayout";
-import PostList from "./Pages/PostList";
-import PostEditor from "./Pages/PostEditor";
-import PostViewer from "./Pages/PostViewer";
+import PostList from "./Features/PostList/PostList.jsx";
+import PostEditor from "./Features/PostEditor/PostEditor.jsx";
+import PostViewer from "./Features/PostViewer/PostViewer.jsx";
 import PageNotFound from "./Pages/PageNotFound";
 import GlobalStyles from "./Styles/GlobalStyles";
 import {Provider} from "react-redux";
@@ -20,7 +20,7 @@ function App() {
             {/* <Route index element={<Navigate replace to="lists" />} /> */}
             <Route path="posts" element={<PostList />} />
             <Route path="editor" element={<PostEditor />} />
-            <Route path="viewer" element={<PostViewer />} />
+            <Route path="viewer/:id" element={<PostViewer />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>

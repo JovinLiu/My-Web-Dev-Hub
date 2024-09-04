@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import styled, {keyframes} from "styled-components";
 import {Link} from "react-router-dom";
-import CardTop from "./CardTop";
+import CardLine from "../../UI/CardLine";
 import Icon from "../../UI/Icon";
-import TitleContainer from "./TitleContainer";
+import TitleContainer from "../../UI/TitleContainer";
 
 const fadeIn = keyframes`
   from {
@@ -83,10 +83,10 @@ function PostCard({post, fadeInTime}) {
   }
 
   return (
-    <StyledCardWithLink to={`/app/viewer/`} width={width} fadeInTime={fadeInTime}>
-      <CardTop category={category} />
+    <StyledCardWithLink to={`/app/viewer/${post.id}`} width={width} fadeInTime={fadeInTime}>
+      <CardLine category={category} />
       <TextContainer>{post.body.slice(0, 200)}</TextContainer>
-      <TitleContainer category={category}>
+      <TitleContainer category={category} height={"30%"} gap={"1rem"} padding={"1.4rem"} flexDirection={"row"} alignItems={"center"} link={Link}>
         <Info>
           <Title>
             <strong>{post.title}</strong>
@@ -100,39 +100,3 @@ function PostCard({post, fadeInTime}) {
 }
 
 export default PostCard;
-
-// //NOTE:利用InterSectionObserver实现4个seciton延时淡入viewport的效果
-// const allSections = document.querySelectorAll(".section");
-
-// function reveal(entries, observer) {
-//   const [entry] = entries;
-//   if (!entry.isIntersecting) return;
-//   entry.target.classList.remove("section--hidden");
-//   observer.unobserve(entry.target);
-// }
-// const options2 = {root: null, thresholds: 0.2};
-// const sectionsReveal = new IntersectionObserver(reveal, options2);
-
-// allSections.forEach((section) => {
-//   // console.log(section);
-//   sectionsReveal.observe(section);
-// });
-// //NOTE:利用InterSectionObserver实现section2中每张图片延迟出现的特效
-// const imgTargets = document.querySelectorAll("img[data-src]");
-
-// function imgLazyLoad(entries, observer) {
-//   const [entry] = entries;
-//   console.log(entry);
-//   if (entry.isIntersecting) {
-//     entry.target.src = entry.target.dataset.src;
-//     entry.target.addEventListener("load", function () {
-//       entry.target.classList.remove("lazy-img");
-//       observer.unobserve(entry.target);
-//     });
-//   }
-// }
-// const options3 = {root: null, thresholds: 0.5, rootMargin: "-100px"};
-// const imgLazyLoadObserver = new IntersectionObserver(imgLazyLoad, options3);
-// imgTargets.forEach((img) => {
-//   imgLazyLoadObserver.observe(img);
-// });

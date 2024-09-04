@@ -2,7 +2,7 @@
 import {Link} from "react-router-dom";
 import styled, {css} from "styled-components";
 
-const BackGroundColor = {
+const textBackGround = {
   javascript: css`
     background-color: rgb(255, 214, 0, 0.2);
   `,
@@ -32,9 +32,17 @@ const BackGroundColor = {
   `
 };
 
-const CardTop = styled(Link)`
-  ${(props) => BackGroundColor[props.category]};
-  height: 5%;
+const TitleContainer = styled(Link)`
+  ${(props) => textBackGround[props.category]};
+  height: ${(props) => props.height};
+  display: flex;
+  flex-direction: ${(props) => props.flexDirection};
+  gap: ${(props) => props.gap};
+  align-items: ${(props) => props.alignItems};
+  justify-content: start;
+  padding: ${(props) => props.padding};
+  width: ${(props) => props.width};
+  z-index: 1;
 `;
 
-export default CardTop;
+export default TitleContainer;

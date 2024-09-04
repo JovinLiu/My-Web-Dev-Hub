@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
-import {Link} from "react-router-dom";
 import styled, {css} from "styled-components";
 
-const textBackGround = {
+const BackGroundColor = {
   javascript: css`
     background-color: rgb(255, 214, 0, 0.2);
   `,
@@ -32,15 +31,9 @@ const textBackGround = {
   `
 };
 
-const TitleContainer = styled(Link)`
-  ${(props) => textBackGround[props.category]};
-  height: 30%;
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  justify-content: start;
-  padding: 1.4rem;
-  z-index: 1;
+const CardLine = styled.div`
+  ${(props) => BackGroundColor[props.category]};
+  height: 5%;
 `;
 
-export default TitleContainer;
+export default CardLine;

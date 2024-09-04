@@ -30,8 +30,8 @@ const Spinner = styled.div`
 
 const FullScreen = styled.div`
   position: relative;
-  height: 100%;
-  width: 150rem;
+  /* height: 100%;
+  width: 100%; */
 `;
 
 function Loader() {

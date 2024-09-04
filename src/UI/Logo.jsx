@@ -43,7 +43,7 @@ function Logo() {
     <LogoContainer>
       <LogoInfoContainer>
         <LogoSvg />
-        <LogoText1>My </LogoText1>
+        <LogoText1>my </LogoText1>
         <LogoText2>WebDev </LogoText2>
         <LogoText3>
           <strong>Hub</strong>
