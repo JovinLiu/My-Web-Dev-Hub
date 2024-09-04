@@ -6,7 +6,7 @@ import PostViewer from "./Features/PostViewer/PostViewer.jsx";
 import PageNotFound from "./Pages/PageNotFound";
 import GlobalStyles from "./Styles/GlobalStyles";
 import {Provider} from "react-redux";
-import {store} from "./store.js";
+import store from "./store.js";
 
 function App() {
   return (

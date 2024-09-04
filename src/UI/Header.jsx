@@ -8,10 +8,10 @@ import NightModeButton from "./NightModeButton";
 
 const HeaderContainer = styled.div`
   background-color: var(--color-grey-800);
+  grid-column: 1 / -1;
 `;
 
 const StyledHeader = styled.header`
-  grid-template-columns: 1/-1;
   display: flex;
   align-items: center;
   justify-content: space-between;

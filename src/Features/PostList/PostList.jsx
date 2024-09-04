@@ -6,12 +6,13 @@ import {useEffect, useRef} from "react";
 
 const Container = styled.div`
   margin: auto;
-  padding: 4rem 4rem 2rem 4rem;
+  padding: 4rem 4rem 8rem 4rem;
   color: white;
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
-  margin-right: auto;
+  //看看要不要删除
+  max-width: 160rem;
 `;
 
 function PostList() {
