@@ -35,8 +35,6 @@ const StyledCardWithLink = styled(Link)`
   animation-name: ${fadeIn};
   animation-duration: ${(props) => Math.cbrt(props.fadeInTime) / 2}s;
   animation-iteration-count: 1;
-  animation-fill-mode: both;
-
   &:hover {
     transform: scale(1.03);
   }
@@ -102,3 +100,39 @@ function PostCard({post, fadeInTime}) {
 }
 
 export default PostCard;
+
+// //NOTE:利用InterSectionObserver实现4个seciton延时淡入viewport的效果
+// const allSections = document.querySelectorAll(".section");
+
+// function reveal(entries, observer) {
+//   const [entry] = entries;
+//   if (!entry.isIntersecting) return;
+//   entry.target.classList.remove("section--hidden");
+//   observer.unobserve(entry.target);
+// }
+// const options2 = {root: null, thresholds: 0.2};
+// const sectionsReveal = new IntersectionObserver(reveal, options2);
+
+// allSections.forEach((section) => {
+//   // console.log(section);
+//   sectionsReveal.observe(section);
+// });
+// //NOTE:利用InterSectionObserver实现section2中每张图片延迟出现的特效
+// const imgTargets = document.querySelectorAll("img[data-src]");
+
+// function imgLazyLoad(entries, observer) {
+//   const [entry] = entries;
+//   console.log(entry);
+//   if (entry.isIntersecting) {
+//     entry.target.src = entry.target.dataset.src;
+//     entry.target.addEventListener("load", function () {
+//       entry.target.classList.remove("lazy-img");
+//       observer.unobserve(entry.target);
+//     });
+//   }
+// }
+// const options3 = {root: null, thresholds: 0.5, rootMargin: "-100px"};
+// const imgLazyLoadObserver = new IntersectionObserver(imgLazyLoad, options3);
+// imgTargets.forEach((img) => {
+//   imgLazyLoadObserver.observe(img);
+// });
