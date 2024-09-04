@@ -8,10 +8,11 @@ import NavListItem from "./NavListItem";
 import {useSelector} from "react-redux";
 
 const Container = styled.aside`
-  color: var(--color-grey-100);
+  color: var(--color-grey-500);
   position: relative;
-  background-color: var(--color-grey-500);
+  background-color: var(--color-grey-50);
   width: 35rem;
+  border-left: 1px solid var(--color-grey-500);
 `;
 
 const Div = styled.div`
@@ -28,6 +29,9 @@ const H2 = styled.h2`
 `;
 
 const ListContainer = styled.div`
+  /* background-image: -webkit-linear-gradient(bottom, var(--color-grey-50), var(--color-grey-600));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; */
   height: 80vh;
   display: ${(props) => (props.showSidebar ? "contents" : "none")};
   display: block;

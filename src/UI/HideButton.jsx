@@ -5,16 +5,16 @@ import styled from "styled-components";
 
 const Button = styled.button`
   position: absolute;
-  top: 40%;
+  top: 45%;
   left: 0rem;
   transform: ${(props) => (props.showSideBar ? "translateX(0)" : "translateX(-100%)")};
-  padding: 8rem 0.5rem;
+  padding: 5rem 0.2rem;
   background-color: var(--color-blue-1);
   border: none;
-  border-radius: ${(props) => (props.showSideBar ? "0 10px 10px 0" : "10px 0 0 10px")};
-  color: var(--color-grey-800);
+  border-radius: ${(props) => (props.showSideBar ? "0 5px 5px 0" : "5px 0 0 5px")};
+  color: var(--color-grey-50);
   &:hover {
-    color: var(--color-grey-200);
+    color: var(--color-grey-700);
     background-color: var(--color-blue-2);
   }
   transition: all 0.2s ease-in-out;

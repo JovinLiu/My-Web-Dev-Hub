@@ -19,7 +19,7 @@ const fadeIn = keyframes`
 const StyledCardWithLink = styled(Link)`
   width: ${(props) => props.width}px;
   height: 20rem;
-  color: var(--color-grey-700);
+  color: var(--color-grey-500);
   background-color: var(--color-grey-200);
   border-radius: 1.5px;
   display: flex;
@@ -30,7 +30,7 @@ const StyledCardWithLink = styled(Link)`
   flex-grow: 1;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 5px 5px 10px var(--color-grey-400);
+  box-shadow: 5px 5px 10px var(--color-grey-100);
   text-decoration: none;
   animation-name: ${fadeIn};
   animation-duration: ${(props) => Math.cbrt(props.fadeInTime) / 2}s;
@@ -46,6 +46,7 @@ const TextContainer = styled.p`
   font-size: 1.2rem;
   z-index: 0;
   overflow: hidden;
+  color: var(--color-grey-400);
 `;
 
 const Info = styled.div`
@@ -56,11 +57,13 @@ const Info = styled.div`
 `;
 
 const Title = styled.span`
+  color: var(--color-grey-700);
   white-space: nowrap;
   font-size: 1.6rem;
 `;
 
 const CreatedAt = styled.span`
+  color: var(--color-grey-500);
   white-space: nowrap;
   font-size: 1.2rem;
 `;

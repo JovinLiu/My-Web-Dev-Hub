@@ -3,17 +3,31 @@ import {createGlobalStyle} from "styled-components";
 const GlobalStyles = createGlobalStyle`
 :root {
   &, &.light-mode{  
-    /* Grey */
-    --color-grey-0: #fff;
-    --color-grey-50: #f8f9fa;
-    --color-grey-100: #e9ecef;
-    --color-grey-200: #dee2e6;
-    --color-grey-300: #ced4da;
-    --color-grey-400: #adb5bd;
-    --color-grey-500: #6c757d;
-    --color-grey-600: #495057;
-    --color-grey-700: #343a40;
-    --color-grey-800: #212529;
+    /* light blue Grey */
+    /* --color-grey-800: #fff;
+    --color-grey-700: #F1F2F4;
+    --color-grey-600: #DCDFE4;
+    --color-grey-500: #B3B9C4;
+    --color-grey-400: #8590A2;
+    --color-grey-300: #758195;
+    --color-grey-200: #44546F;
+    --color-grey-100: #2C3E5D;
+    --color-grey-50: #172B4D;
+    --color-grey-0: #091E42; */
+
+    /* Dark blue Grey */
+    --color-grey-0: #18212f;
+    --color-grey-50: #111827;
+    --color-grey-100: #1f2937;
+    --color-grey-200: #374151;
+    --color-grey-300: #4b5563;
+    --color-grey-400: #6b7280;
+    --color-grey-500: #9ca3af;
+    --color-grey-600: #d1d5db;
+    --color-grey-700: #e5e7eb;
+    --color-grey-800: #f3f4f6;
+    --color-grey-900: #f9fafb;
+
 
     --color-theme-100: #e7e6f7;
     --color-theme-200: #e3d0d8;
@@ -21,8 +35,8 @@ const GlobalStyles = createGlobalStyle`
     --color-theme-400: #827081;
     --color-theme-500: #c6d2ed;
 
-    --color-blue-1: #e0f2fe;
-    --color-blue-2: #0369a1;
+    --color-blue-1: #bfdbfe;
+    --color-blue-2: #1d4ed8;
     --color-green-1: #dcfce7;
     --color-green-2: #15803d;
     --color-yellow-1: #fef9c3;

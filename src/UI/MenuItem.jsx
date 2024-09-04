@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Button = styled.button`
   text-decoration: none;
-  color: var(--color-grey-400);
+  color: var(--color-grey-700);
   transition: all, 0.2s;
   background: transparent;
   border: none;

@@ -7,8 +7,9 @@ import Logo from "./Logo";
 import NightModeButton from "./NightModeButton";
 
 const HeaderContainer = styled.div`
-  background-color: var(--color-grey-800);
+  background-color: var(--color-grey-50);
   grid-column: 1 / -1;
+  border-bottom: 1px solid var(--color-grey-500);
 `;
 
 const StyledHeader = styled.header`

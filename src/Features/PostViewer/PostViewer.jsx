@@ -7,15 +7,18 @@ import CardLine from "../../UI/CardLine";
 
 const Container = styled.div`
   margin: auto;
-  padding: 4rem 4rem 2rem 4rem;
+  padding: 4rem 4rem 8rem 4rem;
   color: white;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  width: 100%;
+  max-width: 110rem;
 `;
 
-const BodyContainer = styled.div``;
+const BodyContainer = styled.div`
+  color: var(--color-grey-600);
+  background-color: var(--color-grey-50);
+  padding: 2rem;
+`;
 
 function PostViewer() {
   const {id} = useParams();
@@ -30,14 +33,14 @@ function PostViewer() {
       <TitleContainer
         category={post.category.toLowerCase()}
         height={"15rem"}
-        gap={"2rem"}
-        padding={"1.4rem"}
+        gap={"1.5rem"}
+        padding={"2rem"}
         flexDirection={"column"}
         alignItems={"start"}
         width={"100%"}
       >
         <h1>{post.title}</h1>
-        <p>{post.date}</p>
+        <p>Posted on {post.date}</p>
         <span>{post.category}</span>
       </TitleContainer>
       <BodyContainer>{post.body}</BodyContainer>

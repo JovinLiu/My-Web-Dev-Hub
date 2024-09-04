@@ -8,7 +8,7 @@ const Container = styled.div`
 `;
 
 const Button = styled.button`
-  color: var(--color-grey-800);
+  color: var(--color-grey-50);
   padding: 0.5rem;
   background-color: var(--color-blue-1);
   border: none;
@@ -18,7 +18,7 @@ const Button = styled.button`
   height: 3.5rem;
 
   &:hover {
-    color: var(--color-grey-200);
+    color: var(--color-grey-700);
     background-color: var(--color-blue-2);
   }
 `;

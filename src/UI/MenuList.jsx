@@ -6,13 +6,13 @@ import Menus from "./Menus";
 const MenuButton = styled.button`
   margin-top: 0.6rem;
   background: none;
-  color: rgb(140, 140, 140);
+  color: var(--color-blue-1);
   border: none;
   font-size: 30px;
   transition: all 0.3s;
 
   &:hover {
-    color: var(--color-grey-50);
+    color: var(--color-blue-2);
     transform: scale(1.2);
   }
 `;
