@@ -87,7 +87,7 @@ function PostCard({post, fadeInTime}) {
 
   return (
     <StyledCardWithLink to={`/app/viewer/${post.id}`} width={width} fadeInTime={fadeInTime}>
-      <CardLine category={category} />
+      <CardLine category={category} height={"5%"} />
       <TextContainer>{post.body.slice(0, 200)}</TextContainer>
       <TitleContainer category={category} height={"30%"} gap={"1rem"} padding={"1.4rem"} flexDirection={"row"} alignItems={"center"} link={Link}>
         <Info>

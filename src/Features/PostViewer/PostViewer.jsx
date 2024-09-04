@@ -1,9 +1,20 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 import {useGetPostByIdQuery} from "../../Utils/data";
 import {useParams} from "react-router-dom";
 import Loader from "../../UI/Loader";
 import TitleContainer from "../../UI/TitleContainer";
 import CardLine from "../../UI/CardLine";
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translate3D(0, 100%,0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3D(0, 0 ,0);
+  }
+`;
 
 const Container = styled.div`
   margin: auto;
@@ -12,6 +23,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 110rem;
+  animation-name: ${fadeIn};
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
 `;
 
 const BodyContainer = styled.div`
@@ -26,12 +40,14 @@ function PostViewer() {
 
   if (isLoading) return <Loader />;
 
+  const category = post.category.toLowerCase();
+
   console.log(post);
 
   return (
     <Container>
       <TitleContainer
-        category={post.category.toLowerCase()}
+        category={category}
         height={"15rem"}
         gap={"1.5rem"}
         padding={"2rem"}
@@ -44,7 +60,7 @@ function PostViewer() {
         <span>{post.category}</span>
       </TitleContainer>
       <BodyContainer>{post.body}</BodyContainer>
-      <CardLine />
+      <CardLine category={category} height={"2rem"} />
     </Container>
   );
 }

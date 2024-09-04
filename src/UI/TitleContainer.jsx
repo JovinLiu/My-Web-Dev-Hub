@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import {Link} from "react-router-dom";
 import styled, {css} from "styled-components";
 
 const textBackGround = {
@@ -32,7 +31,7 @@ const textBackGround = {
   `
 };
 
-const TitleContainer = styled(Link)`
+const TitleContainer = styled.div`
   ${(props) => textBackGround[props.category]};
   height: ${(props) => props.height};
   display: flex;

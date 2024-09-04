@@ -33,7 +33,7 @@ const BackGroundColor = {
 
 const CardLine = styled.div`
   ${(props) => BackGroundColor[props.category]};
-  height: 5%;
+  height: ${({height}) => height};
 `;
 
 export default CardLine;

@@ -22,21 +22,6 @@ function Menus({children, length}) {
   const scrollToLeft = () => setPosition((prev) => Math.min(prev + 15, 0));
   const scrollToRight = () => setPosition((prev) => Math.max(prev - 15, -length));
 
-  // useEffect(() => {
-  //   const callBack = (e) => {
-  //     if (e.code === "ArrowLeft") {
-  //       scrollToLeft();
-  //     }
-  //     if (e.code === "ArrowRight") {
-  //       scrollToRight();
-  //     }
-  //   };
-
-  //   document.addEventListener("keydown", callBack);
-
-  //   return () => document.removeEventListener("keydown", callBack);
-  // }, []);
-
   return (
     <MenusContext.Provider value={{position, scrollToLeft, scrollToRight}}>
       <MenuContainer>{children}</MenuContainer>

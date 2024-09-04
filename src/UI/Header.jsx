@@ -4,7 +4,7 @@ import MenuList from "./MenuList";
 import SearchBar from "./SearchBar";
 import AddPostButton from "./AddPostButton";
 import Logo from "./Logo";
-import NightModeButton from "./NightModeButton";
+import NightModeButton from "./DarkModeButton";
 
 const HeaderContainer = styled.div`
   background-color: var(--color-grey-50);

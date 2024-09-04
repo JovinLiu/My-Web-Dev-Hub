@@ -1,11 +1,12 @@
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {Provider} from "react-redux";
+
 import AppLayout from "./Pages/AppLayout";
 import PostList from "./Features/PostList/PostList.jsx";
 import PostEditor from "./Features/PostEditor/PostEditor.jsx";
 import PostViewer from "./Features/PostViewer/PostViewer.jsx";
 import PageNotFound from "./Pages/PageNotFound";
 import GlobalStyles from "./Styles/GlobalStyles";
-import {Provider} from "react-redux";
 import store from "./store.js";
 
 function App() {

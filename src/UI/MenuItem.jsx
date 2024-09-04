@@ -12,25 +12,13 @@ const Button = styled.button`
   &:hover {
     font-size: 1.8rem;
     text-decoration: none;
-    color: white;
+    color: var(--color-blue-1);
     font-weight: bolder;
   }
 `;
 
 function MenuItem({category}) {
   const value = category.split(" ").join("").toLowerCase();
-
-  // function handleMenuClick(e) {
-  //   if (!e.target.value) return;
-  //   let filteredSearchedPosts;
-  //   if (e.target.value === "allPosts") {
-  //     filteredSearchedPosts = posts;
-  //   } else {
-  //     filteredSearchedPosts = posts.filter((post) => String(post.category).toLowerCase() === e.target.value.toLowerCase());
-  //   }
-
-  //   dispatch({type: "setSearchedPosts", payload: filteredSearchedPosts});
-  // }
 
   return (
     <li>

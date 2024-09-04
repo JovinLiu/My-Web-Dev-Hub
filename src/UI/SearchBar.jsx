@@ -8,7 +8,7 @@ const Container = styled.div`
 `;
 
 const SerachResults = styled.span`
-  color: var(--color-grey-400);
+  color: var(--color-grey-700);
   display: inline-block;
   width: 12rem;
   margin-left: 3rem;
@@ -22,6 +22,7 @@ const Input = styled.input`
   border-radius: 10px;
   padding-left: 30px;
   padding-right: 35px;
+  border: 2px solid var(--color-blue-1);
 `;
 
 const InputContainer = styled.div`
@@ -47,11 +48,6 @@ const Button = styled.button`
 function SearchBar() {
   const [query, setQuery] = useState("");
   const inputEl = useRef(null);
-  // const {searchQuery, viewMode, searchedPosts, dispatch} = usePosts();
-
-  // function handleSearchQueryChange(e) {
-  //   dispatch({type: "setSearchQuery", payload: e.target.value});
-  // }
 
   useEffect(function () {
     const callBack = (e) => {

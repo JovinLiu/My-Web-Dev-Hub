@@ -24,18 +24,18 @@ const LogoText = styled.span`
 `;
 
 const LogoText1 = styled.span`
-  color: var(--color-grey-400);
+  color: var(--color-grey-500);
   margin-left: 1rem;
   margin-top: 1rem;
 `;
 
 const LogoText2 = styled(LogoText)`
-  color: white;
+  color: var(--color-grey-700);
 `;
 
 const LogoText3 = styled(LogoText)`
   border-radius: 8px;
-  color: white;
+  color: var(--color-grey-700);
 `;
 
 function Logo() {
