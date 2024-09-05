@@ -15,12 +15,6 @@ const GlobalStyles = createGlobalStyle`
     --color-grey-800: #1f2937;
     --color-grey-900: #111827;
 
-    --color-theme-100: #e7e6f7;
-    --color-theme-200: #e3d0d8;
-    --color-theme-300: #aea3b0;
-    --color-theme-400: #827081;
-    --color-theme-500: #c6d2ed;
-
     --color-blue-1: #104485;
     --color-blue-2: #bfdbfe;
     --color-green-1: #dcfce7;
@@ -85,15 +79,27 @@ const GlobalStyles = createGlobalStyle`
 }
 
 
-  /* Feature Color */
-  --color-brand-50: #eef2ff;
-  --color-brand-100: #e0e7ff;
-  --color-brand-200: #c7d2fe;
-  --color-brand-500: #6366f1;
-  --color-brand-600: #4f46e5;
-  --color-brand-700: #4338ca;
-  --color-brand-800: #3730a3;
-  --color-brand-900: #312e81;
+  /* Feature Color*/
+  --color-javascript-100: rgb(255, 214, 0);
+  --color-html-100: rgb(255, 109, 0);
+  --color-css-100: rgb(3, 155, 229);
+  --color-sass-100: rgb(240, 98, 146);
+  --color-tailwindcss-100: rgb(0, 172, 193);
+  --color-react-100: rgb(83, 193, 222);
+  --color-redux-100: rgb(108, 78, 176);
+  --color-nodejs-100: rgb(33, 163, 102);
+  --color-reactrouter-100: rgb(244, 66, 80);
+
+  /* Feature Color translucent*/
+  --color-javascript-20: rgb(255, 214, 0, 0.2);
+  --color-html-20: rgb(255, 109, 0, 0.2);
+  --color-css-20: rgb(3, 155, 229, 0.2);
+  --color-sass-20: rgb(240, 98, 146, 0.2);
+  --color-tailwindcss-20: rgb(0, 172, 193, 0.2);
+  --color-react-20: rgb(83, 193, 222, 0.2);
+  --color-redux-20: rgb(108, 78, 176, 0.2);
+  --color-nodejs-20: rgb(33, 163, 102, 0.2);
+  --color-reactrouter-20: rgb(244, 66, 80, 0.2);
 
   --border-radius-tiny: 3px;
   --border-radius-sm: 5px;
@@ -223,4 +229,11 @@ export default GlobalStyles;
     --color-grey-200: #44546F;
     --color-grey-100: #2C3E5D;
     --color-grey-50: #172B4D;
-    --color-grey-0: #091E42; */
+    --color-grey-0: #091E42; 
+    
+        --color-theme-100: #e7e6f7;
+    --color-theme-200: #e3d0d8;
+    --color-theme-300: #aea3b0;
+    --color-theme-400: #827081;
+    --color-theme-500: #c6d2ed;
+    */

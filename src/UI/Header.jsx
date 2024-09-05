@@ -2,9 +2,9 @@ import {Link} from "react-router-dom";
 import styled from "styled-components";
 import MenuList from "./MenuList";
 import SearchBar from "./SearchBar";
-import AddPostButton from "./AddPostButton";
+import AddPostButton from "./Buttons/AddPostButton";
 import Logo from "./Logo";
-import NightModeButton from "./DarkModeButton";
+import NightModeButton from "./Buttons/DarkModeButton";
 
 const HeaderContainer = styled.div`
   background-color: var(--color-grey-50);

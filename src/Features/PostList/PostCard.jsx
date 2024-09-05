@@ -68,6 +68,16 @@ const CreatedAt = styled.span`
   font-size: 1.2rem;
 `;
 
+const Round = styled.div`
+  background-color: var(--color-${({category}) => category}-100);
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  height: 4.5rem;
+  width: 4.5rem;
+  clip-path: circle();
+`;
+
 function PostCard({post, fadeInTime}) {
   const category = post.category.toLowerCase();
 
@@ -96,7 +106,9 @@ function PostCard({post, fadeInTime}) {
           </Title>
           <CreatedAt>{shortTimeFormat(post.date)}</CreatedAt>
         </Info>
-        <Icon category={category} />
+        <Round category={category}>
+          <Icon category={category} />
+        </Round>
       </TitleContainer>
     </StyledCardWithLink>
   );

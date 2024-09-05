@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import {useDispatch, useSelector} from "react-redux";
-import {toggleShowSidebar} from "../Pages/uiSlice";
+import {toggleShowSidebar} from "../../Pages/uiSlice";
 import styled from "styled-components";
 
 const Button = styled.button`

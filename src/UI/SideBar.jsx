@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
-import HideButton from "./HideButton";
+import HideButton from "./Buttons/HideButton";
 // import {useState} from "react";
 import {useGetAllPostsQuery} from "../Utils/data";
 import Loader from "./Loader";

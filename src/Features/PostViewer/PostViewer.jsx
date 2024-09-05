@@ -1,9 +1,11 @@
 import styled, {keyframes} from "styled-components";
 import {useGetPostByIdQuery} from "../../Utils/data";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import Loader from "../../UI/Loader";
 import TitleContainer from "../../UI/TitleContainer";
 import CardLine from "../../UI/CardLine";
+import Icon from "../../UI/Icon";
+import GeneralButton from "../../UI/Buttons/GeneralButton";
 
 const fadeIn = keyframes`
   from {
@@ -34,9 +36,46 @@ const BodyContainer = styled.div`
   padding: 2rem;
 `;
 
+const IconLarge = styled.div`
+  align-items: center;
+  fill: rgb(255, 255, 255);
+  transform: scale(8);
+  position: absolute;
+  top: 50%;
+  right: 20%;
+  z-index: -1;
+  opacity: 20%;
+`;
+
+const ButtonContainer = styled.div`
+  margin-top: auto;
+  margin-left: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+`;
+
+const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  z-index: 2;
+`;
+
+const Span = styled.span`
+  font-size: 1.25rem;
+  color: var(--color-grey-400);
+`;
+
 function PostViewer() {
+  const navigate = useNavigate();
   const {id} = useParams();
   const {currentData: post = {}, isLoading} = useGetPostByIdQuery(id);
+
+  function handleClose(e) {
+    e.preventDefault();
+    navigate("/app/posts");
+  }
 
   if (isLoading) return <Loader />;
 
@@ -46,18 +85,32 @@ function PostViewer() {
 
   return (
     <Container>
-      <TitleContainer
-        category={category}
-        height={"15rem"}
-        gap={"1.5rem"}
-        padding={"2rem"}
-        flexDirection={"column"}
-        alignItems={"start"}
-        width={"100%"}
-      >
-        <h1>{post.title}</h1>
-        <p>Posted on {post.date}</p>
-        <span>{post.category}</span>
+      <TitleContainer category={category} height={"15rem"} padding={"2rem"} flexDirection={"row"} alignItems={"start"} width={"100%"}>
+        <IconLarge>
+          <Icon category={category} />
+        </IconLarge>
+        <GeneralButton category={category} type="close" onClick={handleClose}>
+          <ion-icon name="close-outline" />
+        </GeneralButton>
+        <InfoContainer>
+          <h1>{post.title}</h1>
+          <Span>Posted on {post.date}</Span>
+          <Span>Tech Stack: {post.category}</Span>
+        </InfoContainer>
+        <ButtonContainer>
+          <GeneralButton category={category} type="general">
+            <ion-icon name="copy-outline" />
+          </GeneralButton>
+          <GeneralButton category={category} type="general">
+            <ion-icon name="create-outline" />
+          </GeneralButton>
+          <GeneralButton category={category} type="general">
+            <ion-icon name="mail-outline" />
+          </GeneralButton>
+          <GeneralButton category={category} type="general">
+            <ion-icon name="trash-outline" />
+          </GeneralButton>
+        </ButtonContainer>
       </TitleContainer>
       <BodyContainer>{post.body}</BodyContainer>
       <CardLine category={category} height={"2rem"} />
