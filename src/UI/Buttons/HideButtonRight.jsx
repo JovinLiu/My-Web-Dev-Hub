@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import {useDispatch, useSelector} from "react-redux";
-import {toggleShowSidebar} from "../../Pages/uiSlice";
+import {toggleShowSideBar} from "../../Pages/uiSlice";
 import styled from "styled-components";
 
 const Button = styled.button`
@@ -21,16 +21,16 @@ const Button = styled.button`
 `;
 
 function HideButton() {
-  const showSidebar = useSelector((state) => state.ui.showSideBar);
+  const showSideBar = useSelector((state) => state.ui.showSideBar);
   const dispatch = useDispatch();
 
   function handleClickHide() {
-    dispatch(toggleShowSidebar());
+    dispatch(toggleShowSideBar());
   }
 
   return (
-    <Button onClick={handleClickHide} showSideBar={showSidebar}>
-      <ion-icon name={`chevron-${showSidebar ? "forward" : "back"}-outline`} />
+    <Button onClick={handleClickHide} showSideBar={showSideBar}>
+      <ion-icon name={`chevron-${showSideBar ? "forward" : "back"}-outline`} />
     </Button>
   );
 }

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
-import HideButton from "./Buttons/HideButton";
+import HideButton from "./Buttons/HideButtonRight";
 import {useGetAllPostsQuery} from "../Utils/data";
 import Loader from "./Loader";
 import NavListItem from "./NavListItem";
@@ -72,7 +72,7 @@ const Hr = styled.hr`
 function SideBar() {
   const {currentData: posts = [], isLoading} = useGetAllPostsQuery();
   const showSideBar = useSelector((state) => state.ui.showSideBar);
-  const src = "/src/Public/user-Jovin.jpeg";
+  const src = "/Public/user-Jovin.jpeg";
   const time = useRef(null);
 
   useEffect(

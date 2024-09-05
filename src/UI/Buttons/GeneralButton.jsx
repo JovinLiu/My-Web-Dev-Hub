@@ -20,9 +20,10 @@ const types = {
     padding: 0.5rem 1rem 0.1rem 1rem;
     border-radius: 3px;
     font-size: 2rem;
-    background-color: var(--color-${({category}) => category}-20);
+    color: ${({color}) => color};
+    background-color: var(${({category}) => (category ? `--color-${category}-20` : "--color-blue-1")});
     &:hover {
-      background-color: var(--color-${({category}) => category}-100);
+      background-color: var(${({category}) => (category ? `--color-${category}-100` : "--color-blue-2")});
       color: var(--color-grey-50);
     }
   `,

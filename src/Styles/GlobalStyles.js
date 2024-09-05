@@ -17,6 +17,7 @@ const GlobalStyles = createGlobalStyle`
 
     --color-blue-1: #104485;
     --color-blue-2: #bfdbfe;
+    --color-blue-3: #dae7f7;
     --color-green-1: #dcfce7;
     --color-green-2: #15803d;
     --color-yellow-1: #fef9c3;
@@ -55,6 +56,7 @@ const GlobalStyles = createGlobalStyle`
 
     --color-blue-1: #e0f2fe;
     --color-blue-2: #075985;
+    --color-blue-3: #05334d;
     --color-green-1: #166534;
     --color-green-2: #dcfce7;
     --color-yellow-1: #854d0e;
@@ -80,6 +82,7 @@ const GlobalStyles = createGlobalStyle`
 
 
   /* Feature Color*/
+  --color-webbasic-100: rgb(7, 89, 133);
   --color-javascript-100: rgb(255, 214, 0);
   --color-html-100: rgb(255, 109, 0);
   --color-css-100: rgb(3, 155, 229);
@@ -91,6 +94,7 @@ const GlobalStyles = createGlobalStyle`
   --color-reactrouter-100: rgb(244, 66, 80);
 
   /* Feature Color translucent*/
+  --color-webbasic-20: rgb(7, 89, 133,0.2);
   --color-javascript-20: rgb(255, 214, 0, 0.2);
   --color-html-20: rgb(255, 109, 0, 0.2);
   --color-css-20: rgb(3, 155, 229, 0.2);
@@ -182,7 +186,7 @@ input:focus,
 /* button:focus, */
 textarea:focus,
 select:focus {
-  outline: 5px solid var(--color-blue-2);
+  outline: 2px solid var(--color-blue-1);
   outline-offset: 2px;
 }
 

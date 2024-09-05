@@ -65,6 +65,9 @@ const InfoContainer = styled.div`
 const Span = styled.span`
   font-size: 1.25rem;
   color: var(--color-grey-400);
+  padding: 0.2rem 0.4rem;
+  background-color: var(--color-grey-100);
+  border-radius: 10px;
 `;
 
 function PostViewer() {
@@ -74,7 +77,7 @@ function PostViewer() {
 
   function handleClose(e) {
     e.preventDefault();
-    navigate("/app/posts");
+    navigate(-1);
   }
 
   if (isLoading) return <Loader />;
@@ -85,7 +88,15 @@ function PostViewer() {
 
   return (
     <Container>
-      <TitleContainer category={category} height={"15rem"} padding={"2rem"} flexDirection={"row"} alignItems={"start"} width={"100%"}>
+      <TitleContainer
+        category={category}
+        height={"15rem"}
+        padding={"2rem"}
+        flexDirection={"row"}
+        alignItems={"start"}
+        width={"100%"}
+        position="relative"
+      >
         <IconLarge>
           <Icon category={category} />
         </IconLarge>

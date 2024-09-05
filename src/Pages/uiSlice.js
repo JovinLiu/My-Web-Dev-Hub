@@ -2,6 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const initialStateUI = {
   showSideBar: true,
+  showEditor: true,
   isDarkMode: true
 };
 
@@ -9,8 +10,11 @@ const uiSlice = createSlice({
   name: "ui",
   initialState: initialStateUI,
   reducers: {
-    toggleShowSidebar: (state) => {
+    toggleShowSideBar: (state) => {
       state.showSideBar = !state.showSideBar;
+    },
+    toggleShowEditor: (state) => {
+      state.showEditor = !state.showEditor;
     },
     toggleDarkMode: (state, action) => {
       state.isDarkMode = action.payload;
@@ -18,6 +22,6 @@ const uiSlice = createSlice({
   }
 });
 
-export const {toggleShowSidebar, toggleDarkMode} = uiSlice.actions;
+export const {toggleShowSideBar, toggleShowEditor, toggleDarkMode} = uiSlice.actions;
 //使用default export导出reducer
 export default uiSlice.reducer;
