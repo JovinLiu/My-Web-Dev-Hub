@@ -72,7 +72,7 @@ const Hr = styled.hr`
 function SideBar() {
   const {currentData: posts = [], isLoading} = useGetAllPostsQuery();
   const showSideBar = useSelector((state) => state.ui.showSideBar);
-  const src = "/Public/user-Jovin.jpeg";
+  const src = "/public/user-Jovin.jpeg";
   const time = useRef(null);
 
   useEffect(

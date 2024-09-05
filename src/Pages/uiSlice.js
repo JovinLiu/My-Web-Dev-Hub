@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const initialStateUI = {
   showSideBar: true,
-  showEditor: true,
+  showEditor: false,
   isDarkMode: true
 };
 
