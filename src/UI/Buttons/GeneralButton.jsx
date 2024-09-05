@@ -2,11 +2,10 @@ import styled, {css} from "styled-components";
 
 const types = {
   close: css`
-    height: 25px;
-    width: 25px;
-    font-size: 25px;
-    border-radius: 50%;
+    height: 2.5rem;
+    width: 2.5rem;
     font-size: 2rem;
+    border-radius: 50%;
     position: absolute;
     top: 1.5rem;
     right: 2rem;
@@ -14,11 +13,10 @@ const types = {
     z-index: 3;
     color: var(--color-grey-50);
     &:hover {
-      color: var(--color-grey-700);
       background-color: var(--color-${({category}) => category}-100);
     }
   `,
-  general: css`
+  primary: css`
     padding: 0.5rem 1rem 0.1rem 1rem;
     border-radius: 3px;
     font-size: 2rem;
@@ -27,12 +25,27 @@ const types = {
       background-color: var(--color-${({category}) => category}-100);
       color: var(--color-grey-50);
     }
+  `,
+  userRound: css`
+    height: 3.5rem;
+    width: 3.5rem;
+    font-size: 2rem;
+    border-radius: 50%;
+    color: var(--color-grey-400);
+    border: none;
+    outline: 2px solid var(--color-grey-200);
+    background-color: var(--color-grey-50);
+    &:hover {
+      color: var(--color-grey-700);
+      background-color: var(--color-blue-2);
+    }
   `
 };
 
 const GeneralButton = styled.button`
   ${(props) => types[props.type]};
   border: none;
+  transition: var(--transition-1);
 `;
 
 export default GeneralButton;

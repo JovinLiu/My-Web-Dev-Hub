@@ -9,10 +9,10 @@ const StyledAppLayout = styled.div`
   height: 100vh;
   display: grid;
   grid-template-rows: 6rem 1fr;
-  grid-template-columns: ${(props) => (props.showSideBar ? "1fr 35rem" : "1fr 0rem")};
+  grid-template-columns: ${(props) => (props.showSideBar ? "1fr 35rem" : "1fr 4.5rem")};
   grid-auto-columns: auto;
   overflow: hidden;
-  transition: all 0.2s ease-in-out;
+  transition: var(--transition-1);
 `;
 
 const Main = styled.main`

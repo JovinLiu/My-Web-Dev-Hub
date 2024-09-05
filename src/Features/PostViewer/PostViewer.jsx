@@ -98,16 +98,16 @@ function PostViewer() {
           <Span>Tech Stack: {post.category}</Span>
         </InfoContainer>
         <ButtonContainer>
-          <GeneralButton category={category} type="general">
+          <GeneralButton category={category} type="primary">
             <ion-icon name="copy-outline" />
           </GeneralButton>
-          <GeneralButton category={category} type="general">
+          <GeneralButton category={category} type="primary">
             <ion-icon name="create-outline" />
           </GeneralButton>
-          <GeneralButton category={category} type="general">
+          <GeneralButton category={category} type="primary">
             <ion-icon name="mail-outline" />
           </GeneralButton>
-          <GeneralButton category={category} type="general">
+          <GeneralButton category={category} type="primary">
             <ion-icon name="trash-outline" />
           </GeneralButton>
         </ButtonContainer>

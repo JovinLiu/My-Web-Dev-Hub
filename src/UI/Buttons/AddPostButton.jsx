@@ -7,7 +7,7 @@ const Button = styled.button`
   background-color: var(--color-blue-1);
   border: none;
   border-radius: 10px;
-  transition: all, 0.2s;
+  transition: var(--transition-1);
 
   &:hover {
     color: var(--color-grey-700);

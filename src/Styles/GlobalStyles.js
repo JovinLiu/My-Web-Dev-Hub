@@ -101,6 +101,8 @@ const GlobalStyles = createGlobalStyle`
   --color-nodejs-20: rgb(33, 163, 102, 0.2);
   --color-reactrouter-20: rgb(244, 66, 80, 0.2);
 
+  --transition-1: all 0.2s ease-in-out;
+
   --border-radius-tiny: 3px;
   --border-radius-sm: 5px;
   --border-radius-md: 7px;
@@ -138,7 +140,7 @@ html {
   border-radius: 10px;
 }
 
-*::-webkit-scrollbar-thumb:window-inactive {
+*::-webkit-scrollbar-corner {
   background: none
 }
 

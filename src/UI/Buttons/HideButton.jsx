@@ -17,7 +17,7 @@ const Button = styled.button`
     color: var(--color-grey-700);
     background-color: var(--color-blue-2);
   }
-  transition: all 0.2s ease-in-out;
+  transition: var(--transition-1);
 `;
 
 function HideButton() {
