@@ -55,14 +55,6 @@ const IconLarge = styled.div`
   opacity: 20%;
 `;
 
-const ButtonContainer = styled.div`
-  margin-top: auto;
-  margin-left: auto;
-  display: flex;
-  flex-direction: row;
-  gap: 1.5rem;
-`;
-
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -71,6 +63,7 @@ const InfoContainer = styled.div`
   z-index: 2;
   white-space: nowrap;
   overflow-x: hidden;
+  height: 11rem;
 `;
 
 const Span = styled.span`
@@ -79,15 +72,26 @@ const Span = styled.span`
   padding: 0.2rem 0.4rem;
   background-color: var(--color-grey-100);
   border-radius: 10px;
+  margin-top: auto;
 `;
 
 const H1 = styled.h1`
   white-space: nowrap;
 `;
 
+const Mode = styled.span`
+  margin-top: auto;
+  margin-left: auto;
+  font-size: 1.75rem;
+  background-color: var(${({category}) => `--color-${category}-20`});
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  height: 3.6rem;
+`;
+
 function EmptyPostViewer() {
   const navigate = useNavigate();
-  const {currentTitle, currentComposeTime, currentCategory, currentPostBody} = useSelector((state) => state.currentPost);
+  const {currentTitle, currentCategory, currentPostBody} = useSelector((state) => state.currentPost);
   const {isMarkDown} = useSelector((state) => state.ui);
 
   const category = currentCategory.toLowerCase();
@@ -96,7 +100,7 @@ function EmptyPostViewer() {
 
   function handleClose(e) {
     e.preventDefault();
-    navigate(-1);
+    navigate("/app/posts");
   }
 
   return (
@@ -118,23 +122,9 @@ function EmptyPostViewer() {
         </GeneralButton>
         <InfoContainer>
           <H1>{currentTitle || "New Post..."}</H1>
-          <Span>Posted on {currentComposeTime}</Span>
           <Span>Tech Stack: {category}</Span>
         </InfoContainer>
-        <ButtonContainer>
-          <GeneralButton category={category} type="primary">
-            <ion-icon name="copy-outline" />
-          </GeneralButton>
-          <GeneralButton category={category} type="primary">
-            <ion-icon name="create-outline" />
-          </GeneralButton>
-          <GeneralButton category={category} type="primary">
-            <ion-icon name="mail-outline" />
-          </GeneralButton>
-          <GeneralButton category={category} type="primary">
-            <ion-icon name="trash-outline" />
-          </GeneralButton>
-        </ButtonContainer>
+        <Mode category={category}>Edit Mode</Mode>
       </TitleContainer>
       <BodyContainer>
         {isMarkDown ? (

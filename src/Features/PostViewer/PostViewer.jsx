@@ -1,5 +1,7 @@
 import styled, {keyframes} from "styled-components";
 import {useDeletePostMutation, useGetPostByIdQuery} from "../../Utils/data";
+import {setCurrentId, setCurrentTitle, setCurrentComposeTime, setCurrentCategory, setCurrentPostBody} from "../PostEditor/currentPostSlice";
+import {toggleShowEditor} from "../../Pages/uiSlice";
 import {useNavigate, useParams} from "react-router-dom";
 import Loader from "../../UI/Loader";
 import TitleContainer from "../../UI/TitleContainer";
@@ -8,7 +10,7 @@ import Icon from "../../UI/Icon";
 import GeneralButton from "../../UI/Buttons/GeneralButton";
 import parse from "html-react-parser";
 import toast from "react-hot-toast";
-// import {htmlToText} from "html-to-text";
+import {useDispatch} from "react-redux";
 
 const fadeIn = keyframes`
   from {
@@ -84,20 +86,34 @@ const H1 = styled.h1`
   white-space: nowrap;
 `;
 
+const DateDiv = styled.div`
+  display: flex;
+  gap: 1.5rem;
+`;
+
 function PostViewer() {
   const navigate = useNavigate();
   const {id} = useParams();
   const {currentData: post = {}, isLoading} = useGetPostByIdQuery(id);
   const [deletePost] = useDeletePostMutation();
+  const dispatch = useDispatch();
 
   function handleClose(e) {
     e.preventDefault();
-    navigate(-1);
+    navigate("/app/posts");
   }
 
   if (isLoading) return <Loader />;
 
-  function handleUpdatePost() {}
+  function handleUpdatePost() {
+    dispatch(setCurrentId(post.id));
+    dispatch(setCurrentTitle(post.title));
+    dispatch(setCurrentComposeTime(post.date));
+    dispatch(setCurrentCategory(post.category));
+    dispatch(setCurrentPostBody(post.body));
+    navigate("/app/editor");
+    dispatch(toggleShowEditor(true));
+  }
 
   async function handleDeletePost() {
     try {
@@ -131,7 +147,10 @@ function PostViewer() {
         </GeneralButton>
         <InfoContainer>
           <H1>{post.title}</H1>
-          <Span>Posted on {post.date}</Span>
+          <DateDiv>
+            <Span>Posted on {post.date}</Span>
+            {post.revisedDate && <Span>Revised on {post.revisedDate}</Span>}
+          </DateDiv>
           <Span>Tech Stack: {post.category}</Span>
         </InfoContainer>
         <ButtonContainer>

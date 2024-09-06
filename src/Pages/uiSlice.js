@@ -34,14 +34,14 @@ const uiSlice = createSlice({
     toggleShowSideBar: (state) => {
       state.showSideBar = !state.showSideBar;
     },
-    toggleShowEditor: (state) => {
-      state.showEditor = !state.showEditor;
+    toggleShowEditor: (state, action) => {
+      state.showEditor = action.payload || !state.showEditor;
     },
     toggleDarkMode: (state, action) => {
       state.isDarkMode = action.payload;
     },
-    toggleIsMarkDown: (state) => {
-      state.isMarkDown = !state.isMarkDown;
+    toggleIsMarkDown: (state, action) => {
+      state.isMarkDown = action.payload || !state.isMarkDown;
     }
   }
 });

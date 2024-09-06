@@ -6,15 +6,22 @@ import {useNavigate} from "react-router-dom";
 import CardLine from "../../UI/CardLine";
 import {useDispatch, useSelector} from "react-redux";
 import {toggleShowEditor, toggleIsMarkDown} from "../../Pages/uiSlice";
-import {setCurrentTitle, setCurrentComposeTime, setCurrentCategory, resetCurrentPost} from "../PostEditor/currentPostSlice";
-import {useEffect} from "react";
-import {useAddNewPostMutation} from "../../Utils/data";
+import {
+  // setCurrentId,
+  setCurrentTitle,
+  setCurrentCategory,
+  resetCurrentPost,
+  setCurrentComposeTime,
+  setReviseTime,
+  resetComposeTime
+} from "../PostEditor/currentPostSlice";
+import {useAddNewPostMutation, useUpdatePostMutation} from "../../Utils/data";
 import toast from "react-hot-toast";
 
 const TitleInput = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: start;
+  height: 11rem;
   gap: 1rem;
 `;
 
@@ -42,6 +49,7 @@ const Select = styled.select`
   border: 2px solid var(--color-blue-1);
   padding-left: 1rem;
   color: var(--color-grey-400);
+  margin-top: auto;
 `;
 
 const DateDiv = styled.div`
@@ -52,15 +60,25 @@ const DateDiv = styled.div`
   margin-right: auto;
 `;
 
+const Span = styled.span`
+  font-size: 1.25rem;
+  color: var(--color-grey-400);
+  padding: 0.2rem 0.4rem;
+  background-color: var(--color-grey-100);
+  border-radius: 10px;
+`;
+
 function TitleForm({children}) {
   const navigate = useNavigate();
   const {isMarkDown, categories} = useSelector((state) => state.ui);
-  const {currentTitle, currentComposeTime, curreentCategory, currentPostBody} = useSelector((state) => state.currentPost);
+  const {currentId, currentTitle, currentComposeTime, currentReviseTime, currentCategory, currentPostBody} = useSelector(
+    (state) => state.currentPost
+  );
   const dispatch = useDispatch();
   const [addNewPost] = useAddNewPostMutation();
-  // const [updatePost, {error: updateError, isLoading: isUpdating}] = useUpdatePostMutation();
+  const [updatePost] = useUpdatePostMutation();
 
-  const categoryLower = curreentCategory?.toLowerCase() || "";
+  const categoryLower = currentCategory?.toLowerCase() || "";
 
   function handleSetCurrentCategory(e) {
     e.preventDefault();
@@ -75,6 +93,7 @@ function TitleForm({children}) {
   function handleResetCurrentPost(e) {
     e.preventDefault();
     dispatch(resetCurrentPost());
+    toast.success("Post successfully emptied!");
   }
 
   function handleClose(e) {
@@ -85,62 +104,80 @@ function TitleForm({children}) {
 
   function handleToggleIsMarkDown(e) {
     e.preventDefault();
+
+    if (!isMarkDown) {
+      toast.success("MarkDown Mode");
+    }
+    if (isMarkDown) {
+      toast.success("Text Mode");
+    }
+
     dispatch(toggleIsMarkDown());
   }
 
-  function handleClickSave(e) {
-    e.preventDefault();
-    if (!currentTitle || !currentPostBody || !curreentCategory) return;
-
-    const currentTempPost = {
-      title: currentTitle,
-      category: curreentCategory,
-      date: currentComposeTime,
-      body: currentPostBody
-    };
-
-    localStorage.setItem("tempPost", JSON.stringify(currentTempPost));
-  }
-
-  async function handleSaveNewPost(e) {
+  function handleClickTempSave(e) {
     try {
       e.preventDefault();
-      if (!currentTitle || !currentPostBody || !curreentCategory) throw new Error("Please fill in all required fields.");
+      if (!currentTitle || !currentPostBody || !currentCategory) throw new Error("Please fill in all required fields.");
 
       const currentTempPost = {
+        id: currentId,
         title: currentTitle,
-        category: curreentCategory,
+        category: currentCategory,
         date: currentComposeTime,
+        revisedDate: currentReviseTime,
         body: currentPostBody
       };
 
-      await addNewPost(currentTempPost);
+      localStorage.setItem("tempPost", JSON.stringify(currentTempPost));
+      toast.success("Post saved to temporary storage.");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
+
+  async function handleSavePost(e) {
+    try {
+      e.preventDefault();
+      if (!currentTitle || !currentPostBody || !currentCategory) throw new Error("Please fill in all required fields.");
+
+      console.log(currentId);
+
+      //这俩个时间没有被set进去
+      if (!currentId) {
+        dispatch(setCurrentComposeTime());
+      } else {
+        dispatch(setReviseTime());
+      }
+
+      const currentPost = {
+        id: currentId,
+        title: currentTitle,
+        category: currentCategory,
+        date: currentComposeTime,
+        revisedDate: (currentReviseTime) => {
+          currentReviseTime.split(" ").join(" ");
+        },
+        body: currentPostBody
+      };
+
+      console.log("currentPost", currentPost);
+
+      if (currentId) {
+        await updatePost({id: currentId, updatedPost: currentPost});
+      } else {
+        await addNewPost(currentPost);
+      }
 
       toast.success("New post saved successfully!");
       navigate("/app/posts");
       dispatch(resetCurrentPost());
+      dispatch(resetComposeTime());
+      dispatch(toggleShowEditor());
     } catch (err) {
       toast.error(err.message);
     }
   }
-
-  useEffect(
-    function () {
-      const options = {
-        hour: "numeric",
-        minute: "numeric",
-        day: "numeric",
-        month: "numeric",
-        year: "numeric",
-        weekday: "long",
-        second: "numeric",
-        hour12: false
-      };
-      const time = new Intl.DateTimeFormat(navigator.language, options).format(new Date());
-      dispatch(setCurrentComposeTime(time));
-    },
-    [dispatch]
-  );
 
   return (
     <>
@@ -151,14 +188,15 @@ function TitleForm({children}) {
         <TitleInput>
           <Input className="title-input" value={currentTitle} onChange={handleSetCurrentTitle} placeholder="Post title..." maxLength="200" required />
           <DateDiv>
-            <span>
-              Composed on <strong>{currentComposeTime}</strong>
-            </span>
-            <span>
-              Revised on <strong>12</strong>
-            </span>
+            {currentId ? (
+              <Span>
+                Was composed on <strong>{currentComposeTime}</strong>
+              </Span>
+            ) : (
+              ""
+            )}
           </DateDiv>
-          <Select value={curreentCategory} onChange={handleSetCurrentCategory} required>
+          <Select value={currentCategory} onChange={handleSetCurrentCategory} required>
             <option value="">Tech Stack...</option>
             {categories.map((category, i) => (
               <option value={category.split(" ").join("").toLowerCase()} key={i}>
@@ -171,13 +209,13 @@ function TitleForm({children}) {
           <GeneralButton category={categoryLower} type="primary" onClick={handleToggleIsMarkDown} active={isMarkDown}>
             <ion-icon name="logo-markdown" />
           </GeneralButton>
-          <GeneralButton category={categoryLower} type="primary" onClick={handleClickSave}>
+          <GeneralButton category={categoryLower} type="primary" onClick={handleClickTempSave}>
             <ion-icon name="save-outline" />
           </GeneralButton>
           <GeneralButton category={categoryLower} type="primary" onClick={handleResetCurrentPost}>
             <ion-icon name="trash-bin-outline" />
           </GeneralButton>
-          <GeneralButton category={categoryLower} type="primary" onClick={handleSaveNewPost}>
+          <GeneralButton category={categoryLower} type="primary" onClick={handleSavePost}>
             <ion-icon name="checkmark-outline" />
           </GeneralButton>
         </ButtonContainer>

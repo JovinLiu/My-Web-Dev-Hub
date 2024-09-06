@@ -24,13 +24,13 @@ function AddPostButton() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const handleClick = () => {
+  const handleClickAddPost = () => {
     if (location.pathname !== "/app/editor") navigate("editor");
     if (showEditor) return;
     dispatch(toggleShowEditor());
   };
 
-  return <Button onClick={handleClick}>Add Post</Button>;
+  return <Button onClick={handleClickAddPost}>Add Post</Button>;
 }
 
 export default AddPostButton;

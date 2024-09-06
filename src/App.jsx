@@ -65,8 +65,11 @@ function App() {
 
 export default App;
 
-//Lazzy load each small tag
-//square tag
-//pagination
-//Dark Mode
-//Only Logged in user can add post
+//filter
+//search bar
+//cattegory正常显示
+//Markdown可以正常显示
+//user login logout user settings
+//删除和清空弹窗
+//sidebar的样式
+//Home Page

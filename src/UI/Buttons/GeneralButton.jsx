@@ -18,7 +18,7 @@ const types = {
   `,
   primary: css`
     padding: 0.5rem 1rem 0.1rem 1rem;
-    border-radius: 3px;
+    border-radius: 10px;
     font-size: 2rem;
     color: var(
       ${({category, active}) => (category ? (active ? "--color-grey-50" : "--color-grey-800") : active ? "--color-grey-800" : "--color-grey-50")}
