@@ -6,7 +6,6 @@ import {useEffect, useRef} from "react";
 
 const Container = styled.div`
   margin: auto;
-  padding: 4rem 4rem 8rem 4rem;
   color: white;
   display: flex;
   flex-wrap: wrap;

@@ -25,8 +25,6 @@ function HideButton() {
   const showEditor = useSelector((state) => state.ui.showEditor);
   const dispatch = useDispatch();
 
-  console.log(showEditor);
-
   function handleClickHide() {
     dispatch(toggleShowEditor());
   }

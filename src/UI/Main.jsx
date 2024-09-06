@@ -2,14 +2,13 @@
 import styled from "styled-components";
 
 const MainContainer = styled.main`
-  background-color: var(--color-grey-100);
   overflow-y: scroll;
   overflow-x: hidden;
   width: 100%;
+  padding: 4rem;
   height: 100%;
   position: relative;
-  display: flex;
-  justify-content: space-evenly;
+  background-color: var(--color-grey-100);
   border-left: 1px solid var(--color-grey-500);
   border-right: 1px solid var(--color-grey-500);
 `;

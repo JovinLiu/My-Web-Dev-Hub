@@ -6,6 +6,8 @@ import TitleContainer from "../../UI/TitleContainer";
 import CardLine from "../../UI/CardLine";
 import Icon from "../../UI/Icon";
 import GeneralButton from "../../UI/Buttons/GeneralButton";
+import parse from "html-react-parser";
+// import {htmlToText} from "html-to-text";
 
 const fadeIn = keyframes`
   from {
@@ -19,7 +21,7 @@ const fadeIn = keyframes`
 `;
 
 const Container = styled.div`
-  margin: 4rem;
+  margin: 0rem auto;
   color: white;
   display: flex;
   flex-direction: column;
@@ -35,7 +37,9 @@ const BodyContainer = styled.div`
   background-color: var(--color-grey-50);
   height: calc(100vh - 29rem) !important;
   padding: 2rem;
-  overflow: scroll;
+  overflow-y: scroll;
+  word-wrap: break-word;
+  word-break: break-all;
 `;
 
 const IconLarge = styled.div`
@@ -60,8 +64,11 @@ const ButtonContainer = styled.div`
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: start;
   gap: 1.5rem;
   z-index: 2;
+  max-width: 50%;
+  white-space: nowrap;
 `;
 
 const Span = styled.span`
@@ -70,6 +77,11 @@ const Span = styled.span`
   padding: 0.2rem 0.4rem;
   background-color: var(--color-grey-100);
   border-radius: 10px;
+`;
+
+const H1 = styled.h1`
+  max-width: 80%;
+  white-space: nowrap;
 `;
 
 function PostViewer() {
@@ -84,6 +96,7 @@ function PostViewer() {
 
   if (isLoading) return <Loader />;
 
+  const postBody = parse(post.body);
   const category = post.category.toLowerCase();
 
   console.log(post);
@@ -106,7 +119,7 @@ function PostViewer() {
           <ion-icon name="close-outline" />
         </GeneralButton>
         <InfoContainer>
-          <h1>{post.title}</h1>
+          <H1>{post.title}</H1>
           <Span>Posted on {post.date}</Span>
           <Span>Tech Stack: {post.category}</Span>
         </InfoContainer>
@@ -125,7 +138,7 @@ function PostViewer() {
           </GeneralButton>
         </ButtonContainer>
       </TitleContainer>
-      <BodyContainer>{post.body}</BodyContainer>
+      <BodyContainer>{postBody}</BodyContainer>
       <CardLine category={category} height={"2rem"} />
     </Container>
   );
