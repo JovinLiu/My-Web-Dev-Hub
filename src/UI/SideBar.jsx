@@ -14,7 +14,6 @@ const Container = styled.aside`
   color: var(--color-grey-500);
   position: relative;
   background-color: var(--color-grey-50);
-  border-left: 1px solid var(--color-grey-500);
   transition: var(--transition-1);
 `;
 

@@ -19,11 +19,11 @@ const fadeIn = keyframes`
 `;
 
 const Container = styled.div`
-  margin: auto;
-  padding: 4rem 4rem 8rem 4rem;
+  margin: 4rem;
   color: white;
   display: flex;
   flex-direction: column;
+  height: calc(100vh - 14rem) !important;
   max-width: 110rem;
   animation-name: ${fadeIn};
   animation-duration: 0.5s;
@@ -33,7 +33,9 @@ const Container = styled.div`
 const BodyContainer = styled.div`
   color: var(--color-grey-600);
   background-color: var(--color-grey-50);
+  height: calc(100vh - 29rem) !important;
   padding: 2rem;
+  overflow: scroll;
 `;
 
 const IconLarge = styled.div`

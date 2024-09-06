@@ -5,20 +5,21 @@ import TextBox from "./TextBox";
 import TitleForm from "../PostViewer/TitleForm";
 import {useSelector} from "react-redux";
 
-const Container = styled.aside`
-  height: calc(100vh - 6rem);
-  max-width: 50vw;
-  color: var(--color-grey-500);
+const LeftSide = styled.aside`
+  width: 100%;
+  height: 100%;
+  //编辑器居中
+  display: flex;
+  justify-content: center;
   position: relative;
-  background-color: var(--color-grey-100);
-  border-right: 1px solid var(--color-grey-500);
-  transition: var(--transition-1);
-  padding: 4rem 0rem 8rem 0rem;
 `;
 
-const Div = styled.div`
-  max-width: 110rem;
-  margin: 0 auto;
+const Container = styled.div`
+  height: calc(100vh - 14rem) !important;
+  margin: 4rem !important;
+  width: 110rem !important;
+  color: var(--color-grey-500);
+  background-color: var(--color-grey-100);
   display: ${({showEditor}) => (showEditor ? "block" : "none")};
   transition: var(--transition-1);
 `;
@@ -27,14 +28,15 @@ function PostEditor() {
   const showEditor = useSelector((state) => state.ui.showEditor);
 
   return (
-    <Container>
+    <LeftSide>
       <HideButton />
-      <Div showEditor={showEditor}>
-        <TitleForm />
-        <TextBox />
+      <Container showEditor={showEditor}>
+        <TitleForm>
+          <TextBox />
+        </TitleForm>
         {/* <Markdown>text</Markdown> */}
-      </Div>
-    </Container>
+      </Container>
+    </LeftSide>
   );
 }
 

@@ -1,22 +1,28 @@
 /* eslint-disable react/prop-types */
+import {useEffect} from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import styled from "styled-components";
-// import {usePosts} from "../Contexts/PostsContext";
 
 const Container = styled.div`
-  height: calc(100vh - 6rem);
+  height: calc(100vh - 31rem);
   width: 100%;
+  position: relative;
 `;
 
 const Background = styled.div`
-  height: calc(100vh - 28.2rem);
+  height: calc(100vh - 31rem);
   max-width: 110rem;
+  position: absolute;
   background-color: var(--color-grey-50);
 `;
 
 function TextBox() {
-  // const {bodyValue, setBodyValue, viewMode} = usePosts();
+  useEffect(function () {
+    document.querySelector(".quill").setAttribute("style", "height: calc(100vh - 31rem); display:flex; flex-direction: column");
+    document.querySelector(".ql-toolbar").setAttribute("style", "background-color: var(--color-grey-50)");
+    document.querySelector(".ql-container").setAttribute("style", "background-color: var(--color-grey-50); flex-grow:1");
+  }, []);
 
   const toolbar = {
     toolbar: [
@@ -37,24 +43,15 @@ function TextBox() {
     ]
   };
 
-  const editorStyle = {
-    height: "calc(100vh - 35rem)",
-    maxWidth: "110rem",
-    position: "absolute",
-    top: "19rem",
-    left: "cal(25vh - 55rem)"
-  };
-
   return (
     <Container>
+      <Background />
       <ReactQuill
         theme="snow"
         // value={bodyValue}
         // onChange={setBodyValue}
         modules={toolbar}
-        style={editorStyle}
       />
-      <Background />
     </Container>
   );
 }

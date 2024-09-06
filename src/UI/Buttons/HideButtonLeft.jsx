@@ -6,7 +6,7 @@ import styled from "styled-components";
 const Button = styled.button`
   position: absolute;
   top: 45%;
-  right: 0rem;
+  right: 0%;
   transform: ${(props) => (props.showEditor ? "translateX(0)" : "translateX(100%)")};
   padding: 5rem 0.2rem;
   background-color: var(--color-blue-1);
