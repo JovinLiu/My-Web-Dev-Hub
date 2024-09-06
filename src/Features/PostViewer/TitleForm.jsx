@@ -66,7 +66,7 @@ function TitleForm({children}) {
   return (
     <>
       <TitleContainer category={categoryLower} height="15rem" padding="2rem" flexDirection="row" alignItems="start" position="relative">
-        <GeneralButton category={category} type="close" onClick={handleClose}>
+        <GeneralButton category={categoryLower} type="close" onClick={handleClose}>
           <ion-icon name="close-outline" />
         </GeneralButton>
         <TitleInput>
@@ -110,13 +110,13 @@ function TitleForm({children}) {
           </Select>
         </TitleInput>
         <ButtonContainer>
-          <GeneralButton type="primary" category={categoryLower} color="var(--color-grey-50)">
+          <GeneralButton category={categoryLower} type="primary">
             <ion-icon name="save-outline" />
           </GeneralButton>
-          <GeneralButton type="primary" category={categoryLower} color="var(--color-grey-50)">
+          <GeneralButton category={categoryLower} type="primary">
             <ion-icon name="trash-bin-outline" />
           </GeneralButton>
-          <GeneralButton type="primary" category={categoryLower} color="var(--color-grey-50)">
+          <GeneralButton category={categoryLower} type="primary">
             <ion-icon name="checkmark-outline" />
           </GeneralButton>
         </ButtonContainer>

@@ -51,7 +51,8 @@ const Greeting = styled.span`
 const Avatar = styled.img`
   display: block;
   width: 3.5rem;
-  aspect-ratio: 1;
+  height: 3.5rem;
+  overflow: hidden;
   object-fit: cover;
   object-position: center;
   border-radius: 50%;

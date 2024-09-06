@@ -20,11 +20,11 @@ const types = {
     padding: 0.5rem 1rem 0.1rem 1rem;
     border-radius: 3px;
     font-size: 2rem;
-    color: ${({color}) => color};
+    color: var(${({category}) => (category ? "--color-grey-800" : "--color-grey-50")});
     background-color: var(${({category}) => (category ? `--color-${category}-20` : "--color-blue-1")});
     &:hover {
+      color: var(${({category}) => (category ? "--color-grey-50" : "--color-grey-800")});
       background-color: var(${({category}) => (category ? `--color-${category}-100` : "--color-blue-2")});
-      color: var(--color-grey-50);
     }
   `,
   userRound: css`
