@@ -1,10 +1,15 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
 import GeneralButton from "../../UI/Buttons/GeneralButton";
-import {useState} from "react";
 import TitleContainer from "../../UI/TitleContainer";
-import {Navigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import CardLine from "../../UI/CardLine";
+import {useDispatch, useSelector} from "react-redux";
+import {toggleShowEditor, toggleIsMarkDown} from "../../Pages/uiSlice";
+import {setCurrentTitle, setCurrentComposeTime, setCurrentCategory, resetCurrentPost} from "../PostEditor/currentPostSlice";
+import {useEffect} from "react";
+import {useAddNewPostMutation} from "../../Utils/data";
+import toast from "react-hot-toast";
 
 const TitleInput = styled.div`
   display: flex;
@@ -48,20 +53,94 @@ const DateDiv = styled.div`
 `;
 
 function TitleForm({children}) {
-  const [category, setCategory] = useState();
+  const navigate = useNavigate();
+  const {isMarkDown, categories} = useSelector((state) => state.ui);
+  const {currentTitle, currentComposeTime, curreentCategory, currentPostBody} = useSelector((state) => state.newPost);
+  const dispatch = useDispatch();
+  const [addNewPost] = useAddNewPostMutation();
+  // const [updatePost, {error: updateError, isLoading: isUpdating}] = useUpdatePostMutation();
 
-  const categoryLower = category?.toLowerCase() || "";
+  const categoryLower = curreentCategory?.toLowerCase() || "";
 
-  console.log(categoryLower);
+  function handleSetCurrentCategory(e) {
+    e.preventDefault();
+    dispatch(setCurrentCategory(e.target.value));
+  }
 
-  function handleSetCategory(e) {
-    setCategory(e.target.value);
+  function handleSetCurrentTitle(e) {
+    e.preventDefault();
+    dispatch(setCurrentTitle(e.target.value));
+  }
+
+  function handleResetCurrentPost(e) {
+    e.preventDefault();
+    dispatch(resetCurrentPost());
   }
 
   function handleClose(e) {
     e.preventDefault();
-    Navigate(-1);
+    dispatch(toggleShowEditor());
+    navigate("/app/posts");
   }
+
+  function handleToggleIsMarkDown(e) {
+    e.preventDefault();
+    dispatch(toggleIsMarkDown());
+  }
+
+  function handleClickSave(e) {
+    e.preventDefault();
+    if (!currentTitle || !currentPostBody || !curreentCategory) return;
+
+    const currentTempPost = {
+      title: currentTitle,
+      category: curreentCategory,
+      date: currentComposeTime,
+      body: currentPostBody
+    };
+
+    localStorage.setItem("tempPost", JSON.stringify(currentTempPost));
+  }
+
+  async function handleSaveNewPost(e) {
+    try {
+      e.preventDefault();
+      if (!currentTitle || !currentPostBody || !curreentCategory) throw new Error("Please fill in all required fields.");
+
+      const currentTempPost = {
+        title: currentTitle,
+        category: curreentCategory,
+        date: currentComposeTime,
+        body: currentPostBody
+      };
+
+      await addNewPost(currentTempPost);
+
+      toast.success("New post saved successfully!");
+      navigate("/app/posts");
+      dispatch(resetCurrentPost());
+    } catch (err) {
+      toast.error(err.message);
+    }
+  }
+
+  useEffect(
+    function () {
+      const options = {
+        hour: "numeric",
+        minute: "numeric",
+        day: "numeric",
+        month: "numeric",
+        year: "numeric",
+        weekday: "long",
+        second: "numeric",
+        hour12: false
+      };
+      const time = new Intl.DateTimeFormat(navigator.language, options).format(new Date());
+      dispatch(setCurrentComposeTime(time));
+    },
+    [dispatch]
+  );
 
   return (
     <>
@@ -70,53 +149,35 @@ function TitleForm({children}) {
           <ion-icon name="close-outline" />
         </GeneralButton>
         <TitleInput>
-          <Input
-            // value={titleValue}
-            // onChange={(e) => handleTitleInput(e)}
-            placeholder="Post title..."
-            maxLength="200"
-            required
-          />
+          <Input className="title-input" value={currentTitle} onChange={handleSetCurrentTitle} placeholder="Post title..." maxLength="200" required />
           <DateDiv>
             <span>
-              Composed on <strong>12</strong>
+              Composed on <strong>{currentComposeTime}</strong>
             </span>
             <span>
               Revised on <strong>12</strong>
             </span>
           </DateDiv>
-          <Select value={category} onChange={handleSetCategory} required>
-            {/* 这个看看可不可以改一下 */}
+          <Select value={curreentCategory} onChange={handleSetCurrentCategory} required>
             <option value="">Tech Stack...</option>
-            <option value="WebBasic">Web Basic</option>
-            <option value="Javascript">Javascript</option>
-            <option value="HTML">HTML</option>
-            <option value="CSS">CSS</option>
-            <option value="Sass">Sass</option>
-            <option value="TailwindCSS">Tailwind CSS</option>
-            <option value="React">React</option>
-            <option value="Redux">Redux</option>
-            <option value="NodeJS">NodeJS</option>
-            <option value="Express">Express</option>
-            <option value="MangoDB">MangoDB</option>
-            <option value="Bootstrap">Bootstrap</option>
-            <option value="ReactRouter">React Router</option>
-            <option value="ReactQuery">React Query</option>
-            <option value="NextJS">NextJS</option>
-            <option value="Git">Git</option>
-            <option value="Python">Python</option>
-            <option value="Github">GitHub</option>
-            <option value="Docker">Docker</option>
+            {categories.map((category, i) => (
+              <option value={category.split(" ").join("").toLowerCase()} key={i}>
+                {category}
+              </option>
+            ))}
           </Select>
         </TitleInput>
         <ButtonContainer>
-          <GeneralButton category={categoryLower} type="primary">
+          <GeneralButton category={categoryLower} type="primary" onClick={handleToggleIsMarkDown} active={isMarkDown}>
+            <ion-icon name="logo-markdown" />
+          </GeneralButton>
+          <GeneralButton category={categoryLower} type="primary" onClick={handleClickSave}>
             <ion-icon name="save-outline" />
           </GeneralButton>
-          <GeneralButton category={categoryLower} type="primary">
+          <GeneralButton category={categoryLower} type="primary" onClick={handleResetCurrentPost}>
             <ion-icon name="trash-bin-outline" />
           </GeneralButton>
-          <GeneralButton category={categoryLower} type="primary">
+          <GeneralButton category={categoryLower} type="primary" onClick={handleSaveNewPost}>
             <ion-icon name="checkmark-outline" />
           </GeneralButton>
         </ButtonContainer>

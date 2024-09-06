@@ -1,14 +1,15 @@
 import styled, {keyframes} from "styled-components";
-import {useDeletePostMutation, useGetPostByIdQuery} from "../../Utils/data";
-import {useNavigate, useParams} from "react-router-dom";
-import Loader from "../../UI/Loader";
 import TitleContainer from "../../UI/TitleContainer";
 import CardLine from "../../UI/CardLine";
 import Icon from "../../UI/Icon";
 import GeneralButton from "../../UI/Buttons/GeneralButton";
+import {useSelector} from "react-redux";
 import parse from "html-react-parser";
-import toast from "react-hot-toast";
-// import {htmlToText} from "html-to-text";
+import {useNavigate} from "react-router-dom";
+import {htmlToText} from "html-to-text";
+import Markdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
 
 const fadeIn = keyframes`
   from {
@@ -84,33 +85,19 @@ const H1 = styled.h1`
   white-space: nowrap;
 `;
 
-function PostViewer() {
+function EmptyPostViewer() {
   const navigate = useNavigate();
-  const {id} = useParams();
-  const {currentData: post = {}, isLoading} = useGetPostByIdQuery(id);
-  const [deletePost] = useDeletePostMutation();
+  const {currentTitle, currentComposeTime, currentCategory, currentPostBody} = useSelector((state) => state.currentPost);
+  const {isMarkDown} = useSelector((state) => state.ui);
+
+  const category = currentCategory.toLowerCase();
+  const postBody = parse(currentPostBody);
+  const body = htmlToText(currentPostBody);
 
   function handleClose(e) {
     e.preventDefault();
     navigate(-1);
   }
-
-  if (isLoading) return <Loader />;
-
-  function handleUpdatePost() {}
-
-  async function handleDeletePost() {
-    try {
-      await deletePost(id);
-      toast.success("Post has been deleted successfully!");
-      navigate("/app/posts");
-    } catch (err) {
-      toast.error(err.message);
-    }
-  }
-
-  const postBody = parse(post.body);
-  const category = post.category.toLowerCase();
 
   return (
     <Container>
@@ -130,29 +117,37 @@ function PostViewer() {
           <ion-icon name="close-outline" />
         </GeneralButton>
         <InfoContainer>
-          <H1>{post.title}</H1>
-          <Span>Posted on {post.date}</Span>
-          <Span>Tech Stack: {post.category}</Span>
+          <H1>{currentTitle || "New Post..."}</H1>
+          <Span>Posted on {currentComposeTime}</Span>
+          <Span>Tech Stack: {category}</Span>
         </InfoContainer>
         <ButtonContainer>
           <GeneralButton category={category} type="primary">
             <ion-icon name="copy-outline" />
           </GeneralButton>
-          <GeneralButton category={category} type="primary" onClick={handleUpdatePost}>
+          <GeneralButton category={category} type="primary">
             <ion-icon name="create-outline" />
           </GeneralButton>
           <GeneralButton category={category} type="primary">
             <ion-icon name="mail-outline" />
           </GeneralButton>
-          <GeneralButton category={category} type="primary" onClick={handleDeletePost}>
+          <GeneralButton category={category} type="primary">
             <ion-icon name="trash-outline" />
           </GeneralButton>
         </ButtonContainer>
       </TitleContainer>
-      <BodyContainer>{postBody}</BodyContainer>
+      <BodyContainer>
+        {isMarkDown ? (
+          <Markdown rehypePlugins={[rehypeRaw]} remarkPlugins={[[remarkGfm, {singleTilde: false}]]}>
+            {body}
+          </Markdown>
+        ) : (
+          postBody
+        )}
+      </BodyContainer>
       <CardLine category={category} height={"2rem"} />
     </Container>
   );
 }
 
-export default PostViewer;
+export default EmptyPostViewer;

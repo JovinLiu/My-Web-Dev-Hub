@@ -2,6 +2,7 @@
 import styled from "styled-components";
 import MenuItem from "./MenuItem";
 import Menus from "./Menus";
+import {useSelector} from "react-redux";
 
 const MenuButton = styled.button`
   margin-top: 0.6rem;
@@ -32,27 +33,7 @@ const List = styled.ul`
 
 function MenuList() {
   //这个
-  const categories = [
-    "All Posts",
-    "Web Basic",
-    "JavaScript",
-    "HTML",
-    "CSS",
-    "Sass",
-    "Tailwind CSS",
-    "React",
-    "Redux",
-    "NodeJS",
-    "Express",
-    "MangoDB",
-    "Mongoose",
-    "Bootstrap",
-    "React Router",
-    "React Query",
-    "NextJS",
-    "Git",
-    "Github"
-  ];
+  const {categories} = useSelector((state) => state.ui);
 
   const categoryLength = categories.join("").length;
 
@@ -65,6 +46,7 @@ function MenuList() {
       </Menus.Action>
       <Menus.Window>
         <List>
+          <MenuItem category="All Post" />
           {categories.map((category, i) => (
             <MenuItem category={category} key={i} />
           ))}

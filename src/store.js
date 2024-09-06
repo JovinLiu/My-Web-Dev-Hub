@@ -2,10 +2,12 @@ import {configureStore} from "@reduxjs/toolkit";
 import {setupListeners} from "@reduxjs/toolkit/query";
 import {postsApi} from "./Utils/data.js";
 import uiReducer from "./Pages/uiSlice";
+import currentPostReducer from "./Features/PostEditor/currentPostSlice.js";
 
 const store = configureStore({
   reducer: {
     ui: uiReducer,
+    currentPost: currentPostReducer,
     [postsApi.reducerPath]: postsApi.reducer
   },
   //协助缓存

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import HideButton from "../../UI/Buttons/HideButtonLeft";
-// import Markdown from "react-markdown";
 import TextBox from "./TextBox";
 import TitleForm from "../PostViewer/TitleForm";
 import {useSelector} from "react-redux";
@@ -34,7 +33,6 @@ function PostEditor() {
         <TitleForm>
           <TextBox />
         </TitleForm>
-        {/* <Markdown>text</Markdown> */}
       </Container>
     </LeftSide>
   );

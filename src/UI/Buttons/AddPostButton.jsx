@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import {useDispatch, useSelector} from "react-redux";
+import {toggleShowEditor} from "../../Pages/uiSlice";
+import {useNavigate, useLocation} from "react-router-dom";
 
 const Button = styled.button`
   color: var(--color-grey-50);
@@ -16,7 +19,18 @@ const Button = styled.button`
 `;
 
 function AddPostButton() {
-  return <Button>Add Post</Button>;
+  const navigate = useNavigate();
+  const showEditor = useSelector((state) => state.ui.showEditor);
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const handleClick = () => {
+    if (location.pathname !== "/app/editor") navigate("editor");
+    if (showEditor) return;
+    dispatch(toggleShowEditor());
+  };
+
+  return <Button onClick={handleClick}>Add Post</Button>;
 }
 
 export default AddPostButton;

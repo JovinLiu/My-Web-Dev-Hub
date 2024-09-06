@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
+import {useGetAllPostsQuery} from "../Utils/data";
 // import {usePosts} from "../Contexts/PostsContext";
 const Container = styled.div`
   display: flex;
@@ -46,11 +47,14 @@ const Button = styled.button`
 `;
 
 function SearchBar() {
+  const {currentData: posts = []} = useGetAllPostsQuery();
   const [query, setQuery] = useState("");
   const inputEl = useRef(null);
 
   useEffect(function () {
     const callBack = (e) => {
+      if (document.activeElement === document.querySelector(".ql-editor")) return;
+      if (document.activeElement === document.querySelector(".title-input")) return;
       if (e.code === "Enter") inputEl.current.focus();
       if (e.code === "Escape") {
         inputEl.current.blur();
@@ -63,7 +67,7 @@ function SearchBar() {
 
   return (
     <Container>
-      <SerachResults>123 posts found</SerachResults>
+      <SerachResults>{posts.length} posts found</SerachResults>
       <InputContainer>
         <IconContainer left="1.5rem">
           <ion-icon name="search-outline"></ion-icon>
