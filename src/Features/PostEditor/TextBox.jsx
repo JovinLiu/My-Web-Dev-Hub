@@ -20,7 +20,7 @@ const Background = styled.div`
 `;
 
 function TextBox() {
-  const {currentPostBody} = useSelector((state) => state.newPost);
+  const {currentPostBody} = useSelector((state) => state.currentPost);
   const dispatch = useDispatch();
   useEffect(function () {
     document.querySelector(".quill").setAttribute("style", "height: calc(100vh - 31rem); display:flex; flex-direction: column");

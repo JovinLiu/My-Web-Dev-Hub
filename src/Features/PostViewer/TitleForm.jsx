@@ -55,7 +55,7 @@ const DateDiv = styled.div`
 function TitleForm({children}) {
   const navigate = useNavigate();
   const {isMarkDown, categories} = useSelector((state) => state.ui);
-  const {currentTitle, currentComposeTime, curreentCategory, currentPostBody} = useSelector((state) => state.newPost);
+  const {currentTitle, currentComposeTime, curreentCategory, currentPostBody} = useSelector((state) => state.currentPost);
   const dispatch = useDispatch();
   const [addNewPost] = useAddNewPostMutation();
   // const [updatePost, {error: updateError, isLoading: isUpdating}] = useUpdatePostMutation();
