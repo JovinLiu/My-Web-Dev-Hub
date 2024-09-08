@@ -4,7 +4,6 @@
 //user login logout user settings
 //sidebar的样式
 //Home Page
-//RTK的 Automated Re-fetching https://redux-toolkit.js.org/rtk-query/usage/automated-refetching
 
 //显示的格式：大写小写+空格
 //数据库存储的格式：大写小写

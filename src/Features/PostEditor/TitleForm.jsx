@@ -180,8 +180,6 @@ function TitleForm({children}) {
         body: currentPostBody
       };
 
-      console.log("currentPost", currentPost);
-
       if (currentId) {
         await updatePost({id: currentId, updatedPost: currentPost});
       } else {

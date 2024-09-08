@@ -3,8 +3,11 @@ import {useGetPostsByCategoryQuery} from "../../Utils/data";
 import PostCard from "./PostCard";
 import Loader from "../../UI/Loader";
 import {useEffect, useRef} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
+import {useSelector} from "react-redux";
 import {setPostsNum} from "../../Pages/uiSlice";
+// import {useGetAllPostsQuery} from "../../Utils/data";
+// import NoPostFound from "../../UI/NoPostFound";
 
 const Container = styled.div`
   margin: auto;
@@ -20,6 +23,7 @@ function PostList() {
   const {currentTag} = useSelector((state) => state.ui);
   const searchQuery = {category: currentTag === "AllPosts" ? "" : currentTag};
   const {currentData: posts = [], isLoading} = useGetPostsByCategoryQuery(searchQuery);
+  // const {currentData: posts = [], isLoading} = useGetAllPostsQuery();
   const dispatch = useDispatch();
   const allCards = useRef(null);
 
@@ -55,7 +59,12 @@ function PostList() {
 
   dispatch(setPostsNum(posts.length));
 
-  if (posts.length === 0) return <Container>No Post found</Container>;
+  // if (posts.length === 0)
+  //   return (
+  //     <Container>
+  //       <NoPostFound />
+  //     </Container>
+  //   );
 
   return (
     <Container ref={allCards}>
