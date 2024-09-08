@@ -1,8 +1,9 @@
-// import {useState} from "react";
 import styled from "styled-components";
 import MenuItem from "./MenuItem";
 import Menus from "./Menus";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {setCurrentTag} from "../Pages/uiSlice";
+import {useNavigate} from "react-router-dom";
 
 const MenuButton = styled.button`
   margin-top: 0.6rem;
@@ -32,10 +33,16 @@ const List = styled.ul`
 `;
 
 function MenuList() {
-  //这个
+  const dispatch = useDispatch();
   const {categories} = useSelector((state) => state.ui);
+  const navigate = useNavigate();
 
   const categoryLength = categories.join("").length;
+
+  function handleClickTag(e) {
+    dispatch(setCurrentTag(e.target.value));
+    navigate("/app/posts");
+  }
 
   return (
     <Menus length={categoryLength}>
@@ -45,8 +52,8 @@ function MenuList() {
         </MenuButton>
       </Menus.Action>
       <Menus.Window>
-        <List>
-          <MenuItem category="All Post" />
+        <List onClick={handleClickTag}>
+          <MenuItem category="All Posts" />
           {categories.map((category, i) => (
             <MenuItem category={category} key={i} />
           ))}

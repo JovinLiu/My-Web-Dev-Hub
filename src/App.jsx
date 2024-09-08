@@ -1,3 +1,14 @@
+//search bar
+//Markdown可以正常显示
+//单个的tab实现pagination
+//user login logout user settings
+//sidebar的样式
+//Home Page
+//RTK的 Automated Re-fetching https://redux-toolkit.js.org/rtk-query/usage/automated-refetching
+
+//显示的格式：大写小写+空格
+//存储的格式：大写小写
+//css的格式：小写
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {Provider} from "react-redux";
 import {Toaster} from "react-hot-toast";
@@ -64,12 +75,3 @@ function App() {
 }
 
 export default App;
-
-//filter
-//search bar
-//cattegory正常显示
-//Markdown可以正常显示
-//user login logout user settings
-//删除和清空弹窗
-//sidebar的样式
-//Home Page

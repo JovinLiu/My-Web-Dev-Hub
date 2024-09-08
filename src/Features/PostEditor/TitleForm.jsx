@@ -13,10 +13,13 @@ import {
   resetCurrentPost,
   setCurrentComposeTime,
   setReviseTime,
-  resetComposeTime
-} from "../PostEditor/currentPostSlice";
+  resetComposeTime,
+  setCurrentPostBody
+} from "./currentPostSlice";
 import {useAddNewPostMutation, useUpdatePostMutation} from "../../Utils/data";
 import toast from "react-hot-toast";
+import Modal from "../../UI/Modal";
+import Confirm from "../../UI/Confirm";
 
 const TitleInput = styled.div`
   display: flex;
@@ -90,8 +93,7 @@ function TitleForm({children}) {
     dispatch(setCurrentTitle(e.target.value));
   }
 
-  function handleResetCurrentPost(e) {
-    e.preventDefault();
+  function handleResetCurrentPost() {
     dispatch(resetCurrentPost());
     toast.success("Post successfully emptied!");
   }
@@ -133,6 +135,23 @@ function TitleForm({children}) {
       toast.success("Post saved to temporary storage.");
     } catch (error) {
       toast.error(error.message);
+    }
+  }
+
+  function handleClickLoadTempSave(e) {
+    e.preventDefault();
+    const data = localStorage.getItem("tempPost");
+    if (data) {
+      const tempPost = JSON.parse(data);
+      console.log(tempPost);
+      dispatch(setCurrentTitle(tempPost.title));
+      dispatch(setCurrentCategory(tempPost.category));
+      dispatch(setCurrentComposeTime(tempPost.date));
+      dispatch(setReviseTime(tempPost.revisedDate));
+      dispatch(setCurrentPostBody(tempPost.body));
+      toast.success("Post loaded from temporary storage.");
+    } else {
+      toast.error("No post found in temporary storage.");
     }
   }
 
@@ -199,7 +218,8 @@ function TitleForm({children}) {
           <Select value={currentCategory} onChange={handleSetCurrentCategory} required>
             <option value="">Tech Stack...</option>
             {categories.map((category, i) => (
-              <option value={category.split(" ").join("").toLowerCase()} key={i}>
+              <option value={category?.split(" ").join("")} key={i}>
+                {/* <option value={category} key={i}> */}
                 {category}
               </option>
             ))}
@@ -209,12 +229,22 @@ function TitleForm({children}) {
           <GeneralButton category={categoryLower} type="primary" onClick={handleToggleIsMarkDown} active={isMarkDown}>
             <ion-icon name="logo-markdown" />
           </GeneralButton>
+          <GeneralButton category={categoryLower} type="primary" onClick={handleClickLoadTempSave}>
+            <ion-icon name="folder-outline" />
+          </GeneralButton>
           <GeneralButton category={categoryLower} type="primary" onClick={handleClickTempSave}>
             <ion-icon name="save-outline" />
           </GeneralButton>
-          <GeneralButton category={categoryLower} type="primary" onClick={handleResetCurrentPost}>
-            <ion-icon name="trash-bin-outline" />
-          </GeneralButton>
+          <Modal>
+            <Modal.Open openCode="delete">
+              <GeneralButton category={categoryLower} type="primary">
+                <ion-icon name="trash-bin-outline" />
+              </GeneralButton>
+            </Modal.Open>
+            <Modal.Window verifyCode="delete">
+              <Confirm onConfirm={handleResetCurrentPost} action="Empty" />
+            </Modal.Window>
+          </Modal>
           <GeneralButton category={categoryLower} type="primary" onClick={handleSavePost}>
             <ion-icon name="checkmark-outline" />
           </GeneralButton>

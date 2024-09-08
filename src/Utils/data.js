@@ -8,6 +8,14 @@ export const postsApi = createApi({
       query: () => "/posts"
     }),
 
+    getPostsByCategory: builder.query({
+      query: (arg) => {
+        return {
+          url: arg.category === "" ? `/posts` : `/posts?category=${arg.category}`
+        };
+      }
+    }),
+
     getPostById: builder.query({
       query: (id) => `/posts/${id}`
     }),
@@ -39,4 +47,11 @@ export const postsApi = createApi({
   })
 });
 
-export const {useGetAllPostsQuery, useGetPostByIdQuery, useAddNewPostMutation, useUpdatePostMutation, useDeletePostMutation} = postsApi;
+export const {
+  useGetAllPostsQuery,
+  useGetPostsByCategoryQuery,
+  useGetPostByIdQuery,
+  useAddNewPostMutation,
+  useUpdatePostMutation,
+  useDeletePostMutation
+} = postsApi;

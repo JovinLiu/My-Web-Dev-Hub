@@ -5,9 +5,10 @@ const initialStateUI = {
   showEditor: false,
   isDarkMode: true,
   isMarkDown: false,
+  currentTag: "AllPosts",
   categories: [
     "Web Basic",
-    "JavaScript",
+    "Javascript",
     "HTML",
     "CSS",
     "Sass",
@@ -42,10 +43,13 @@ const uiSlice = createSlice({
     },
     toggleIsMarkDown: (state, action) => {
       state.isMarkDown = action.payload || !state.isMarkDown;
+    },
+    setCurrentTag: (state, action) => {
+      state.currentTag = action.payload;
     }
   }
 });
 
-export const {toggleShowSideBar, toggleShowEditor, toggleDarkMode, toggleIsMarkDown} = uiSlice.actions;
+export const {toggleShowSideBar, toggleShowEditor, toggleDarkMode, toggleIsMarkDown, setCurrentTag} = uiSlice.actions;
 //使用default export导出reducer
 export default uiSlice.reducer;

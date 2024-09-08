@@ -75,20 +75,16 @@ function SideBar() {
   const src = "/default-user.jpg";
   const time = useRef(null);
 
-  useEffect(
-    function () {
-      const currentHour = new Intl.DateTimeFormat(navigator.language, {
-        hour: "numeric",
-        hour12: false
-      }).format(new Date());
+  useEffect(function () {
+    const currentHour = new Intl.DateTimeFormat(navigator.language, {
+      hour: "numeric",
+      hour12: false
+    }).format(new Date());
 
-      if (currentHour >= 6 || currentHour <= 12) time.current = "Morning";
-      if (currentHour > 12 || currentHour <= 19) time.current = "Afternoon";
-      if ((currentHour > 19 && currentHour <= 23) || (currentHour > 0 && currentHour < 6)) time.current = "Evening";
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [time.current]
-  );
+    if (currentHour >= 6 && currentHour <= 11) time.current = "Morning";
+    if (currentHour >= 12 && currentHour <= 18) time.current = "Afternoon";
+    if ((currentHour >= 19 && currentHour <= 23) || (currentHour >= 0 && currentHour < 6)) time.current = "Evening";
+  }, []);
 
   if (isLoading)
     return (

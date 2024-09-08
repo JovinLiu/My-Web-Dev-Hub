@@ -23,9 +23,9 @@ function TextBox() {
   const {currentPostBody} = useSelector((state) => state.currentPost);
   const dispatch = useDispatch();
   useEffect(function () {
-    document.querySelector(".quill").setAttribute("style", "height: calc(100vh - 31rem); display:flex; flex-direction: column");
+    document.querySelector(".quill").setAttribute("style", "height: calc(100vh - 31rem); display:flex; flex-direction: column;");
     document.querySelector(".ql-toolbar").setAttribute("style", "background-color: var(--color-grey-50)");
-    document.querySelector(".ql-container").setAttribute("style", "background-color: var(--color-grey-50); flex-grow:1");
+    document.querySelector(".ql-container").setAttribute("style", "background-color: var(--color-grey-50); flex-grow:1;overflow:scroll");
   }, []);
 
   const toolbar = {

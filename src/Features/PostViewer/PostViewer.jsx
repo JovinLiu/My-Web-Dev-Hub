@@ -10,7 +10,10 @@ import Icon from "../../UI/Icon";
 import GeneralButton from "../../UI/Buttons/GeneralButton";
 import parse from "html-react-parser";
 import toast from "react-hot-toast";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {htmlToText} from "html-to-text";
+import Modal from "../../UI/Modal";
+import Confirm from "../../UI/Confirm";
 
 const fadeIn = keyframes`
   from {
@@ -93,10 +96,12 @@ const DateDiv = styled.div`
 
 function PostViewer() {
   const navigate = useNavigate();
+  const {categories} = useSelector((state) => state.ui);
   const {id} = useParams();
   const {currentData: post = {}, isLoading} = useGetPostByIdQuery(id);
   const [deletePost] = useDeletePostMutation();
   const dispatch = useDispatch();
+  const [techStack] = categories.filter((category) => category.split(" ").join("") === post.category);
 
   function handleClose(e) {
     e.preventDefault();
@@ -104,6 +109,11 @@ function PostViewer() {
   }
 
   if (isLoading) return <Loader />;
+
+  async function handleClickClickToCopy() {
+    navigator.clipboard.writeText(htmlToText(post.body));
+    toast.success("Copied to clipboard!");
+  }
 
   function handleUpdatePost() {
     dispatch(setCurrentId(post.id));
@@ -113,6 +123,11 @@ function PostViewer() {
     dispatch(setCurrentPostBody(post.body));
     navigate("/app/editor");
     dispatch(toggleShowEditor(true));
+  }
+
+  function handleClickSharePost() {
+    window.location.href = `mailto:?subject=${post.title}&body=${encodeURIComponent(htmlToText(post.body))}`;
+    toast.success("Copied to your email!");
   }
 
   async function handleDeletePost() {
@@ -151,21 +166,28 @@ function PostViewer() {
             <Span>Posted on {post.date}</Span>
             {post.revisedDate && <Span>Revised on {post.revisedDate}</Span>}
           </DateDiv>
-          <Span>Tech Stack: {post.category}</Span>
+          <Span>Tech Stack: {techStack}</Span>
         </InfoContainer>
         <ButtonContainer>
-          <GeneralButton category={category} type="primary">
+          <GeneralButton category={category} type="primary" onClick={handleClickClickToCopy}>
             <ion-icon name="copy-outline" />
           </GeneralButton>
           <GeneralButton category={category} type="primary" onClick={handleUpdatePost}>
             <ion-icon name="create-outline" />
           </GeneralButton>
-          <GeneralButton category={category} type="primary">
+          <GeneralButton category={category} type="primary" onClick={handleClickSharePost}>
             <ion-icon name="mail-outline" />
           </GeneralButton>
-          <GeneralButton category={category} type="primary" onClick={handleDeletePost}>
-            <ion-icon name="trash-outline" />
-          </GeneralButton>
+          <Modal>
+            <Modal.Open openCode="delete">
+              <GeneralButton category={category} type="primary">
+                <ion-icon name="trash-outline" />
+              </GeneralButton>
+            </Modal.Open>
+            <Modal.Window verifyCode="delete">
+              <Confirm onConfirm={handleDeletePost} action="Delete" />
+            </Modal.Window>
+          </Modal>
         </ButtonContainer>
       </TitleContainer>
       <BodyContainer>{postBody}</BodyContainer>

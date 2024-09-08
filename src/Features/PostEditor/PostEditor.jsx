@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import HideButton from "../../UI/Buttons/HideButtonLeft";
 import TextBox from "./TextBox";
-import TitleForm from "../PostViewer/TitleForm";
+import TitleForm from "./TitleForm";
 import {useSelector} from "react-redux";
 
 const LeftSide = styled.aside`

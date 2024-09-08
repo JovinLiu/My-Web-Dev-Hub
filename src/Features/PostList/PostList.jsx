@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import {useGetAllPostsQuery} from "../../Utils/data";
+import {useGetPostsByCategoryQuery} from "../../Utils/data";
 import PostCard from "./PostCard";
 import Loader from "../../UI/Loader";
 import {useEffect, useRef} from "react";
+import {useSelector} from "react-redux";
 
 const Container = styled.div`
   margin: auto;
@@ -15,8 +16,9 @@ const Container = styled.div`
 `;
 
 function PostList() {
-  const {currentData: posts = [], isLoading} = useGetAllPostsQuery();
-
+  const {currentTag} = useSelector((state) => state.ui);
+  const searchQuery = {category: currentTag === "AllPosts" ? "" : currentTag};
+  const {currentData: posts = [], isLoading} = useGetPostsByCategoryQuery(searchQuery);
   const allCards = useRef(null);
 
   useEffect(

@@ -45,6 +45,28 @@ const types = {
       color: var(--color-grey-700);
       background-color: var(--color-blue-2);
     }
+  `,
+  secondary: css`
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    color: var(--color-grey-50);
+    background-color: var(--color-blue-1);
+    &:hover {
+      color: var(--color-grey-700);
+      background-color: var(--color-blue-2);
+    }
+  `,
+  danger: css`
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    color: var(--color-grey-50);
+    background-color: var(--color-red-700);
+    &:hover {
+      color: var(--color-grey-700);
+      background-color: var(--color-red-100);
+    }
   `
 };
 

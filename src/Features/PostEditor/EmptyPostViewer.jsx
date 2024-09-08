@@ -92,9 +92,12 @@ const Mode = styled.span`
 function EmptyPostViewer() {
   const navigate = useNavigate();
   const {currentTitle, currentCategory, currentPostBody} = useSelector((state) => state.currentPost);
-  const {isMarkDown} = useSelector((state) => state.ui);
+  const {isMarkDown, categories} = useSelector((state) => state.ui);
+  const [techStack] = categories.filter(
+    (category) => category.toLowerCase().split(" ").join("") === currentCategory?.toLowerCase().split(" ").join("")
+  );
 
-  const category = currentCategory.toLowerCase();
+  const category = currentCategory.split(" ").join("").toLowerCase();
   const postBody = parse(currentPostBody);
   const body = htmlToText(currentPostBody);
 
@@ -122,7 +125,7 @@ function EmptyPostViewer() {
         </GeneralButton>
         <InfoContainer>
           <H1>{currentTitle || "New Post..."}</H1>
-          <Span>Tech Stack: {category}</Span>
+          <Span>Tech Stack: {techStack}</Span>
         </InfoContainer>
         <Mode category={category}>Edit Mode</Mode>
       </TitleContainer>

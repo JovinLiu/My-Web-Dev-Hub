@@ -57,7 +57,7 @@ function SearchBar() {
       if (document.activeElement === document.querySelector(".title-input")) return;
       if (e.code === "Enter") inputEl.current.focus();
       if (e.code === "Escape") {
-        inputEl.current.blur();
+        inputEl?.current?.blur();
         setQuery("");
       }
     };
