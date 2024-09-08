@@ -1,7 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
-import {useGetAllPostsQuery} from "../Utils/data";
-// import {usePosts} from "../Contexts/PostsContext";
+import {useSelector} from "react-redux";
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -47,7 +46,7 @@ const Button = styled.button`
 `;
 
 function SearchBar() {
-  const {currentData: posts = []} = useGetAllPostsQuery();
+  const {postsNum} = useSelector((state) => state.ui);
   const [query, setQuery] = useState("");
   const inputEl = useRef(null);
 
@@ -67,7 +66,7 @@ function SearchBar() {
 
   return (
     <Container>
-      <SerachResults>{posts.length} posts found</SerachResults>
+      <SerachResults>{postsNum} posts found</SerachResults>
       <InputContainer>
         <IconContainer left="1.5rem">
           <ion-icon name="search-outline"></ion-icon>

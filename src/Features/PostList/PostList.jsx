@@ -3,7 +3,8 @@ import {useGetPostsByCategoryQuery} from "../../Utils/data";
 import PostCard from "./PostCard";
 import Loader from "../../UI/Loader";
 import {useEffect, useRef} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {setPostsNum} from "../../Pages/uiSlice";
 
 const Container = styled.div`
   margin: auto;
@@ -19,6 +20,7 @@ function PostList() {
   const {currentTag} = useSelector((state) => state.ui);
   const searchQuery = {category: currentTag === "AllPosts" ? "" : currentTag};
   const {currentData: posts = [], isLoading} = useGetPostsByCategoryQuery(searchQuery);
+  const dispatch = useDispatch();
   const allCards = useRef(null);
 
   useEffect(
@@ -50,6 +52,8 @@ function PostList() {
   );
 
   if (isLoading) return <Loader />;
+
+  dispatch(setPostsNum(posts.length));
 
   if (posts.length === 0) return <Container>No Post found</Container>;
 

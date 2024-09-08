@@ -7,7 +7,7 @@
 //RTK的 Automated Re-fetching https://redux-toolkit.js.org/rtk-query/usage/automated-refetching
 
 //显示的格式：大写小写+空格
-//存储的格式：大写小写
+//数据库存储的格式：大写小写
 //css的格式：小写
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {Provider} from "react-redux";
