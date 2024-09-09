@@ -29,11 +29,13 @@ function PostEditor() {
   return (
     <LeftSide>
       <HideButton />
-      <Container showEditor={showEditor}>
-        <TitleForm>
-          <TextBox />
-        </TitleForm>
-      </Container>
+      {showEditor && (
+        <Container showEditor={showEditor}>
+          <TitleForm>
+            <TextBox />
+          </TitleForm>
+        </Container>
+      )}
     </LeftSide>
   );
 }

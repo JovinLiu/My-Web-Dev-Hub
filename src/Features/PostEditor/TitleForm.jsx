@@ -20,6 +20,7 @@ import {useAddNewPostMutation, useUpdatePostMutation} from "../../Utils/data";
 import toast from "react-hot-toast";
 import Modal from "../../UI/Modal";
 import Confirm from "../../UI/Confirm";
+import getTime from "../../Utils/getTime";
 
 const TitleInput = styled.div`
   display: flex;
@@ -160,23 +161,14 @@ function TitleForm({children}) {
       e.preventDefault();
       if (!currentTitle || !currentPostBody || !currentCategory) throw new Error("Please fill in all required fields.");
 
-      console.log(currentId);
-
-      //这俩个时间没有被set进去
-      if (!currentId) {
-        dispatch(setCurrentComposeTime());
-      } else {
-        dispatch(setReviseTime());
-      }
+      const time = getTime();
 
       const currentPost = {
         id: currentId,
         title: currentTitle,
         category: currentCategory,
-        date: currentComposeTime,
-        revisedDate: (currentReviseTime) => {
-          currentReviseTime.split(" ").join(" ");
-        },
+        date: currentId ? currentComposeTime : time,
+        revisedDate: currentId && time,
         body: currentPostBody
       };
 

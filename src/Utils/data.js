@@ -5,16 +5,23 @@ export const postsApi = createApi({
   baseQuery: fetchBaseQuery({baseUrl: "https://virtualdb.vercel.app"}),
   tagTypes: ["Post"],
   endpoints: (builder) => ({
-    getAllPosts: builder.query({
-      query: () => "/posts"
-    }),
-
+    // getAllPosts: builder.query({
+    //   query: () => "/posts"
+    // }),
     getPostsByCategory: builder.query({
       query: (arg) => {
         return {
-          url: arg.category === "" ? `/posts` : `/posts?category=${arg.category}`
+          url:
+            arg.category === ""
+              ? `/posts?_start=${arg.start}&_limit=${arg.limit}`
+              : `/posts?category=${arg.category}&_start=${arg.start}&_limit=${arg.limit}`
         };
       },
+      providesTags: ["Post"]
+    }),
+
+    getTotalPostsNumber: builder.query({
+      query: () => `/posts/count`,
       providesTags: ["Post"]
     }),
 
@@ -54,8 +61,9 @@ export const postsApi = createApi({
 });
 
 export const {
-  useGetAllPostsQuery,
+  // useGetAllPostsQuery,
   useGetPostsByCategoryQuery,
+  useGetTotalPostsNumberQuery,
   useGetPostByIdQuery,
   useAddNewPostMutation,
   useUpdatePostMutation,

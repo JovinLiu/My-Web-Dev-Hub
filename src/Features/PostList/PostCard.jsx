@@ -91,7 +91,7 @@ function PostCard({post, fadeInTime}) {
   }
 
   function shortTimeFormat(date) {
-    const arr = date.split(", ");
+    const arr = date?.split(", ");
     return arr[1] + " at " + arr[2];
   }
 

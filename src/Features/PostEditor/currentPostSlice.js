@@ -40,36 +40,16 @@ const currentPostSlice = createSlice({
   }
 });
 
-export const {setCurrentTitle, setCurrentCategory, setCurrentPostBody, resetCurrentPost, resetComposeTime, setCurrentId} = currentPostSlice.actions;
-
-function getTime() {
-  const options = {
-    hour: "numeric",
-    minute: "numeric",
-    day: "numeric",
-    month: "numeric",
-    year: "numeric",
-    weekday: "long",
-    second: "numeric",
-    hour12: false
-  };
-  const time = new Intl.DateTimeFormat(navigator.language, options).format(new Date());
-  return time;
-}
-
-export function setCurrentComposeTime(date) {
-  return async function (dispatch) {
-    const time = date || getTime();
-    dispatch({type: "currentPost/setCurrentComposeTime", payload: time});
-  };
-}
-
-export function setReviseTime() {
-  return async function (dispatch) {
-    const time = getTime();
-    dispatch({type: "currentPost/setReviseTime", payload: time});
-  };
-}
+export const {
+  setCurrentTitle,
+  setCurrentCategory,
+  setCurrentPostBody,
+  resetCurrentPost,
+  resetComposeTime,
+  setCurrentId,
+  setCurrentComposeTime,
+  setReviseTime
+} = currentPostSlice.actions;
 
 //使用default export导出reducer
 export default currentPostSlice.reducer;

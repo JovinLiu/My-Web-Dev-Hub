@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styled from "styled-components";
 
 const Div = styled.div`
@@ -9,10 +10,10 @@ const Div = styled.div`
   background-color: var(--color-blue-1);
 `;
 
-function NoPostFound() {
+function NoPostFound({message}) {
   return (
     <Div>
-      <span>No post found, Click Add Post button to create one!</span>
+      <span>{message}</span>
     </Div>
   );
 }

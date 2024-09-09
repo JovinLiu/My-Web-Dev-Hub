@@ -1,12 +1,16 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialStateUI = {
+  totalPostsNum: 146,
+  cardsPerPage: 50,
   showSideBar: true,
   showEditor: false,
   isDarkMode: true,
   isMarkDown: false,
-  postsNum: "",
+  postsNum: 0,
   currentTag: "AllPosts",
+  currentPage: 1,
+  searchQuery: "",
   categories: [
     "Web Basic",
     "Javascript",
@@ -50,10 +54,17 @@ const uiSlice = createSlice({
     },
     setPostsNum: (state, action) => {
       state.postsNum = action.payload;
+    },
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+    },
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
     }
   }
 });
 
-export const {toggleShowSideBar, toggleShowEditor, toggleDarkMode, toggleIsMarkDown, setCurrentTag, setPostsNum} = uiSlice.actions;
+export const {toggleShowSideBar, toggleShowEditor, toggleDarkMode, toggleIsMarkDown, setCurrentTag, setPostsNum, setSearchQuery, setCurrentPage} =
+  uiSlice.actions;
 //使用default export导出reducer
 export default uiSlice.reducer;

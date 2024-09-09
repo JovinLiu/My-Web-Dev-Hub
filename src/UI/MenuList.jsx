@@ -2,7 +2,7 @@ import styled from "styled-components";
 import MenuItem from "./MenuItem";
 import Menus from "./Menus";
 import {useDispatch, useSelector} from "react-redux";
-import {setCurrentTag} from "../Pages/uiSlice";
+import {setCurrentPage, setCurrentTag} from "../Pages/uiSlice";
 import {useNavigate} from "react-router-dom";
 
 const MenuButton = styled.button`
@@ -41,7 +41,9 @@ function MenuList() {
 
   function handleClickTag(e) {
     dispatch(setCurrentTag(e.target.value));
-    navigate("/app/posts");
+    dispatch(setCurrentPage(1));
+    //这个地方吧navigate('/app/posts)改成navigate("/app")来解决一个tag出现多种tag的内容的问题。解决办法不好
+    navigate("/app");
   }
 
   return (

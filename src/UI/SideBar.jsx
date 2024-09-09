@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
 import HideButton from "./Buttons/HideButtonRight";
-import {useGetAllPostsQuery} from "../Utils/data";
+import {useGetPostsByCategoryQuery} from "../Utils/data";
 import Loader from "./Loader";
 import NavListItem from "./NavListItem";
 import {useSelector} from "react-redux";
@@ -29,13 +29,17 @@ const ListContainer = styled.div`
   overflow: scroll;
 `;
 
-const NavIconDiv = styled.div`
-  margin: ${({showSideBar}) => (showSideBar ? "0rem 2.5rem 0rem 2.5rem" : "2.5rem 2.5rem 0rem 0.5rem")};
-  height: ${({showSideBar}) => (showSideBar ? "8rem" : "20rem")};
+const Nav = styled.nav`
   display: flex;
-  flex-direction: ${({showSideBar}) => (showSideBar ? "row" : "column")};
-  gap: ${({showSideBar}) => (showSideBar ? "1rem" : "2rem")};
-  align-items: ${({showSideBar}) => (showSideBar ? "center" : "start")};
+  margin: ${({showSideBar}) => (showSideBar ? "0rem 2.5rem 0rem 2.5rem" : "0rem 2.5rem 0rem 0.5rem")};
+  height: 8rem;
+  align-items: center;
+`;
+
+const NavButton = styled.div`
+  display: ${({showSideBar}) => (showSideBar ? "flex" : "none")};
+  align-items: center;
+  gap: 1.5rem;
 `;
 
 const Greeting = styled.span`
@@ -70,8 +74,10 @@ const Hr = styled.hr`
 `;
 
 function SideBar() {
-  const {currentData: posts = [], isLoading} = useGetAllPostsQuery();
-  const showSideBar = useSelector((state) => state.ui.showSideBar);
+  const {currentTag, showSideBar, currentPage, cardsPerPage} = useSelector((state) => state.ui);
+  const query = currentTag === "AllPosts" ? "" : currentTag;
+  const arg = {category: query, start: (currentPage - 1) * cardsPerPage, limit: cardsPerPage};
+  const {currentData: posts = [], isLoading} = useGetPostsByCategoryQuery(arg);
   const src = "/default-user.jpg";
   const time = useRef(null);
 
@@ -97,28 +103,36 @@ function SideBar() {
   return (
     <Container showSideBar={showSideBar}>
       <HideButton />
-      <NavIconDiv showSideBar={showSideBar}>
+      <Nav showSideBar={showSideBar}>
         <Avatar src={src} alt="user-avatar" />
-        <Greeting showSideBar={showSideBar}>
-          Good {time.current}
-          <br />
-          Jovin
-        </Greeting>
-        <GeneralButton type="userRound">
-          <ion-icon name="person-outline" />
-        </GeneralButton>
-        <GeneralButton type="userRound">
-          <ion-icon name="log-out-outline" />
-        </GeneralButton>
-      </NavIconDiv>
-      <Hr showSideBar={showSideBar} />
-      <Div>
-        <ListContainer showSideBar={showSideBar}>
-          {posts.map((post, i) => (
-            <NavListItem title={post.title} key={i} />
-          ))}
-        </ListContainer>
-      </Div>
+        {showSideBar && (
+          <NavButton showSideBar={showSideBar}>
+            <Greeting showSideBar={showSideBar}>
+              Good {time.current}
+              <br />
+              Jovin
+            </Greeting>
+            <GeneralButton type="userRound">
+              <ion-icon name="person-outline" />
+            </GeneralButton>
+            <GeneralButton type="userRound">
+              <ion-icon name="log-out-outline" />
+            </GeneralButton>
+          </NavButton>
+        )}
+      </Nav>
+      {showSideBar && (
+        <>
+          <Hr showSideBar={showSideBar} />
+          <Div>
+            <ListContainer showSideBar={showSideBar}>
+              {posts.map((post, i) => (
+                <NavListItem title={post.title} key={i} />
+              ))}
+            </ListContainer>
+          </Div>
+        </>
+      )}
     </Container>
   );
 }

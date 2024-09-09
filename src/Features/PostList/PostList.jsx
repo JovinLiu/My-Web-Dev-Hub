@@ -2,14 +2,21 @@ import styled from "styled-components";
 import {useGetPostsByCategoryQuery} from "../../Utils/data";
 import PostCard from "./PostCard";
 import Loader from "../../UI/Loader";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useDispatch} from "react-redux";
 import {useSelector} from "react-redux";
 import {setPostsNum} from "../../Pages/uiSlice";
-// import {useGetAllPostsQuery} from "../../Utils/data";
-// import NoPostFound from "../../UI/NoPostFound";
+import NoPostFound from "../../UI/NoPostFound";
+import Pagination from "../../UI/Pagination";
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5rem;
+`;
+
+const CardContainer = styled.div`
   margin: auto;
   color: white;
   display: flex;
@@ -20,9 +27,11 @@ const Container = styled.div`
 `;
 
 function PostList() {
-  const {currentTag} = useSelector((state) => state.ui);
-  const searchQuery = {category: currentTag === "AllPosts" ? "" : currentTag};
-  const {currentData: posts = [], isLoading} = useGetPostsByCategoryQuery(searchQuery);
+  const {currentTag, searchQuery, currentPage, cardsPerPage} = useSelector((state) => state.ui);
+  const [searchedPosts, setSearchedPosts] = useState([]);
+  const query = currentTag === "AllPosts" ? "" : currentTag;
+  const arg = {category: query, start: (currentPage - 1) * cardsPerPage, limit: cardsPerPage};
+  const {currentData: posts = [], isFetching, isLoading} = useGetPostsByCategoryQuery(arg);
   // const {currentData: posts = [], isLoading} = useGetAllPostsQuery();
   const dispatch = useDispatch();
   const allCards = useRef(null);
@@ -52,25 +61,46 @@ function PostList() {
         cardObserver.observe(card);
       });
     },
-    [posts]
+    [searchedPosts]
   );
 
-  if (isLoading) return <Loader />;
+  useEffect(
+    function () {
+      const searchResults =
+        searchQuery.length > 0
+          ? posts.filter((post) => `${post.title} ${post.body} ${post.category}`.toLowerCase().includes(searchQuery.toLowerCase()))
+          : posts;
+      setSearchedPosts(searchResults);
+    },
+    [searchQuery, posts]
+  );
 
-  dispatch(setPostsNum(posts.length));
+  if (isFetching || isLoading) return <Loader />;
 
-  // if (posts.length === 0)
-  //   return (
-  //     <Container>
-  //       <NoPostFound />
-  //     </Container>
-  //   );
+  dispatch(setPostsNum(searchedPosts.length));
+
+  if (posts.length === 0 && !isFetching)
+    return (
+      <Container>
+        <NoPostFound message="No post found, Click Add Post button to create one!" />
+      </Container>
+    );
+
+  if (searchQuery !== "" && searchedPosts.length === 0 && !isFetching)
+    return (
+      <Container>
+        <NoPostFound message="No post found, try another keyword" />
+      </Container>
+    );
 
   return (
-    <Container ref={allCards}>
-      {posts.map((post, i) => (
-        <PostCard post={post} fadeInTime={i} key={post.id} />
-      ))}
+    <Container>
+      <CardContainer ref={allCards}>
+        {searchedPosts.map((post, i) => (
+          <PostCard post={post} fadeInTime={i} key={post.id} />
+        ))}
+      </CardContainer>
+      {searchedPosts.length !== 0 && <Pagination />}
     </Container>
   );
 }

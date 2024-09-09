@@ -1,6 +1,5 @@
-//search bar
+//pre fetch功能
 //Markdown可以正常显示
-//单个的tab实现pagination
 //user login logout user settings
 //sidebar的样式
 //Home Page
@@ -19,6 +18,7 @@ import PostViewer from "./Features/PostViewer/PostViewer.jsx";
 import PageNotFound from "./Pages/PageNotFound";
 import GlobalStyles from "./Styles/GlobalStyles";
 import store from "./store.js";
+import HomePage from "./Pages/HomePage.jsx";
 
 function App() {
   return (
@@ -26,10 +26,9 @@ function App() {
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
-          {/* <Route index element={<HomePage />} /> */}
-          <Route index element={<Navigate replace to="/app/posts" />} />
+          <Route index element={<HomePage />} />
           <Route path="/app" element={<AppLayout />}>
-            {/* <Route index element={<Navigate replace to="lists" />} /> */}
+            <Route index element={<Navigate replace to="posts" />} />
             <Route path="posts" element={<PostList />} />
             <Route path="editor" element={<EmptyPostViewer />} />
             <Route path="viewer/:id" element={<PostViewer />} />
