@@ -3,8 +3,6 @@
 //后端通过aggregate来解决sidebar内容汇总的信息，从而决定的样式
 
 //Markdown可以正常显示
-//user login logout user settings
-//Home Page 参考一下chatGPT的页面
 
 //显示的格式：大写小写+空格
 //数据库存储的格式：大写小写
