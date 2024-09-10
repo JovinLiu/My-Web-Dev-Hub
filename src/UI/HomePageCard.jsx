@@ -24,9 +24,9 @@ const TextBox = styled.div`
 function HomePageCard({content}) {
   return (
     <Div>
-      <CardLine height="0.7rem" />
-      <TextBox>{content}</TextBox>
-      <CardLine height="1.5rem" />
+      <CardLine height="0.7rem" category={content[1]} />
+      <TextBox>{content[0]}</TextBox>
+      <CardLine height="1.5rem" category={content[1]} />
     </Div>
   );
 }
