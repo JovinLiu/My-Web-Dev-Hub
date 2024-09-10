@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {Link} from "react-router-dom";
 import styled from "styled-components";
 import MenuList from "./MenuList";
@@ -5,6 +6,7 @@ import SearchBar from "./SearchBar";
 import AddPostButton from "./Buttons/AddPostButton";
 import Logo from "./Logo";
 import NightModeButton from "./Buttons/DarkModeButton";
+import SignInUpButton from "./Buttons/SignInUpButton";
 
 const HeaderContainer = styled.div`
   background-color: var(--color-grey-50);
@@ -28,7 +30,7 @@ const FeatureContainer = styled.div`
   margin-right: 3rem;
 `;
 
-function Header() {
+function Header({homepage}) {
   return (
     <HeaderContainer>
       <StyledHeader>
@@ -37,10 +39,16 @@ function Header() {
             <Logo />
           </Link>
         </nav>
-        <MenuList />
+        {homepage ? null : <MenuList />}
         <FeatureContainer>
-          <SearchBar />
-          <AddPostButton />
+          {homepage ? (
+            <SignInUpButton />
+          ) : (
+            <>
+              <SearchBar />
+              <AddPostButton />
+            </>
+          )}
           <NightModeButton />
         </FeatureContainer>
       </StyledHeader>

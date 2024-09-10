@@ -50,6 +50,9 @@ const Span = styled.span`
 
 function Pagination() {
   //写后端时替代掉totalPostsNum
+  //all posts是后端发来的aggregate的总数
+  //每一个tag都是agregate的总数
+  //如果searchQuery不为空，总数是searchedPosts的length
   const {currentPage, totalPostsNum, cardsPerPage} = useSelector((state) => state.ui);
   const dispatch = useDispatch();
 

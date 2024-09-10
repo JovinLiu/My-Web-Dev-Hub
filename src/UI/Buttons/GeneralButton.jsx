@@ -13,13 +13,14 @@ const types = {
     z-index: 3;
     color: var(--color-grey-50);
     &:hover {
-      background-color: var(--color-${({category}) => category}-100);
+      color: var(--color-grey-700);
+      background-color: var(--color-${({category}) => (category ? `${category}-100` : "blue-2")});
     }
   `,
   primary: css`
-    padding: 0.5rem 1rem 0.1rem 1rem;
+    padding: ${({padding}) => padding || "0.5rem 1rem 0.3rem 1rem"};
     border-radius: 10px;
-    font-size: 2rem;
+    font-size: ${({fontSize}) => fontSize || "2rem"};
     color: var(
       ${({category, active}) => (category ? (active ? "--color-grey-50" : "--color-grey-800") : active ? "--color-grey-800" : "--color-grey-50")}
     );

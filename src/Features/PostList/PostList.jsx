@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {useGetPostsByCategoryQuery} from "../../Utils/data";
+import {useGetPostsByConditionsQuery} from "../../Utils/data";
 import PostCard from "./PostCard";
 import Loader from "../../UI/Loader";
 import {useEffect, useRef, useState} from "react";
@@ -29,9 +29,10 @@ const CardContainer = styled.div`
 function PostList() {
   const {currentTag, searchQuery, currentPage, cardsPerPage} = useSelector((state) => state.ui);
   const [searchedPosts, setSearchedPosts] = useState([]);
-  const query = currentTag === "AllPosts" ? "" : currentTag;
-  const arg = {category: query, start: (currentPage - 1) * cardsPerPage, limit: cardsPerPage};
-  const {currentData: posts = [], isFetching, isLoading} = useGetPostsByCategoryQuery(arg);
+  const category = currentTag === "AllPosts" ? "" : currentTag;
+  //通过提供queryString来
+  const arg = {search: searchQuery, category: category, start: (currentPage - 1) * cardsPerPage, limit: cardsPerPage};
+  const {currentData: posts = [], isFetching, isLoading} = useGetPostsByConditionsQuery(arg);
   // const {currentData: posts = [], isLoading} = useGetAllPostsQuery();
   const dispatch = useDispatch();
   const allCards = useRef(null);
@@ -64,6 +65,7 @@ function PostList() {
     [searchedPosts]
   );
 
+  //用后端取代这个
   useEffect(
     function () {
       const searchResults =

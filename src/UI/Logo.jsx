@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import styled from "styled-components";
 import LogoSvg from "./LogoSvg";
 
 const LogoContainer = styled.div`
   margin-top: 0.5rem;
-  margin-left: 6.5rem;
+  margin-left: ${({homepage}) => (homepage ? "" : "6.5rem")};
   display: flex;
   flex-direction: column;
   text-decoration: none;
@@ -38,11 +39,11 @@ const LogoText3 = styled(LogoText)`
   color: var(--color-grey-700);
 `;
 
-function Logo() {
+function Logo({homepage}) {
   return (
-    <LogoContainer>
+    <LogoContainer homepage={homepage}>
       <LogoInfoContainer>
-        <LogoSvg />
+        {homepage ? null : <LogoSvg />}
         <LogoText1>my </LogoText1>
         <LogoText2>WebDev </LogoText2>
         <LogoText3>

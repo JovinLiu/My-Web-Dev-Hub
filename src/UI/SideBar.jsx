@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
 import HideButton from "./Buttons/HideButtonRight";
-import {useGetPostsByCategoryQuery} from "../Utils/data";
+import {useGetPostsByConditionsQuery} from "../Utils/data";
 import Loader from "./Loader";
 import NavListItem from "./NavListItem";
 import {useSelector} from "react-redux";
 import {useEffect, useRef} from "react";
 import GeneralButton from "./Buttons/GeneralButton";
+import SignInUpButton from "./Buttons/SignInUpButton";
 
 const Container = styled.aside`
   height: calc(100vh - 6rem);
@@ -74,10 +75,10 @@ const Hr = styled.hr`
 `;
 
 function SideBar() {
-  const {currentTag, showSideBar, currentPage, cardsPerPage} = useSelector((state) => state.ui);
+  const {currentTag, showSideBar, currentPage, cardsPerPage, signin} = useSelector((state) => state.ui);
   const query = currentTag === "AllPosts" ? "" : currentTag;
   const arg = {category: query, start: (currentPage - 1) * cardsPerPage, limit: cardsPerPage};
-  const {currentData: posts = [], isLoading} = useGetPostsByCategoryQuery(arg);
+  const {currentData: posts = [], isLoading} = useGetPostsByConditionsQuery(arg);
   const src = "/default-user.jpg";
   const time = useRef(null);
 
@@ -110,14 +111,20 @@ function SideBar() {
             <Greeting showSideBar={showSideBar}>
               Good {time.current}
               <br />
-              Jovin
+              {signin ? "Jovin" : ""}
             </Greeting>
-            <GeneralButton type="userRound">
-              <ion-icon name="person-outline" />
-            </GeneralButton>
-            <GeneralButton type="userRound">
-              <ion-icon name="log-out-outline" />
-            </GeneralButton>
+            {signin ? (
+              <>
+                <GeneralButton type="userRound">
+                  <ion-icon name="person-outline" />
+                </GeneralButton>
+                <GeneralButton type="userRound">
+                  <ion-icon name="log-out-outline" />
+                </GeneralButton>
+              </>
+            ) : (
+              <SignInUpButton />
+            )}
           </NavButton>
         )}
       </Nav>

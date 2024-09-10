@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialStateUI = {
+  signin: false,
   totalPostsNum: 146,
   cardsPerPage: 50,
   showSideBar: true,

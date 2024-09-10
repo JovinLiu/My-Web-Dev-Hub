@@ -5,18 +5,26 @@ export const postsApi = createApi({
   baseQuery: fetchBaseQuery({baseUrl: "https://virtualdb.vercel.app"}),
   tagTypes: ["Post"],
   endpoints: (builder) => ({
-    // getAllPosts: builder.query({
-    //   query: () => "/posts"
-    // }),
-    getPostsByCategory: builder.query({
+    getAllPosts: builder.query({
+      query: () => "/posts"
+    }),
+
+    getPostsByConditions: builder.query({
       query: (arg) => {
+        console.log(arg);
         return {
           url:
             arg.category === ""
-              ? `/posts?_start=${arg.start}&_limit=${arg.limit}`
-              : `/posts?category=${arg.category}&_start=${arg.start}&_limit=${arg.limit}`
+              ? `/posts?search=${arg.searchQuery}&_start=${arg.start}&_limit=${arg.limit}`
+              : `/posts?search=${arg.searchQuery}&category=${arg.category}&_start=${arg.start}&_limit=${arg.limit}`
         };
       },
+      providesTags: ["Post"]
+    }),
+
+    //后端写一下这个
+    getPostsBySearchQuery: builder.query({
+      query: (arg) => `/posts?search=${arg.searchQuery}&_start=${arg.start}&_limit=${arg.limit}`,
       providesTags: ["Post"]
     }),
 
@@ -61,8 +69,8 @@ export const postsApi = createApi({
 });
 
 export const {
-  // useGetAllPostsQuery,
-  useGetPostsByCategoryQuery,
+  useGetAllPostsQuery,
+  useGetPostsByConditionsQuery,
   useGetTotalPostsNumberQuery,
   useGetPostByIdQuery,
   useAddNewPostMutation,

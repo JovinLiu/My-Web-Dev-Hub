@@ -26,12 +26,13 @@ const SerachResult = styled.span`
 
 const Input = styled.input`
   margin-left: 1rem;
-  width: 30rem;
+  width: 25rem;
   height: 3.6rem;
   border-radius: 10px;
   padding-left: 30px;
-  padding-right: 12rem;
+  padding-right: 7rem;
   border: 2px solid var(--color-blue-1);
+  background-color: var(--color-grey-200);
 `;
 
 const InputContainer = styled.div`
@@ -54,23 +55,10 @@ const IconContainer = styled.div`
 const Div = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.2rem;
+  gap: 1rem;
 `;
 
-const SearchButton = styled.button`
-  padding: 0rem 0.5rem;
-  font-size: 1.8rem;
-  color: var(--color-grey-50);
-  background-color: var(--color-blue-1);
-  border: none;
-  border-radius: 7px;
-  &:hover {
-    color: var(--color-grey-70s0);
-    background-color: var(--color-blue-2);
-  }
-`;
-
-const CloseButton = styled.button`
+const RoundButton = styled.button`
   height: 2.5rem;
   width: 2.5rem;
   font-size: 2rem;
@@ -98,6 +86,8 @@ function SearchBar() {
       const callBack = (e) => {
         if (document.activeElement === document.querySelector(".ql-editor")) return;
         if (document.activeElement === document.querySelector(".title-input")) return;
+        if (document.activeElement === document.querySelector(".loginEmail")) return;
+        if (document.activeElement === document.querySelector(".loginPassword")) return;
         if (e.code === "Enter") inputEl.current.focus();
         if (e.code === "Escape") {
           inputEl?.current?.blur();
@@ -148,10 +138,12 @@ function SearchBar() {
         <IconContainer top="0.5rem" right="0.3rem">
           {keywords && (
             <Div>
-              <SearchButton onClick={handleSetSearchQuery}>SEARCH</SearchButton>
-              <CloseButton onClick={handleCleanKeywords}>
+              <RoundButton onClick={handleSetSearchQuery}>
+                <ion-icon name="checkmark-outline"></ion-icon>
+              </RoundButton>
+              <RoundButton onClick={handleCleanKeywords}>
                 <ion-icon name="close-outline" />
-              </CloseButton>
+              </RoundButton>
             </Div>
           )}
         </IconContainer>
