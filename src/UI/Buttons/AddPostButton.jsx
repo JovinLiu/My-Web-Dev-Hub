@@ -6,6 +6,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 const Button = styled.button`
   color: var(--color-grey-50);
   padding: 0.5rem;
+  font-size: 1.5rem;
   width: 10rem;
   background-color: var(--color-blue-1);
   border: none;

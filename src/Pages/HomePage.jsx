@@ -25,6 +25,16 @@ const Div = styled.div`
   scale: 0.8;
 `;
 
+const Slogan = styled.span`
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  text-align: center;
+  font-size: ${({fontSize}) => fontSize};
+  font-weight: ${({fontWeight}) => fontWeight};
+  width: ${({width}) => width || ""};
+`;
+
 const Span = styled.span`
   text-align: center;
   font-size: ${({fontSize}) => fontSize};
@@ -41,6 +51,7 @@ const Button = styled.button`
   color: var(--color-grey-50);
   background-color: var(--color-blue-1);
   border: none;
+  font-weight: bold;
   transition: var(--transition-1);
   &:hover {
     color: var(--color-grey-700);
@@ -68,7 +79,7 @@ const Slider = styled.div`
 `;
 
 const Footer = styled.footer`
-  height: 4rem;
+  height: 3.9rem;
   background-color: var(--color-grey-50);
   overflow: hidden;
 `;
@@ -80,6 +91,7 @@ const FooterContainer = styled.div`
   gap: 3rem;
   font-size: 1.25rem;
   margin-right: 3rem;
+  color: var(--color-blue-1);
 `;
 
 const FootText = styled.span`
@@ -219,11 +231,11 @@ function HomePage() {
           <Div>
             <Logo homepage={true} />
           </Div>
-          <Span fontSize="4rem" fontWeight="bolder">
+          <Slogan fontSize="4rem" fontWeight="bolder">
             Exploring Web Dev Tech,
             <br />
             Evolving and Growing Every Day!
-          </Span>
+          </Slogan>
           <Span fontSize="2rem" fontWeight="300" width="50vw">
             Empower your journey in web development as you learn, document, build, and share insights, while shaping the future of the digital world
             through this lightweight and accessible blog.

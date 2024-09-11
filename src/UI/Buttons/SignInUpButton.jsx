@@ -22,7 +22,7 @@ function SignInUpButton() {
   return (
     <Modal>
       <Modal.Open openCode="signin">
-        <LoginButton>Sign in/up</LoginButton>
+        <LoginButton>Sign In/Up</LoginButton>
       </Modal.Open>
       <Modal.Window verifyCode="signin">
         <Login />
