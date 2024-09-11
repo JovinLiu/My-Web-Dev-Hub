@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const Div = styled.div`
   margin: auto;
+  margin-top: 5rem;
   padding: 2rem 4rem;
   border-radius: 10px;
   font-size: 2rem;

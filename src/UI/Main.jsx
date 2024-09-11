@@ -5,7 +5,7 @@ const MainContainer = styled.main`
   overflow-y: scroll;
   overflow-x: hidden;
   width: 100%;
-  padding: 4rem;
+  padding: 0 4rem 0rem 4rem;
   height: 100%;
   position: relative;
   background-color: var(--color-grey-100);

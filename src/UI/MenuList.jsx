@@ -40,10 +40,13 @@ function MenuList() {
   const categoryLength = categories.join("").length;
 
   function handleClickTag(e) {
-    dispatch(setCurrentTag(e.target.value));
+    const category = e.target.value;
+    dispatch(setCurrentTag(category));
     dispatch(setCurrentPage(1));
+    if (category === "AllPosts") return navigate("/app/posts");
     //这个地方吧navigate('/app/posts)改成navigate("/app")来解决一个tag出现多种tag的内容的问题。解决办法不好
-    navigate("/app");
+    navigate(`/app/posts?category=${category}`);
+    // navigate(`/app/posts?category=${category}&_start=${start}&_limit=${limit}&search=${searchQuery}`);
   }
 
   return (

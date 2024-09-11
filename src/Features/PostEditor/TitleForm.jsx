@@ -12,7 +12,7 @@ import {
   setCurrentCategory,
   resetCurrentPost,
   setCurrentComposeTime,
-  setReviseTime,
+  setCurrentReviseTime,
   resetComposeTime,
   setCurrentPostBody
 } from "./currentPostSlice";
@@ -21,6 +21,7 @@ import toast from "react-hot-toast";
 import Modal from "../../UI/Modal";
 import Confirm from "../../UI/Confirm";
 import getTime from "../../Utils/getTime";
+import timeFormat from "../../Utils/timeFormat";
 
 const TitleInput = styled.div`
   display: flex;
@@ -83,6 +84,7 @@ function TitleForm({children}) {
   const [updatePost] = useUpdatePostMutation();
 
   const categoryLower = currentCategory?.toLowerCase() || "";
+  const date = timeFormat(currentComposeTime);
 
   function handleSetCurrentCategory(e) {
     e.preventDefault();
@@ -148,7 +150,7 @@ function TitleForm({children}) {
       dispatch(setCurrentTitle(tempPost.title));
       dispatch(setCurrentCategory(tempPost.category));
       dispatch(setCurrentComposeTime(tempPost.date));
-      dispatch(setReviseTime(tempPost.revisedDate));
+      dispatch(setCurrentReviseTime(tempPost.revisedDate));
       dispatch(setCurrentPostBody(tempPost.body));
       toast.success("Post loaded from temporary storage.");
     } else {
@@ -199,7 +201,7 @@ function TitleForm({children}) {
           <DateDiv>
             {currentId ? (
               <Span>
-                Was composed on <strong>{currentComposeTime}</strong>
+                Was composed on <strong>{date[2] + ", " + date[0] + ", " + date[1]}</strong>
               </Span>
             ) : (
               ""

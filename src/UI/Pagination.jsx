@@ -2,6 +2,13 @@ import styled from "styled-components";
 import {setCurrentPage} from "../Pages/uiSlice";
 import {useDispatch, useSelector} from "react-redux";
 
+const Div = styled.div`
+  height: 3rem;
+  margin: 3rem 0;
+  display: flex;
+  gap: 2rem;
+`;
+
 const Button = styled.div`
   cursor: pointer;
   text-align: center;
@@ -36,11 +43,6 @@ const PageButton = styled.div`
   }
 `;
 
-const Div = styled.div`
-  display: flex;
-  gap: 2rem;
-`;
-
 const Span = styled.span`
   font-size: 1.5rem;
   color: var(--color-grey-700);
@@ -49,14 +51,14 @@ const Span = styled.span`
 `;
 
 function Pagination() {
-  //写后端时替代掉totalPostsNum
+  //写后端时替代掉totalPostsQuantity
   //all posts是后端发来的aggregate的总数
   //每一个tag都是agregate的总数
   //如果searchQuery不为空，总数是searchedPosts的length
-  const {currentPage, totalPostsNum, cardsPerPage} = useSelector((state) => state.ui);
+  const {currentPage, cardsPerPage, searchedPostsQuantity} = useSelector((state) => state.ui);
   const dispatch = useDispatch();
 
-  const maxPages = Math.ceil(totalPostsNum / cardsPerPage);
+  const maxPages = Math.ceil(searchedPostsQuantity / cardsPerPage);
   const pageArr = Array.from({length: maxPages}, (_, i) => i + 1);
   const start = currentPage - 5 >= 0 && maxPages > 10 ? (currentPage > maxPages - 5 ? maxPages - 10 : currentPage - 5) : 0;
   const end = start + 10 <= maxPages ? start + 10 : maxPages;
@@ -83,7 +85,7 @@ function Pagination() {
       {maxPages !== 1 && (
         <>
           <Button onClick={handleClickPageDecrease}>
-            <ion-icon name="chevron-back-outline"></ion-icon>
+            <ion-icon name="chevron-back-outline" />
           </Button>
           <Span show={showLeftDots}>...</Span>
           {pageArr.slice(start, end).map((page, i) => (
@@ -93,7 +95,7 @@ function Pagination() {
           ))}
           <Span show={showRightDots}>...</Span>
           <Button onClick={handleClickPageIncrease}>
-            <ion-icon name="chevron-forward-outline"></ion-icon>
+            <ion-icon name="chevron-forward-outline" />
           </Button>
         </>
       )}

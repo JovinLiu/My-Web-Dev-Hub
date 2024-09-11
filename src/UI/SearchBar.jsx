@@ -15,6 +15,7 @@ const SearchResultDiv = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: auto;
+  white-space: nowrap;
 `;
 
 const SerachResult = styled.span`
@@ -22,6 +23,7 @@ const SerachResult = styled.span`
   width: 12rem;
   font-size: 1.4rem;
   margin-left: auto;
+  font-weight: 300;
 `;
 
 const Input = styled.input`
@@ -75,8 +77,9 @@ const RoundButton = styled.button`
 `;
 
 function SearchBar() {
-  const {postsNum, totalPostsNum} = useSelector((state) => state.ui);
+  const {totalPostsQuantity} = useSelector((state) => state.ui);
   const [keywords, setKeywords] = useState("");
+
   const inputEl = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -127,8 +130,10 @@ function SearchBar() {
   return (
     <Container>
       <SearchResultDiv>
-        <SerachResult>{totalPostsNum} posts in total</SerachResult>
-        <SerachResult>{postsNum} posts found</SerachResult>
+        <SerachResult>
+          {/* 后端发来的帖子总数 */}
+          <strong>{totalPostsQuantity}</strong> posts in total
+        </SerachResult>
       </SearchResultDiv>
       <InputContainer>
         <IconContainer left="1.5rem">

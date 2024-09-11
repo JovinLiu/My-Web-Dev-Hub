@@ -5,15 +5,16 @@ import Loader from "../../UI/Loader";
 import {useEffect, useRef, useState} from "react";
 import {useDispatch} from "react-redux";
 import {useSelector} from "react-redux";
-import {setPostsNum} from "../../Pages/uiSlice";
+import {setSearchedPostsQuantity, setTotalPostsQuantity} from "../../Pages/uiSlice";
 import NoPostFound from "../../UI/NoPostFound";
 import Pagination from "../../UI/Pagination";
+import PaginationTop from "../../UI/PaginationTop";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5rem;
+  /* gap: 5rem; */
 `;
 
 const CardContainer = styled.div`
@@ -30,12 +31,25 @@ function PostList() {
   const {currentTag, searchQuery, currentPage, cardsPerPage} = useSelector((state) => state.ui);
   const [searchedPosts, setSearchedPosts] = useState([]);
   const category = currentTag === "AllPosts" ? "" : currentTag;
-  //通过提供queryString来
-  const arg = {search: searchQuery, category: category, start: (currentPage - 1) * cardsPerPage, limit: cardsPerPage};
-  const {currentData: posts = [], isFetching, isLoading} = useGetPostsByConditionsQuery(arg);
-  // const {currentData: posts = [], isLoading} = useGetAllPostsQuery();
+
+  const arg = {category, search: searchQuery, page: currentPage, limit: cardsPerPage};
+  const {currentData = {}, isFetching, isLoading} = useGetPostsByConditionsQuery(arg);
+
   const dispatch = useDispatch();
   const allCards = useRef(null);
+
+  const posts = currentData?.data?.docs;
+  const {results} = currentData;
+  const {totalPostsQuantity} = currentData;
+
+  const showPagination = searchedPosts?.length !== 0 || !isFetching || !isLoading;
+
+  useEffect(
+    function () {
+      dispatch(setTotalPostsQuantity(totalPostsQuantity));
+    },
+    [totalPostsQuantity, dispatch]
+  );
 
   useEffect(
     function () {
@@ -73,13 +87,13 @@ function PostList() {
           ? posts.filter((post) => `${post.title} ${post.body} ${post.category}`.toLowerCase().includes(searchQuery.toLowerCase()))
           : posts;
       setSearchedPosts(searchResults);
+      //用后端取代这个
+      dispatch(setSearchedPostsQuantity(results));
     },
-    [searchQuery, posts]
+    [dispatch, searchQuery, posts, searchedPosts, results]
   );
 
   if (isFetching || isLoading) return <Loader />;
-
-  dispatch(setPostsNum(searchedPosts.length));
 
   if (posts.length === 0 && !isFetching)
     return (
@@ -97,12 +111,13 @@ function PostList() {
 
   return (
     <Container>
+      {showPagination && <PaginationTop />}
       <CardContainer ref={allCards}>
-        {searchedPosts.map((post, i) => (
+        {searchedPosts?.map((post, i) => (
           <PostCard post={post} fadeInTime={i} key={post.id} />
         ))}
       </CardContainer>
-      {searchedPosts.length !== 0 && <Pagination />}
+      {showPagination && <Pagination />}
     </Container>
   );
 }

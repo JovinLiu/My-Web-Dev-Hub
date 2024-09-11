@@ -1,6 +1,17 @@
 import styled, {keyframes} from "styled-components";
 import {useDeletePostMutation, useGetPostByIdQuery} from "../../Utils/data";
-import {setCurrentId, setCurrentTitle, setCurrentComposeTime, setCurrentCategory, setCurrentPostBody} from "../PostEditor/currentPostSlice";
+import {
+  setCurrentId,
+  setCurrentTitle,
+  setCurrentComposeTime,
+  setCurrentReviseTime,
+  setCurrentDescription,
+  setCurrentCategory,
+  setCurrentTopic,
+  setCurrentPostBody,
+  setCurrentImages,
+  setCurrentIsPrivate
+} from "../PostEditor/currentPostSlice";
 import {toggleShowEditor} from "../../Pages/uiSlice";
 import {useNavigate, useParams} from "react-router-dom";
 import Loader from "../../UI/Loader";
@@ -14,6 +25,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {htmlToText} from "html-to-text";
 import Modal from "../../UI/Modal";
 import Confirm from "../../UI/Confirm";
+import timeFormat from "../../Utils/timeFormat";
 
 const fadeIn = keyframes`
   from {
@@ -98,10 +110,11 @@ function PostViewer() {
   const navigate = useNavigate();
   const {categories} = useSelector((state) => state.ui);
   const {id} = useParams();
-  const {currentData: post = {}, isLoading} = useGetPostByIdQuery(id);
+  const {currentData = {}, isLoading} = useGetPostByIdQuery(id);
+  const post = currentData?.data?.doc;
   const [deletePost] = useDeletePostMutation();
   const dispatch = useDispatch();
-  const [techStack] = categories.filter((category) => category.split(" ").join("") === post.category);
+  const [techStack] = categories.filter((category) => category.split(" ").join("") === post?.category);
 
   function handleClose(e) {
     e.preventDefault();
@@ -118,15 +131,23 @@ function PostViewer() {
   function handleUpdatePost() {
     dispatch(setCurrentId(post.id));
     dispatch(setCurrentTitle(post.title));
-    dispatch(setCurrentComposeTime(post.date));
+    dispatch(setCurrentComposeTime(post.createdAt));
+    dispatch(setCurrentReviseTime(post.updatedAt));
+    dispatch(setCurrentDescription(post.descriptions));
     dispatch(setCurrentCategory(post.category));
-    dispatch(setCurrentPostBody(post.body));
+    dispatch(setCurrentTopic(post.topic));
+    dispatch(setCurrentPostBody(post.content));
+    dispatch(setCurrentImages(post.Images));
+    dispatch(setCurrentIsPrivate(post.isPrivate));
+    // dispatch(setCurrentUser());
+    // dispatch(resetCurrentPost());
+    // dispatch(resetComposeTime());
     navigate("/app/editor");
     dispatch(toggleShowEditor(true));
   }
 
   function handleClickSharePost() {
-    window.location.href = `mailto:?subject=${post.title}&body=${encodeURIComponent(htmlToText(post.body))}`;
+    window.location.href = `mailto:?subject=${post.title}&body=${encodeURIComponent(htmlToText(post.content))}`;
     toast.success("Copied to your email!");
   }
 
@@ -140,8 +161,10 @@ function PostViewer() {
     }
   }
 
-  const postBody = parse(post.body);
+  const postBody = parse(post.content);
   const category = post.category.toLowerCase();
+  const date = timeFormat(post.createdAt);
+  const updateDate = timeFormat(post.updatedAt || "");
 
   return (
     <Container>
@@ -163,8 +186,8 @@ function PostViewer() {
         <InfoContainer>
           <H1>{post.title}</H1>
           <DateDiv>
-            <Span>Posted on {post.date}</Span>
-            {post.revisedDate && <Span>Revised on {post.revisedDate}</Span>}
+            <Span>Posted on {date[2] + ", " + date[0] + ", " + date[1]}</Span>
+            {updateDate && <Span>Revised on {updateDate}</Span>}
           </DateDiv>
           <Span>Tech Stack: {techStack}</Span>
         </InfoContainer>

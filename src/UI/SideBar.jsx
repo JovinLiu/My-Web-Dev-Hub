@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
 import HideButton from "./Buttons/HideButtonRight";
-import {useGetPostsByConditionsQuery} from "../Utils/data";
+import {useGetAllPostsQuery} from "../Utils/data";
 import Loader from "./Loader";
 import NavListItem from "./NavListItem";
 import {useSelector} from "react-redux";
@@ -75,12 +75,15 @@ const Hr = styled.hr`
 `;
 
 function SideBar() {
-  const {currentTag, showSideBar, currentPage, cardsPerPage, signin} = useSelector((state) => state.ui);
-  const query = currentTag === "AllPosts" ? "" : currentTag;
-  const arg = {category: query, start: (currentPage - 1) * cardsPerPage, limit: cardsPerPage};
-  const {currentData: posts = [], isLoading, isFetching} = useGetPostsByConditionsQuery(arg);
+  const {showSideBar, signin} = useSelector((state) => state.ui);
+  // const {currentTag, showSideBar, currentPage, cardsPerPage, signin} = useSelector((state) => state.ui);
+  // const query = currentTag === "AllPosts" ? "" : currentTag;
+  // const arg = {category: query, start: (currentPage - 1) * cardsPerPage, limit: cardsPerPage};
+  const {currentData, isLoading, isFetching} = useGetAllPostsQuery();
   const src = "/default-user.jpg";
   const time = useRef(null);
+  const posts = currentData?.data?.docs;
+  // const {results} = currentData
 
   useEffect(function () {
     const currentHour = new Intl.DateTimeFormat(navigator.language, {
@@ -133,7 +136,7 @@ function SideBar() {
           <Hr showSideBar={showSideBar} />
           <Div>
             <ListContainer showSideBar={showSideBar}>
-              {posts.map((post, i) => (
+              {posts?.map((post, i) => (
                 <NavListItem title={post.title} key={i} />
               ))}
             </ListContainer>

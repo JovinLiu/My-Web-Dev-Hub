@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import CardLine from "../../UI/CardLine";
 import Icon from "../../UI/Icon";
 import TitleContainer from "../../UI/TitleContainer";
+import timeFormat from "../../Utils/timeFormat";
 
 const fadeIn = keyframes`
   from {
@@ -90,21 +91,18 @@ function PostCard({post, fadeInTime}) {
     width = calcWidth();
   }
 
-  function shortTimeFormat(date) {
-    const arr = date?.split(", ");
-    return arr[1] + " at " + arr[2];
-  }
+  const date = timeFormat(post.createdAt);
 
   return (
     <StyledCardWithLink to={`/app/viewer/${post.id}`} width={width} fadeInTime={fadeInTime}>
       <CardLine category={category} height={"5%"} />
-      <TextContainer>{post.body.slice(0, 200)}</TextContainer>
+      <TextContainer>{post.description.slice(0, 200)}</TextContainer>
       <TitleContainer category={category} height={"30%"} gap={"1rem"} padding={"1.4rem"} flexDirection={"row"} alignItems={"center"} link={Link}>
         <Info>
           <Title>
             <strong>{post.title}</strong>
           </Title>
-          <CreatedAt>{shortTimeFormat(post.date)}</CreatedAt>
+          <CreatedAt>{date[0] + " at " + date[1]}</CreatedAt>
         </Info>
         <Round category={category}>
           <Icon category={category} />

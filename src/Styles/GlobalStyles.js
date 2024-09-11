@@ -92,6 +92,9 @@ const GlobalStyles = createGlobalStyle`
   --color-redux-100: rgb(108, 78, 176);
   --color-nodejs-100: rgb(33, 163, 102);
   --color-reactrouter-100: rgb(244, 66, 80);
+  --color-reactquery-100: rgb(239, 68, 68 );
+  --color-git-100: rgb(241, 78, 50);
+  --color-github-100: rgb(0,0,0);
 
   /* Feature Color translucent*/
   --color-webbasic-20: rgb(7, 89, 133,0.2);
@@ -104,6 +107,9 @@ const GlobalStyles = createGlobalStyle`
   --color-redux-20: rgb(108, 78, 176, 0.2);
   --color-nodejs-20: rgb(33, 163, 102, 0.2);
   --color-reactrouter-20: rgb(244, 66, 80, 0.2);
+  --color-reactquery-20: rgb(239, 68, 68, 0.2);
+  --color-git-20: rgb(241, 78, 50, 0.2);
+  --color-github-20: rgb(0,0,0,0.2);
 
   --transition-1: all 0.2s ease-in-out;
 

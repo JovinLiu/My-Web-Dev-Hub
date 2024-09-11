@@ -2,7 +2,8 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 
 export const postsApi = createApi({
   reducerPath: "posts",
-  baseQuery: fetchBaseQuery({baseUrl: "https://virtualdb.vercel.app"}),
+  // baseQuery: fetchBaseQuery({baseUrl: "https://virtualdb.vercel.app"}),
+  baseQuery: fetchBaseQuery({baseUrl: "http://localhost:3000/api/v1"}),
   tagTypes: ["Post"],
   endpoints: (builder) => ({
     getAllPosts: builder.query({
@@ -11,27 +12,18 @@ export const postsApi = createApi({
 
     getPostsByConditions: builder.query({
       query: (arg) => {
-        console.log(arg);
         return {
-          url:
-            arg.category === ""
-              ? `/posts?search=${arg.searchQuery}&_start=${arg.start}&_limit=${arg.limit}`
-              : `/posts?search=${arg.searchQuery}&category=${arg.category}&_start=${arg.start}&_limit=${arg.limit}`
+          url: `/posts?category=${arg.category}&page=${arg.page}&limit=${arg.limit}&search=${arg.searchQuery}`
         };
       },
       providesTags: ["Post"]
     }),
 
     //后端写一下这个
-    getPostsBySearchQuery: builder.query({
-      query: (arg) => `/posts?search=${arg.searchQuery}&_start=${arg.start}&_limit=${arg.limit}`,
-      providesTags: ["Post"]
-    }),
-
-    getTotalPostsNumber: builder.query({
-      query: () => `/posts/count`,
-      providesTags: ["Post"]
-    }),
+    // getPostsBySearchQuery: builder.query({
+    //   query: (arg) => `/posts?search=${arg.searchQuery}&_start=${arg.start}&_limit=${arg.limit}`,
+    //   providesTags: ["Post"]
+    // }),
 
     getPostById: builder.query({
       query: (id) => `/posts/${id}`,
@@ -71,7 +63,7 @@ export const postsApi = createApi({
 export const {
   useGetAllPostsQuery,
   useGetPostsByConditionsQuery,
-  useGetTotalPostsNumberQuery,
+  useGetTotalPostsQuantityQuery,
   useGetPostByIdQuery,
   useAddNewPostMutation,
   useUpdatePostMutation,

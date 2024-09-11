@@ -165,8 +165,6 @@ function HomePage() {
   const sliderA = useRef(null);
   const containerB = useRef(null);
   const sliderB = useRef(null);
-  // const containerC = useRef(null);
-  // const sliderC = useRef(null);
 
   const navigate = useNavigate();
 
@@ -208,21 +206,6 @@ function HomePage() {
     }, 15);
   }, []);
 
-  // useEffect(function () {
-  //   setInterval(() => {
-  //     if (!containerC.current) return;
-  //     containerC.current.scrollLeft++;
-
-  //     if (containerC.current.scrollLeft % 320 === 0) {
-  //       const el = sliderC.current.firstElementChild;
-  //       sliderC.current.appendChild(el);
-  //       const paddingLeftStr = window.getComputedStyle(sliderC.current).getPropertyValue("padding-left");
-  //       const paddingLeft = parseInt(paddingLeftStr);
-  //       sliderC.current.style.paddingLeft = paddingLeft + 320 + "px";
-  //     }
-  //   }, 20);
-  // }, []);
-
   return (
     <>
       <Header homepage={true} />
@@ -257,13 +240,6 @@ function HomePage() {
               ))}
             </Slider>
           </SliderContainer>
-          {/* <SliderContainer ref={containerC}>
-            <Slider ref={sliderC}>
-              {sampleCards.map((card, i) => (
-                <HomePageCard key={i} content={card} />
-              ))}
-            </Slider>
-          </SliderContainer> */}
         </SlidersContainer>
       </Section>
       <Footer>
