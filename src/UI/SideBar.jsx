@@ -78,7 +78,7 @@ function SideBar() {
   const {currentTag, showSideBar, currentPage, cardsPerPage, signin} = useSelector((state) => state.ui);
   const query = currentTag === "AllPosts" ? "" : currentTag;
   const arg = {category: query, start: (currentPage - 1) * cardsPerPage, limit: cardsPerPage};
-  const {currentData: posts = [], isLoading} = useGetPostsByConditionsQuery(arg);
+  const {currentData: posts = [], isLoading, isFetching} = useGetPostsByConditionsQuery(arg);
   const src = "/default-user.jpg";
   const time = useRef(null);
 
@@ -93,7 +93,7 @@ function SideBar() {
     if ((currentHour >= 19 && currentHour <= 23) || (currentHour >= 0 && currentHour < 6)) time.current = "Evening";
   }, []);
 
-  if (isLoading)
+  if (isLoading || isFetching)
     return (
       <Container showSideBar={showSideBar}>
         <HideButton />

@@ -24,8 +24,8 @@ const Spinner = styled.div`
   border: 13px solid var(--color-blue-1);
   animation: ${rotateA} 0.8s infinite linear alternate, ${rotateB} 1.6s infinite linear;
   position: absolute;
-  top: 40rem;
-  left: 45%;
+  top: calc(50vh - 14rem);
+  left: 47%;
 `;
 
 const FullScreen = styled.div`
