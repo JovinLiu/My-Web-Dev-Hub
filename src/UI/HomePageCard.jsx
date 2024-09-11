@@ -7,7 +7,7 @@ const Div = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 30rem;
-  height: 12rem;
+  height: 90%;
   color: var(--color-grey-700);
   background-color: var(--color-grey-50);
   font-size: 3rem;
@@ -24,9 +24,9 @@ const TextBox = styled.div`
 function HomePageCard({content}) {
   return (
     <Div>
-      <CardLine height="0.7rem" />
-      <TextBox>{content}</TextBox>
-      <CardLine height="1.5rem" />
+      <CardLine height="1rem" category={content[1]} />
+      <TextBox>{content[0]}</TextBox>
+      <CardLine height="2.5rem" category={content[1]} />
     </Div>
   );
 }
