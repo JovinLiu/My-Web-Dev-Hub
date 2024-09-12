@@ -9,7 +9,7 @@ import parse from "html-react-parser";
 import {useSelector} from "react-redux";
 import {useGetPostByIdQuery} from "../../Utils/data";
 import timeFormat from "../../Utils/timeFormat";
-import ViewerButtonGroup from "./viewerButtonGroup";
+import ViewerButtonGroup from "./ViewerButtonGroup";
 
 const fadeIn = keyframes`
   from {
