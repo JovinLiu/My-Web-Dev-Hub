@@ -15,13 +15,13 @@ export const postsApi = createApi({
             : `/posts?search=${arg.search}&page=${arg.page}&limit=${arg.limit}`
         };
       },
-      providesTags: ["Post"]
+      invalidatesTags: ["Post"]
     }),
 
     //return a single post by provided ID
     getPostById: builder.query({
       query: (id) => `/posts/${id}`,
-      providesTags: ["Post"]
+      invalidatesTags: ["Post"]
     }),
 
     addNewPost: builder.mutation({
@@ -52,15 +52,22 @@ export const postsApi = createApi({
       invalidatesTags: ["Post"]
     }),
 
+    getTopicStats: builder.query({
+      query: (category) => `/posts/topic-stats?category=${category || ""}`,
+      invalidatesTags: ["Post"]
+    }),
+
     //not in use
     getAllPosts: builder.query({
-      query: () => "/posts"
+      query: () => "/posts",
+      invalidatesTags: ["Post"]
     })
   })
 });
 
 export const {
   useGetAllPostsQuery,
+  useGetTopicStatsQuery,
   useGetPostsByConditionsQuery,
   useGetTotalPostsQuantityQuery,
   useGetPostByIdQuery,

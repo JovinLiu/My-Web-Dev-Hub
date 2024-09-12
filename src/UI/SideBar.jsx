@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
 import HideButton from "./Buttons/HideButtonRight";
-import {useGetAllPostsQuery} from "../Utils/data";
+import {useGetTopicStatsQuery} from "../Utils/data";
 import Loader from "./Loader";
-import NavListItem from "./NavListItem";
+import TopicListItem from "./TopicListItem";
 import {useSelector} from "react-redux";
 import {useEffect, useRef} from "react";
 import GeneralButton from "./Buttons/GeneralButton";
 import SignInUpButton from "./Buttons/SignInUpButton";
+import {useSearchParams} from "react-router-dom";
 
 const Container = styled.aside`
   height: calc(100vh - 6rem);
@@ -22,12 +23,27 @@ const Div = styled.div`
   margin: 2rem 2.5rem 2rem 2.5rem;
   display: block;
   overflow: hidden;
+  position: relative;
 `;
 
 const ListContainer = styled.div`
+  list-style: none;
   height: calc(100vh - 6rem - 12rem);
   display: ${(props) => (props.showSideBar ? "block" : "none")};
   overflow: scroll;
+`;
+
+const Transparent = styled.div`
+  pointer-events: none;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  height: calc(60vh - 20rem);
+  background: linear-gradient(180deg, transparent 0, var(--color-grey-50) 80%);
+  transition: all 0.3s ease;
+  &:hover {
+    background: none;
+  }
 `;
 
 const Nav = styled.nav`
@@ -76,14 +92,31 @@ const Hr = styled.hr`
 
 function SideBar() {
   const {showSideBar, signin} = useSelector((state) => state.ui);
-  // const {currentTag, showSideBar, currentPage, cardsPerPage, signin} = useSelector((state) => state.ui);
-  // const query = currentTag === "AllPosts" ? "" : currentTag;
-  // const arg = {category: query, start: (currentPage - 1) * cardsPerPage, limit: cardsPerPage};
-  const {currentData, isLoading, isFetching} = useGetAllPostsQuery();
+  const [searchParams] = useSearchParams();
+  // const [isHovered, setIsHovered] = useState(false);
+
+  // useEffect(() => {
+  //   const transparentDiv = document.querySelector(".transparent");
+
+  //   if (transparentDiv) {
+  //     transparentDiv.addEventListener("mouseenter", () => setIsHovered(true));
+  //     transparentDiv.addEventListener("mouseleave", () => setIsHovered(false));
+  //   }
+
+  //   return () => {
+  //     if (transparentDiv) {
+  //       transparentDiv.removeEventListener("mouseenter", () => setIsHovered(true));
+  //       transparentDiv.removeEventListener("mouseleave", () => setIsHovered(false));
+  //     }
+  //   };
+  // }, []);
+
+  const category = searchParams.get("category");
+  const {currentData, isLoading, isFetching} = useGetTopicStatsQuery(category);
+
   const src = "/default-user.jpg";
   const time = useRef(null);
-  const posts = currentData?.data?.docs;
-  // const {results} = currentData
+  const topics = currentData?.data?.stats;
 
   useEffect(function () {
     const currentHour = new Intl.DateTimeFormat(navigator.language, {
@@ -136,9 +169,10 @@ function SideBar() {
           <Hr showSideBar={showSideBar} />
           <Div>
             <ListContainer showSideBar={showSideBar}>
-              {posts?.map((post, i) => (
-                <NavListItem title={post.title} key={i} />
+              {topics?.map((topic, i) => (
+                <TopicListItem topic={topic._id} titles={topic.titles} key={i} />
               ))}
+              <Transparent />
             </ListContainer>
           </Div>
         </>

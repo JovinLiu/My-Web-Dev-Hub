@@ -91,7 +91,7 @@ function PostViewer() {
   const navigate = useNavigate();
   const {categories} = useSelector((state) => state.ui);
   const {id} = useParams();
-  const {currentData = {}, isLoading} = useGetPostByIdQuery(id);
+  const {currentData = {}, isLoading, isFetching} = useGetPostByIdQuery(id);
   const post = currentData?.data?.doc;
 
   const [techStack] = categories.filter((category) => category.split(" ").join("") === post?.category);
@@ -101,7 +101,7 @@ function PostViewer() {
     navigate("/app/posts");
   }
 
-  if (isLoading) return <Loader />;
+  if (isLoading || isFetching) return <Loader />;
 
   const content = parse(post.content);
   const category = post.category.toLowerCase();

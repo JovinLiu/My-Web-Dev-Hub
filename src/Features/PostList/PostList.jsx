@@ -14,7 +14,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* gap: 5rem; */
+  max-width: 160rem;
+  margin: 0 auto;
 `;
 
 const CardContainer = styled.div`

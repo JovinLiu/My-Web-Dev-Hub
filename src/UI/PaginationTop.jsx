@@ -28,7 +28,7 @@ function PaginationTop() {
   const start = (currentPage - 1) * cardsPerPage + 1;
   const end = currentPage * cardsPerPage < searchedPostsQuantity ? currentPage * cardsPerPage : searchedPostsQuantity;
 
-  const cardsPerPageOptions = Array.from({length: 51}, (_, i, start = 24) => i + 1 + start);
+  const cardsPerPageOptions = [25, 50, 75, 100];
 
   function handleSetCardsPerPage(e) {
     dispatch(setCardsPerPage(e.target.value));
