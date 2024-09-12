@@ -40,11 +40,13 @@ const InputDescription = styled.textarea`
   border: 2px solid var(--color-blue-1);
   background-color: var(--color-grey-200);
   transition: var(--transition-1);
+  overflow: hidden;
   &:focus {
     position: absolute;
     top: 10rem;
-    height: 30vh;
+    height: 20vh;
     z-index: 10;
+    overflow: auto;
   }
 `;
 

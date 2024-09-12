@@ -4,6 +4,7 @@ import TitleListItem from "./titleListItem";
 
 /* eslint-disable react/prop-types */
 const Li = styled.li`
+  cursor: default;
   margin-top: 1.75rem;
   font-size: 1.5rem;
   max-width: 30rem;
@@ -11,6 +12,7 @@ const Li = styled.li`
   align-items: center;
   gap: 2rem;
   transition: var(--transition-1);
+  font-weight: bolder;
 `;
 
 const Ol = styled.ol`
@@ -27,23 +29,30 @@ const Ol = styled.ol`
 `;
 
 const Button = styled.button`
-  cursor: pointer;
   height: 2rem;
   width: 2rem;
-  font-size: 1.6rem;
   border-radius: 50%;
+  font-size: 1.6rem;
   background-color: var(--color-blue-1);
   color: var(--color-grey-50);
   border: none;
   transition: var(--transition-1);
+  white-space: nowrap;
   &:hover {
     color: var(--color-grey-700);
     background-color: var(--color-blue-2);
   }
 `;
 
-const Span = styled.span`
+const TextButton = styled.button`
+  border: none;
+  background: none;
+  color: var(--color-grey-700);
   white-space: nowrap;
+  transition: var(--transition-1);
+  &:hover {
+    color: var(--color-grey-500);
+  }
 `;
 
 function TopicListItem({topic, titles}) {
@@ -56,7 +65,9 @@ function TopicListItem({topic, titles}) {
     <>
       <Li>
         <Button onClick={handleClickOpen}>{open ? <ion-icon name="chevron-down-outline" /> : <ion-icon name="chevron-forward-outline" />}</Button>
-        <Span>{topic}</Span>
+        <TextButton onClick={handleClickOpen}>
+          {topic} ({titles.length})
+        </TextButton>
       </Li>
       {open && (
         <Ol>

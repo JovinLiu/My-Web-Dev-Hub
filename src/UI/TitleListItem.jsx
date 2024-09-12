@@ -2,7 +2,15 @@ import {Link, useSearchParams} from "react-router-dom";
 import styled from "styled-components";
 
 /* eslint-disable react/prop-types */
-const StyledLink = styled(Link)``;
+const StyledLink = styled(Link)`
+  cursor: default;
+  color: var(--color-blue-1);
+  font-size: 1.25rem;
+  transition: var(--transition-1);
+  &:hover {
+    font-size: 1.5rem;
+  }
+`;
 
 const Li = styled.li``;
 
