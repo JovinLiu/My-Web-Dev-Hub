@@ -1,6 +1,6 @@
 import {useState} from "react";
 import styled from "styled-components";
-import TitleListItem from "./titleListItem";
+import TitleListItem from "./TitleListItem";
 
 /* eslint-disable react/prop-types */
 const Li = styled.li`
