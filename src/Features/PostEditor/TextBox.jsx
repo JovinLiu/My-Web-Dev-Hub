@@ -3,13 +3,14 @@ import {useEffect} from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import styled from "styled-components";
-import {setCurrentPostBody} from "./currentPostSlice";
+import {setContent} from "./currentPostSlice";
 import {useDispatch, useSelector} from "react-redux";
 
 const Container = styled.div`
   height: calc(100vh - 31rem);
   width: 100%;
   position: relative;
+  z-index: 0;
 `;
 
 const Background = styled.div`
@@ -20,7 +21,7 @@ const Background = styled.div`
 `;
 
 function TextBox() {
-  const {currentPostBody} = useSelector((state) => state.currentPost);
+  const {content} = useSelector((state) => state.currentPost);
   const dispatch = useDispatch();
   useEffect(function () {
     document.querySelector(".quill").setAttribute("style", "height: calc(100vh - 31rem); display:flex; flex-direction: column;");
@@ -47,14 +48,14 @@ function TextBox() {
     ]
   };
 
-  function handleSetCurrentPostBody() {
-    dispatch(setCurrentPostBody(document.querySelector(".ql-editor").innerHTML));
+  function handleSetCurrentContent() {
+    dispatch(setContent(document.querySelector(".ql-editor").innerHTML));
   }
 
   return (
     <Container>
       <Background />
-      <ReactQuill theme="snow" value={currentPostBody} onChange={handleSetCurrentPostBody} modules={toolbar} />
+      <ReactQuill theme="snow" value={content} onChange={handleSetCurrentContent} modules={toolbar} />
     </Container>
   );
 }

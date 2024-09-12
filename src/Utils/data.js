@@ -6,25 +6,19 @@ export const postsApi = createApi({
   baseQuery: fetchBaseQuery({baseUrl: "http://localhost:3000/api/v1"}),
   tagTypes: ["Post"],
   endpoints: (builder) => ({
-    getAllPosts: builder.query({
-      query: () => "/posts"
-    }),
-
+    //returns posts with query and total number of posts and total number of posts by a category in the database
     getPostsByConditions: builder.query({
       query: (arg) => {
         return {
-          url: `/posts?category=${arg.category}&page=${arg.page}&limit=${arg.limit}&search=${arg.searchQuery}`
+          url: arg.category
+            ? `/posts?category=${arg.category}&search=${arg.search}&page=${arg.page}&limit=${arg.limit}`
+            : `/posts?search=${arg.search}&page=${arg.page}&limit=${arg.limit}`
         };
       },
       providesTags: ["Post"]
     }),
 
-    //后端写一下这个
-    // getPostsBySearchQuery: builder.query({
-    //   query: (arg) => `/posts?search=${arg.searchQuery}&_start=${arg.start}&_limit=${arg.limit}`,
-    //   providesTags: ["Post"]
-    // }),
-
+    //return a single post by provided ID
     getPostById: builder.query({
       query: (id) => `/posts/${id}`,
       providesTags: ["Post"]
@@ -43,7 +37,7 @@ export const postsApi = createApi({
     updatePost: builder.mutation({
       query: ({id, updatedPost}) => ({
         url: `/posts/${id}`,
-        method: "PUT",
+        method: "PATCH",
         headers: {"content-type": "application/json"},
         body: updatedPost
       }),
@@ -56,6 +50,11 @@ export const postsApi = createApi({
         method: "DELETE"
       }),
       invalidatesTags: ["Post"]
+    }),
+
+    //not in use
+    getAllPosts: builder.query({
+      query: () => "/posts"
     })
   })
 });

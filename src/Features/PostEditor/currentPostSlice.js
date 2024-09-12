@@ -1,88 +1,99 @@
 import {createSlice} from "@reduxjs/toolkit";
 //["id","title","createdAt","updatedAt","description","category","topic","content","images","isPrivate","user"]
 const initialStateCurrentPost = {
-  currentId: "",
-  currentTitle: "",
-  currentComposeTime: "",
-  currentReviseTime: "",
-  currentDescription: "",
-  currentCategory: "",
-  currentTopic: "",
-  currentPostBody: "",
-  currentImages: [],
-  currentIsPrivate: false,
-  currentUser: ""
+  id: "",
+  title: "",
+  createdAt: "",
+  updatedAt: "",
+  description: "",
+  category: "",
+  topic: "",
+  content: "",
+  images: [],
+  isPrivate: true,
+  user: ""
 };
 
 const currentPostSlice = createSlice({
   name: "currentPost",
   initialState: initialStateCurrentPost,
   reducers: {
-    setCurrentId: (state, action) => {
-      state.currentId = action.payload;
+    setId: (state, action) => {
+      state.id = action.payload;
     },
-    setCurrentTitle: (state, action) => {
-      state.currentTitle = action.payload;
+    setTitle: (state, action) => {
+      state.title = action.payload;
     },
-    setCurrentComposeTime: (state, action) => {
-      state.currentComposeTime = action.payload;
+    setCreatedAt: (state, action) => {
+      state.createdAt = action.payload;
     },
-    setCurrentReviseTime: (state, action) => {
-      state.currentReviseTime = action.payload;
+    setUpdatedAt: (state, action) => {
+      state.updatedAt = action.payload;
     },
-    setCurrentDescription: (state, action) => {
-      state.currentDescription = action.payload;
+    setDescription: (state, action) => {
+      state.description = action.payload;
     },
-    setCurrentCategory: (state, action) => {
-      state.currentCategory = action.payload;
+    setCategory: (state, action) => {
+      state.category = action.payload;
     },
-    setCurrentTopic: (state, action) => {
-      state.currentTopic = action.payload;
+    setTopic: (state, action) => {
+      state.topic = action.payload;
     },
-    setCurrentPostBody: (state, action) => {
-      state.currentPostBody = action.payload;
+    setContent: (state, action) => {
+      state.content = action.payload;
     },
-    setCurrentImages: (state, action) => {
-      state.currentImages = action.payload;
+    setImages: (state, action) => {
+      state.images = action.payload;
     },
-    setCurrentIsPrivate: (state, action) => {
-      state.currentIsPrivate = action.payload;
+    setIsPrivate: (state) => {
+      state.isPrivate = !state.isPrivate;
     },
-    setCurrentUser: (state, action) => {
-      state.currentUser = action.payload;
+    setUser: (state, action) => {
+      state.user = action.payload;
     },
-    resetCurrentPost: (state) => {
-      state.currentId = "";
-      state.currentTitle = "";
-      state.currentReviseTime = "";
-      state.currentDescription = "";
-      state.currentCategory = "";
-      state.currentTopic = "";
-      state.currentPostBody = "";
-      state.currentImages = [];
-      state.currentIsPrivate = false;
-      state.currentUser = "";
+    setPost: (state, action) => {
+      state.id = action.payload.id;
+      state.title = action.payload.title;
+      state.createdAt = action.payload.createdAt;
+      state.updatedAt = action.payload.updatedAt;
+      state.description = action.payload.description;
+      state.category = action.payload.category;
+      state.topic = action.payload.topic;
+      state.content = action.payload.content;
+      state.images = action.payload.images;
+      state.isPrivate = action.payload.isPrivate;
+      state.user = action.payload.user;
     },
-    resetComposeTime: (state) => {
-      state.currentComposeTime = "";
+    resetPost: (state) => {
+      state.id = "";
+      state.title = "";
+      state.createdAt = "";
+      state.updatedAt = "";
+      state.description = "";
+      state.category = "";
+      state.topic = "";
+      state.content = "";
+      state.images = [];
+      state.isPrivate = false;
+      state.user = "";
     }
   }
 });
 
 export const {
-  setCurrentId,
-  setCurrentTitle,
-  setCurrentComposeTime,
-  setCurrentReviseTime,
-  setCurrentDescription,
-  setCurrentCategory,
-  setCurrentTopic,
-  setCurrentPostBody,
-  setCurrentImages,
-  setCurrentIsPrivate,
-  setCurrentUser,
-  resetCurrentPost,
-  resetComposeTime
+  setId,
+  setTitle,
+  setCreatedAt,
+  setUpdatedAt,
+  setDescription,
+  setCategory,
+  setTopic,
+  setContent,
+  setImages,
+  setIsPrivate,
+  setUser,
+  setPost,
+  resetPost
 } = currentPostSlice.actions;
 
 //使用default export导出reducer

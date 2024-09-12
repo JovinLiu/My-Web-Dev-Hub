@@ -79,16 +79,18 @@ const RoundButton = styled.button`
 function SearchBar() {
   const {totalPostsQuantity} = useSelector((state) => state.ui);
   const [keywords, setKeywords] = useState("");
+  const navigate = useNavigate();
 
   const inputEl = useRef(null);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(
     function () {
       const callBack = (e) => {
         if (document.activeElement === document.querySelector(".ql-editor")) return;
         if (document.activeElement === document.querySelector(".title-input")) return;
+        if (document.activeElement === document.querySelector(".title-topic")) return;
+        if (document.activeElement === document.querySelector(".title-description")) return;
         if (document.activeElement === document.querySelector(".loginEmail")) return;
         if (document.activeElement === document.querySelector(".loginPassword")) return;
         if (e.code === "Enter") inputEl.current.focus();
@@ -106,7 +108,7 @@ function SearchBar() {
   function handleSetSearchQuery(e) {
     e.preventDefault();
     dispatch(setSearchQuery(keywords));
-    navigate("/app/posts");
+    navigate("/app");
   }
 
   function handleSetKeywords(e) {
@@ -130,10 +132,13 @@ function SearchBar() {
   return (
     <Container>
       <SearchResultDiv>
-        <SerachResult>
-          {/* 后端发来的帖子总数 */}
-          <strong>{totalPostsQuantity}</strong> posts in total
-        </SerachResult>
+        {totalPostsQuantity ? (
+          <SerachResult>
+            <strong>{totalPostsQuantity}</strong> posts collected!
+          </SerachResult>
+        ) : (
+          ""
+        )}
       </SearchResultDiv>
       <InputContainer>
         <IconContainer left="1.5rem">

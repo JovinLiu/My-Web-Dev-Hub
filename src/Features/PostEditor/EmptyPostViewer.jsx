@@ -23,7 +23,7 @@ const fadeIn = keyframes`
 `;
 
 const Container = styled.div`
-  margin: 0rem auto;
+  margin: 4rem auto;
   color: white;
   display: flex;
   flex-direction: column;
@@ -87,19 +87,27 @@ const Mode = styled.span`
   padding: 0.5rem 1rem;
   border-radius: 10px;
   height: 3.6rem;
+  white-space: nowrap;
+`;
+
+const DescriptionBox = styled.p`
+  width: 100%;
+  padding: 2rem;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+  border-radius: 25px;
+  background-color: var(--color-${({category}) => category}-20);
 `;
 
 function EmptyPostViewer() {
   const navigate = useNavigate();
-  const {currentTitle, currentCategory, currentPostBody} = useSelector((state) => state.currentPost);
+  const {title, category, content, description} = useSelector((state) => state.currentPost);
   const {isMarkDown, categories} = useSelector((state) => state.ui);
-  const [techStack] = categories.filter(
-    (category) => category.toLowerCase().split(" ").join("") === currentCategory?.toLowerCase().split(" ").join("")
-  );
+  const [techStack] = categories.filter((category) => category.toLowerCase().split(" ").join("") === category?.toLowerCase().split(" ").join(""));
 
-  const category = currentCategory.split(" ").join("").toLowerCase();
-  const postBody = parse(currentPostBody);
-  const body = htmlToText(currentPostBody);
+  const categoryLower = category.split(" ").join("").toLowerCase();
+  const postBody = parse(content);
+  const body = htmlToText(content);
 
   function handleClose(e) {
     e.preventDefault();
@@ -109,27 +117,29 @@ function EmptyPostViewer() {
   return (
     <Container>
       <TitleContainer
-        category={category}
+        category={categoryLower}
         height={"15rem"}
         padding={"2rem"}
         flexDirection={"row"}
         alignItems={"start"}
         width={"100%"}
         position="relative"
+        overflow="hidden"
       >
         <IconLarge>
-          <Icon category={category} />
+          <Icon category={categoryLower} />
         </IconLarge>
-        <GeneralButton category={category} type="close" onClick={handleClose}>
+        <GeneralButton category={categoryLower} type="close" onClick={handleClose}>
           <ion-icon name="close-outline" />
         </GeneralButton>
         <InfoContainer>
-          <H1>{currentTitle || "New Post..."}</H1>
+          <H1>{title || "New Post..."}</H1>
           <Span>Tech Stack: {techStack}</Span>
         </InfoContainer>
-        <Mode category={category}>Edit Mode</Mode>
+        <Mode category={categoryLower}>Edit Mode</Mode>
       </TitleContainer>
       <BodyContainer>
+        <DescriptionBox category={categoryLower}>{description}</DescriptionBox>
         {isMarkDown ? (
           <Markdown rehypePlugins={[rehypeRaw]} remarkPlugins={[[remarkGfm, {singleTilde: false}]]}>
             {body}
@@ -138,7 +148,7 @@ function EmptyPostViewer() {
           postBody
         )}
       </BodyContainer>
-      <CardLine category={category} height={"2rem"} />
+      <CardLine category={categoryLower} height={"2rem"} />
     </Container>
   );
 }

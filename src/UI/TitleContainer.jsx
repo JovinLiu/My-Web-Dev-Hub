@@ -15,7 +15,7 @@ const TitleContainer = styled.div`
   width: ${(props) => props.width};
   z-index: 1;
   position: ${(props) => props.position};
-  overflow: hidden;
+  overflow: ${(props) => props.overflow || ""};
 `;
 
 export default TitleContainer;
