@@ -34,7 +34,7 @@ const StyledCardWithLink = styled(Link)`
   box-shadow: 5px 5px 10px var(--color-grey-100);
   text-decoration: none;
   animation-name: ${fadeIn};
-  animation-duration: ${(props) => Math.cbrt(props.fadeitime) / 2}s;
+  animation-duration: ${(props) => Math.cbrt(props.fadeintime) / 2}s;
   animation-iteration-count: 1;
   position: relative;
   &:hover {
@@ -95,7 +95,7 @@ const Private = styled.div`
   z-index: 10;
 `;
 
-function PostCard({post, fadeitime}) {
+function PostCard({post, fadeintime}) {
   const {category, id, description, title, createdAt, isPrivate} = post;
   const categoryLower = category.toLowerCase();
 
@@ -111,7 +111,7 @@ function PostCard({post, fadeitime}) {
   const date = timeFormat(createdAt);
 
   return (
-    <StyledCardWithLink to={`/app/viewer/${id}`} width={width} fadeitime={fadeitime}>
+    <StyledCardWithLink to={`/app/viewer/${id}`} width={width} fadeintime={fadeintime}>
       {isPrivate ? (
         <Private>
           <ion-icon name="lock-closed-outline" />
