@@ -5,6 +5,7 @@ import "react-quill/dist/quill.snow.css";
 import styled from "styled-components";
 import {setContent} from "./currentPostSlice";
 import {useDispatch, useSelector} from "react-redux";
+import Loader from "../../UI/Loader";
 
 const Container = styled.div`
   height: calc(100vh - 31rem);
@@ -20,13 +21,23 @@ const Background = styled.div`
   background-color: var(--color-grey-50);
 `;
 
+const LoaderContainer = styled.div`
+  position: absolute;
+  z-index: 20;
+  top: -10%;
+  left: 45%;
+`;
+
 function TextBox() {
   const {content} = useSelector((state) => state.currentPost);
+  const {isWorking} = useSelector((state) => state.ui);
   const dispatch = useDispatch();
+
   useEffect(function () {
     document.querySelector(".quill").setAttribute("style", "height: calc(100vh - 31rem); display:flex; flex-direction: column;");
     document.querySelector(".ql-toolbar").setAttribute("style", "background-color: var(--color-grey-50)");
     document.querySelector(".ql-container").setAttribute("style", "background-color: var(--color-grey-50); flex-grow:1;overflow:scroll");
+    document.querySelector(".ql-editor").setAttribute("style", "font-size: 1.5rem; color: var(--color-grey-500); line-height: 2.5rem;");
   }, []);
 
   const toolbar = {
@@ -54,7 +65,13 @@ function TextBox() {
 
   return (
     <Container>
-      <Background />
+      {isWorking ? (
+        <LoaderContainer>
+          <Loader />
+        </LoaderContainer>
+      ) : (
+        <Background />
+      )}
       <ReactQuill theme="snow" value={content} onChange={handleSetCurrentContent} modules={toolbar} />
     </Container>
   );

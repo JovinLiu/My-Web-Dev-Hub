@@ -11,6 +11,7 @@ const initialStateCurrentPost = {
   content: "",
   images: [],
   isPrivate: true,
+  isMarkdown: false,
   user: ""
 };
 
@@ -48,6 +49,9 @@ const currentPostSlice = createSlice({
     setIsPrivate: (state) => {
       state.isPrivate = !state.isPrivate;
     },
+    setIsMarkdown: (state, action) => {
+      state.isMarkdown = action.payload;
+    },
     setUser: (state, action) => {
       state.user = action.payload;
     },
@@ -62,6 +66,7 @@ const currentPostSlice = createSlice({
       state.content = action.payload.content;
       state.images = action.payload.images;
       state.isPrivate = action.payload.isPrivate;
+      state.isMarkdown = action.payload.isMarkdown;
       state.user = action.payload.user;
     },
     resetPost: (state) => {
@@ -91,6 +96,7 @@ export const {
   setContent,
   setImages,
   setIsPrivate,
+  setIsMarkdown,
   setUser,
   setPost,
   resetPost

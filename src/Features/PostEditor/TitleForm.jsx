@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+// 可以安装image-to-base64把图片转换成base64
 import styled from "styled-components";
 import GeneralButton from "../../UI/Buttons/GeneralButton";
 import TitleContainer from "../../UI/TitleContainer";
@@ -134,7 +135,7 @@ function TitleForm({children}) {
             className="title-description"
             value={description}
             onChange={handleSetCurrentDescription}
-            placeholder="Write down the most critical thought of the post and it will be displayed on the card, maximum 400 characters."
+            placeholder="The main idea of this post. Maximum 400 characters."
             maxLength="400"
             column="1 / -1"
             width="36rem"

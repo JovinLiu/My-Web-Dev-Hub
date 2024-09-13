@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
 import toast from "react-hot-toast";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {htmlToText} from "html-to-text";
 import Modal from "../../UI/Modal";
 import Confirm from "../../UI/Confirm";
@@ -20,6 +20,7 @@ const ButtonContainer = styled.div`
 `;
 
 function ViewerButtonGroup({post, id, category}) {
+  const {isWorking} = useSelector((state) => state.ui);
   const [deletePost] = useDeletePostMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -50,18 +51,18 @@ function ViewerButtonGroup({post, id, category}) {
   }
   return (
     <ButtonContainer>
-      <GeneralButton category={category} type="primary" onClick={handleClickClickToCopy}>
+      <GeneralButton category={category} type="primary" onClick={handleClickClickToCopy} disabled={isWorking}>
         <ion-icon name="copy-outline" />
       </GeneralButton>
-      <GeneralButton category={category} type="primary" onClick={handleUpdatePost}>
+      <GeneralButton category={category} type="primary" onClick={handleUpdatePost} disabled={isWorking}>
         <ion-icon name="create-outline" />
       </GeneralButton>
-      <GeneralButton category={category} type="primary" onClick={handleClickSharePost}>
+      <GeneralButton category={category} type="primary" onClick={handleClickSharePost} disabled={isWorking}>
         <ion-icon name="mail-outline" />
       </GeneralButton>
       <Modal>
         <Modal.Open openCode="delete">
-          <GeneralButton category={category} type="primary">
+          <GeneralButton category={category} type="primary" disabled={isWorking}>
             <ion-icon name="trash-outline" />
           </GeneralButton>
         </Modal.Open>

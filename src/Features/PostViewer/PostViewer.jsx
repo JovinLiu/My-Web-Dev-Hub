@@ -10,6 +10,10 @@ import {useSelector} from "react-redux";
 import {useGetPostByIdQuery} from "../../Utils/data";
 import timeFormat from "../../Utils/timeFormat";
 import ViewerButtonGroup from "./ViewerButtonGroup";
+import {htmlToText} from "html-to-text";
+import Markdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
 
 const fadeIn = keyframes`
   from {
@@ -35,6 +39,7 @@ const Container = styled.div`
 `;
 
 const BodyContainer = styled.div`
+  font-size: 1.5rem;
   color: var(--color-grey-600);
   background-color: var(--color-grey-50);
   height: calc(100vh - 29rem) !important;
@@ -88,13 +93,11 @@ const DescriptionBox = styled.p`
 `;
 
 function PostViewer() {
+  //Hooks
   const navigate = useNavigate();
   const {categories} = useSelector((state) => state.ui);
   const {id} = useParams();
   const {currentData = {}, isLoading, isFetching} = useGetPostByIdQuery(id);
-  const post = currentData?.data?.doc;
-
-  const [techStack] = categories.filter((category) => category.split(" ").join("") === post?.category);
 
   function handleClose(e) {
     e.preventDefault();
@@ -103,15 +106,19 @@ function PostViewer() {
 
   if (isLoading || isFetching) return <Loader />;
 
-  const content = parse(post.content);
-  const category = post.category.toLowerCase();
-  const date = timeFormat(post.createdAt);
-  const updateDate = timeFormat(post.updatedAt || "");
+  //drived states and processing data
+  const post = currentData?.data?.doc;
+  const plainTextContent = htmlToText(post?.content);
+  const htmlContent = parse(post.content);
+  const categoryLower = post?.category?.toLowerCase();
+  const [category] = categories.filter((category) => category.split(" ").join("") === post?.category);
+  const createdAtArr = timeFormat(post?.createdAt);
+  const updatedAtArr = timeFormat(post?.updatedAt || "");
 
   return (
     <Container>
       <TitleContainer
-        category={category}
+        category={categoryLower}
         height={"15rem"}
         padding={"2rem"}
         flexDirection={"row"}
@@ -121,27 +128,34 @@ function PostViewer() {
         overflow="hidden"
       >
         <IconLarge>
-          <Icon category={category} />
+          <Icon category={categoryLower} />
         </IconLarge>
-        <GeneralButton category={category} type="close" onClick={handleClose}>
+        <GeneralButton category={categoryLower} type="close" onClick={handleClose}>
           <ion-icon name="close-outline" />
         </GeneralButton>
         <InfoContainer>
-          <H1>{post.title}</H1>
+          <H1>{post?.title}</H1>
 
-          <Span>Posted on {date[2] + ", " + date[0] + ", " + date[1]}</Span>
+          <Span>Posted on {createdAtArr[2] + ", " + createdAtArr[0] + ", " + createdAtArr[1]}</Span>
 
-          {updateDate && <Span>Revised on {updateDate[2] + ", " + updateDate[0] + ", " + updateDate[1]}</Span>}
+          {updatedAtArr && <Span>Amended on {updatedAtArr[2] + ", " + updatedAtArr[0] + ", " + updatedAtArr[1]}</Span>}
 
-          <Span>Tech Stack: {techStack}</Span>
+          <Span>Tech Stack: {category}</Span>
         </InfoContainer>
-        <ViewerButtonGroup post={post} id={id} category={category} />
+        <ViewerButtonGroup post={post} id={id} category={categoryLower} />
       </TitleContainer>
       <BodyContainer>
-        <DescriptionBox category={category}>{post.description}</DescriptionBox>
-        {content}
+        <DescriptionBox category={categoryLower}>{post?.description}</DescriptionBox>
+        {post?.isMarkdown ? (
+          //remarkGfm这个好像不管用
+          <Markdown rehypePlugins={[rehypeRaw]} remarkPlugins={[[remarkGfm, {singleTilde: false}]]}>
+            {plainTextContent}
+          </Markdown>
+        ) : (
+          <>{htmlContent}</>
+        )}
       </BodyContainer>
-      <CardLine category={category} height={"2rem"} />
+      <CardLine category={categoryLower} height={"2rem"} />
     </Container>
   );
 }

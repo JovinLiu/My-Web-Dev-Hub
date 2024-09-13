@@ -93,23 +93,6 @@ const Hr = styled.hr`
 function SideBar() {
   const {showSideBar, signin} = useSelector((state) => state.ui);
   const [searchParams] = useSearchParams();
-  // const [isHovered, setIsHovered] = useState(false);
-
-  // useEffect(() => {
-  //   const transparentDiv = document.querySelector(".transparent");
-
-  //   if (transparentDiv) {
-  //     transparentDiv.addEventListener("mouseenter", () => setIsHovered(true));
-  //     transparentDiv.addEventListener("mouseleave", () => setIsHovered(false));
-  //   }
-
-  //   return () => {
-  //     if (transparentDiv) {
-  //       transparentDiv.removeEventListener("mouseenter", () => setIsHovered(true));
-  //       transparentDiv.removeEventListener("mouseleave", () => setIsHovered(false));
-  //     }
-  //   };
-  // }, []);
 
   const category = searchParams.get("category");
   const {currentData, isLoading, isFetching} = useGetTopicStatsQuery(category);

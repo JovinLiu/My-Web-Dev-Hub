@@ -3,12 +3,13 @@ import styled from "styled-components";
 import toast from "react-hot-toast";
 import Modal from "../../UI/Modal";
 import Confirm from "../../UI/Confirm";
-import {toggleShowEditor, toggleIsMarkDown} from "../../Pages/uiSlice";
-import {setPost, setIsPrivate, resetPost} from "./currentPostSlice";
+import {setIsWorking, toggleShowEditor} from "../../Pages/uiSlice";
+import {setPost, setIsPrivate, setIsMarkdown, resetPost} from "./currentPostSlice";
 import {useAddNewPostMutation, useUpdatePostMutation} from "../../Utils/data";
 import {useDispatch, useSelector} from "react-redux";
 import GeneralButton from "../../UI/Buttons/GeneralButton";
 import {useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
 
 const ButtonContainer = styled.div`
   margin-top: auto;
@@ -19,22 +20,34 @@ const ButtonContainer = styled.div`
 `;
 
 function EditorButtonGroup({categoryLower, currentPost}) {
-  const {isMarkDown} = useSelector((state) => state.ui);
+  //Hooks
+  const [isMarkDownMode, setIsMarkDownMode] = useState(false);
+  const {isWorking} = useSelector((state) => state.ui);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [addNewPost, {isLoading: isCreating}] = useAddNewPostMutation();
+  const [updatePost, {isLoading: isUpdating}] = useUpdatePostMutation();
+
+  //get all fields
   const {id, title, description, category, topic, content, isPrivate} = currentPost;
 
-  const [addNewPost] = useAddNewPostMutation();
-  const [updatePost] = useUpdatePostMutation();
+  //Save Condition
+  const canSave = !title || !content || !category || !topic || !description;
 
-  //react hook form
-  const canISave = !title || !content || !category || !topic || !description;
+  useEffect(
+    function () {
+      dispatch(setIsWorking(isCreating || isUpdating));
+    },
+    [isCreating, isUpdating, dispatch]
+  );
 
+  //清空当前帖子
   function handleResetCurrentPost() {
     dispatch(resetPost());
     toast.success("Post successfully emptied!");
   }
 
+  //切换帖子公开还是私有
   function handleToggleIsPrivate(e) {
     e.preventDefault();
 
@@ -48,32 +61,43 @@ function EditorButtonGroup({categoryLower, currentPost}) {
     dispatch(setIsPrivate());
   }
 
+  //切换mark down模式
   function handleToggleIsMarkDown(e) {
     e.preventDefault();
 
-    if (!isMarkDown) {
+    if (!isMarkDownMode) {
       toast.success("MarkDown Editor");
     }
-    if (isMarkDown) {
+    if (isMarkDownMode) {
       toast.success("Text Editor");
     }
 
-    dispatch(toggleIsMarkDown());
+    setIsMarkDownMode(!isMarkDownMode);
   }
 
-  //save to localstorage
+  //同步mark down模式
+  useEffect(
+    function () {
+      dispatch(setIsMarkdown(isMarkDownMode));
+    },
+    [isMarkDownMode, dispatch]
+  );
+
+  //保存到localstorage（除去id）
   function handleClickTempSave(e) {
     try {
       e.preventDefault();
-      if (canISave) throw new Error("Please fill in all required fields.");
-      localStorage.setItem("tempPost", JSON.stringify(currentPost));
+      if (canSave) throw new Error("Please fill in all required fields.");
+      // eslint-disable-next-line no-unused-vars
+      const {id, createdAt, updatedAt, user, ...post} = currentPost;
+      localStorage.setItem("tempPost", JSON.stringify(post));
       toast.success("Post saved to temporary storage.");
     } catch (error) {
       toast.error(error.message);
     }
   }
 
-  //Load from localstorage
+  //从localstorage读取（除去id）
   function handleClickLoadTempSave(e) {
     e.preventDefault();
     const data = localStorage.getItem("tempPost");
@@ -86,18 +110,72 @@ function EditorButtonGroup({categoryLower, currentPost}) {
     }
   }
 
-  //save to database
+  //保存到数据库
   async function handleSavePost(e) {
     try {
       e.preventDefault();
-      if (canISave) throw new Error("Please fill in all required fields.");
+      if (canSave) throw new Error("Please fill in all required fields.");
+
+      //获取所有的image的element
+      const formdata = new FormData();
+
+      const images = document.querySelector(".ql-editor").getElementsByTagName("img");
+
+      const imgNameArr = [];
+      //https://blog.csdn.net/qq_16946803/article/details/121080836
+      Array.from(images).map((image, i) => {
+        if (!image.outerHTML.match(/:(.*?);/)) return;
+        const imgType = image.outerHTML.match(/:(.*?);/)[1];
+
+        const imgFormat = imgType.split("/")[1];
+        const imgStr = image.outerHTML.split(",")[1].slice(0, -2);
+        //如果第一次add post，没有id，文件名就变成了img--时间了，其实应该把起名这个放在后端进行
+        const imgName = `img-${currentPost.id || currentPost.title}-${Date.now()}-${i}.${imgFormat}`;
+        imgNameArr.push(imgName);
+
+        const bytes = window.atob(imgStr);
+
+        const arr = [];
+        for (let i = 0; i < bytes.length; i++) {
+          arr.push(bytes.charCodeAt(i));
+        }
+
+        const blob = new Blob([new Uint8Array(arr)], {type: imgType});
+        formdata.append("imagefiles", blob, imgName);
+      });
+      //图片名称放入formData
+      formdata.append("images", imgNameArr);
+      formdata.append("title", currentPost.title);
+      formdata.append("createdAt", currentPost.createdAt);
+      formdata.append("updatedAt", currentPost.updatedAt);
+      formdata.append("description", currentPost.description);
+      formdata.append("category", currentPost.category);
+      formdata.append("topic", currentPost.topic);
+      formdata.append("isPrivate", currentPost.isPrivate);
+      formdata.append("isMarkdown", currentPost.isMarkdown);
+      // form.append("user", currentPost.user);
+
+      let htmlStr = currentPost.content;
+
+      if (imgNameArr.length !== 0)
+        imgNameArr.map(
+          (imgName) =>
+            (htmlStr = htmlStr.replace(
+              /<img[^>]*src=["']data:image\/[^'"]+;base64,[^'"]*["'][^>]*>/,
+              `<img src="http://localhost:3000/images/post/${imgName}" alt="image">`
+            ))
+        );
+      //
+      formdata.append("content", htmlStr);
 
       let res;
 
       if (id) {
-        res = await updatePost({id, updatedPost: currentPost});
+        console.log(id);
+        res = await updatePost({id, formdata});
       } else {
-        res = await addNewPost(currentPost);
+        console.log("add new post");
+        res = await addNewPost(formdata);
       }
 
       if (res.data.status === "success") {
@@ -105,28 +183,31 @@ function EditorButtonGroup({categoryLower, currentPost}) {
         navigate("/app/posts");
         dispatch(resetPost());
         dispatch(toggleShowEditor());
+        dispatch(setIsWorking(false));
       }
     } catch (err) {
       toast.error(err.message);
     }
   }
+
+  //Render
   return (
     <ButtonContainer>
-      <GeneralButton category={categoryLower} type="primary" onClick={handleToggleIsPrivate}>
+      <GeneralButton category={categoryLower} type="primary" onClick={handleToggleIsPrivate} disabled={isWorking}>
         {isPrivate ? <ion-icon name="lock-closed-outline" /> : <ion-icon name="globe-outline" />}
       </GeneralButton>
-      <GeneralButton category={categoryLower} type="primary" onClick={handleToggleIsMarkDown}>
-        {isMarkDown ? <ion-icon name="logo-markdown" /> : <ion-icon name="text-outline" />}
+      <GeneralButton category={categoryLower} type="primary" onClick={handleToggleIsMarkDown} disabled={isWorking}>
+        {isMarkDownMode ? <ion-icon name="logo-markdown" /> : <ion-icon name="text-outline" />}
       </GeneralButton>
-      <GeneralButton category={categoryLower} type="primary" onClick={handleClickLoadTempSave}>
+      <GeneralButton category={categoryLower} type="primary" onClick={handleClickLoadTempSave} disabled={isWorking}>
         <ion-icon name="folder-outline" />
       </GeneralButton>
-      <GeneralButton category={categoryLower} type="primary" onClick={handleClickTempSave}>
+      <GeneralButton category={categoryLower} type="primary" onClick={handleClickTempSave} disabled={isWorking}>
         <ion-icon name="save-outline" />
       </GeneralButton>
       <Modal>
         <Modal.Open openCode="delete">
-          <GeneralButton category={categoryLower} type="primary">
+          <GeneralButton category={categoryLower} type="primary" disabled={isWorking}>
             <ion-icon name="trash-bin-outline" />
           </GeneralButton>
         </Modal.Open>
@@ -134,7 +215,7 @@ function EditorButtonGroup({categoryLower, currentPost}) {
           <Confirm onConfirm={handleResetCurrentPost} action="Empty" />
         </Modal.Window>
       </Modal>
-      <GeneralButton category={categoryLower} type="primary" onClick={handleSavePost}>
+      <GeneralButton category={categoryLower} type="primary" onClick={handleSavePost} disabled={isWorking}>
         <ion-icon name="checkmark-outline" />
       </GeneralButton>
     </ButtonContainer>

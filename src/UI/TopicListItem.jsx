@@ -29,17 +29,16 @@ const Ol = styled.ol`
 `;
 
 const Button = styled.button`
+  color: var(--color-grey-700);
   height: 2rem;
   width: 2rem;
-  border-radius: 50%;
   font-size: 1.6rem;
-  background-color: var(--color-blue-1);
-  color: var(--color-grey-50);
+  background-color: var(--color-grey-50);
+  border-radius: 50%;
   border: none;
   transition: var(--transition-1);
   white-space: nowrap;
   &:hover {
-    color: var(--color-grey-700);
     background-color: var(--color-blue-2);
   }
 `;

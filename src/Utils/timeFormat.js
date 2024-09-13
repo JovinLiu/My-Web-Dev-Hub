@@ -1,5 +1,5 @@
-function timeFormat(createdAt, short = false) {
-  if (!createdAt) return "";
+function timeFormat(dateInput, short = false) {
+  if (!dateInput) return "";
   const options = {
     hour: "numeric",
     minute: "numeric",
@@ -13,7 +13,7 @@ function timeFormat(createdAt, short = false) {
   };
   const locale = navigator.language;
   //Tuesday, August 10, 2021 at 19:30:00 GMT+10
-  const timeArr = new Intl.DateTimeFormat(locale, options).format(new Date(createdAt)).split(", ");
+  const timeArr = new Intl.DateTimeFormat(locale, options).format(new Date(dateInput)).split(", ");
 
   //Wednesday, 9/11/2024, 15:54:14 GMT+10
   const year = timeArr[2].split(" ")[0];
@@ -21,8 +21,8 @@ function timeFormat(createdAt, short = false) {
   const dateArr = timeArr[1].split(" ");
   const date = `${dateArr[0]}/${dateArr[1]}/${year}`;
   const time = timeArr[2].split(" ")[2];
-  const createdAtFormatted = [date, time, weekday];
-  return createdAtFormatted;
+  const dateFormatted = [date, time, weekday];
+  return dateFormatted;
 }
 
 export default timeFormat;

@@ -34,8 +34,9 @@ const StyledCardWithLink = styled(Link)`
   box-shadow: 5px 5px 10px var(--color-grey-100);
   text-decoration: none;
   animation-name: ${fadeIn};
-  animation-duration: ${(props) => Math.cbrt(props.fadeInTime) / 2}s;
+  animation-duration: ${(props) => Math.cbrt(props.fadeitime) / 2}s;
   animation-iteration-count: 1;
+  position: relative;
   &:hover {
     transform: scale(1.03);
   }
@@ -79,8 +80,24 @@ const Round = styled.div`
   clip-path: circle();
 `;
 
-function PostCard({post, fadeInTime}) {
-  const category = post.category.toLowerCase();
+const Private = styled.div`
+  position: absolute;
+  font-size: 1.75rem;
+  text-align: center;
+  height: 2.25rem;
+  width: 2.25rem;
+  color: var(--color-grey-700);
+  background-color: var(--color-grey-50);
+  border-radius: 50%;
+  right: 0;
+  top: 0;
+  transform: translate(-15%, 15%);
+  z-index: 10;
+`;
+
+function PostCard({post, fadeitime}) {
+  const {category, id, description, title, createdAt, isPrivate} = post;
+  const categoryLower = category.toLowerCase();
 
   function calcWidth() {
     return (Math.random() * 500).toFixed(0) * 1;
@@ -91,21 +108,26 @@ function PostCard({post, fadeInTime}) {
     width = calcWidth();
   }
 
-  const date = timeFormat(post.createdAt);
+  const date = timeFormat(createdAt);
 
   return (
-    <StyledCardWithLink to={`/app/viewer/${post.id}`} width={width} fadeInTime={fadeInTime}>
-      <CardLine category={category} height={"5%"} />
-      <TextContainer>{post.description.slice(0, 200)}</TextContainer>
-      <TitleContainer category={category} height={"30%"} gap={"1rem"} padding={"1.4rem"} flexDirection={"row"} alignItems={"center"} link={Link}>
+    <StyledCardWithLink to={`/app/viewer/${id}`} width={width} fadeitime={fadeitime}>
+      {isPrivate ? (
+        <Private>
+          <ion-icon name="lock-closed-outline" />
+        </Private>
+      ) : null}
+      <CardLine category={categoryLower} height={"5%"} />
+      <TextContainer>{description.slice(0, 200)}</TextContainer>
+      <TitleContainer category={categoryLower} height={"30%"} gap={"1rem"} padding={"1.4rem"} flexDirection={"row"} alignItems={"center"} link={Link}>
         <Info>
           <Title>
-            <strong>{post.title}</strong>
+            <strong>{title}</strong>
           </Title>
           <CreatedAt>{date[0] + " at " + date[1]}</CreatedAt>
         </Info>
-        <Round category={category}>
-          <Icon category={category} />
+        <Round category={categoryLower}>
+          <Icon category={categoryLower} />
         </Round>
       </TitleContainer>
     </StyledCardWithLink>

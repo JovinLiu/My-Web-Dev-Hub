@@ -35,7 +35,9 @@ const Container = styled.div`
 `;
 
 const BodyContainer = styled.div`
-  color: var(--color-grey-600);
+  font-size: 1.5rem;
+  color: var(--color-grey-500);
+  line-height: 2.5rem;
   background-color: var(--color-grey-50);
   height: calc(100vh - 29rem) !important;
   padding: 2rem;
@@ -101,13 +103,13 @@ const DescriptionBox = styled.p`
 
 function EmptyPostViewer() {
   const navigate = useNavigate();
-  const {title, category, content, description} = useSelector((state) => state.currentPost);
-  const {isMarkDown, categories} = useSelector((state) => state.ui);
+  const {title, category, content, description, isMarkdown} = useSelector((state) => state.currentPost);
+  const {categories} = useSelector((state) => state.ui);
   const [techStack] = categories.filter((category) => category.toLowerCase().split(" ").join("") === category?.toLowerCase().split(" ").join(""));
 
   const categoryLower = category.split(" ").join("").toLowerCase();
-  const postBody = parse(content);
   const body = htmlToText(content);
+  const postBody = parse(content);
 
   function handleClose(e) {
     e.preventDefault();
@@ -140,7 +142,7 @@ function EmptyPostViewer() {
       </TitleContainer>
       <BodyContainer>
         <DescriptionBox category={categoryLower}>{description}</DescriptionBox>
-        {isMarkDown ? (
+        {isMarkdown ? (
           <Markdown rehypePlugins={[rehypeRaw]} remarkPlugins={[[remarkGfm, {singleTilde: false}]]}>
             {body}
           </Markdown>

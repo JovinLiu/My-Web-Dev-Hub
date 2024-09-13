@@ -22,7 +22,7 @@ const Select = styled.select`
   background-color: var(--color-grey-100);
 `;
 
-function PaginationTop() {
+function PaginationRange() {
   const {currentPage, cardsPerPage, searchedPostsQuantity} = useSelector((state) => state.ui);
   const dispatch = useDispatch();
   const start = (currentPage - 1) * cardsPerPage + 1;
@@ -53,4 +53,4 @@ function PaginationTop() {
   );
 }
 
-export default PaginationTop;
+export default PaginationRange;

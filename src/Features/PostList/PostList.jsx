@@ -8,7 +8,7 @@ import {useSelector} from "react-redux";
 import {setSearchedPostsQuantity, setTotalPostsQuantity} from "../../Pages/uiSlice";
 import NoPostFound from "../../UI/NoPostFound";
 import Pagination from "../../UI/Pagination";
-import PaginationTop from "../../UI/PaginationTop";
+import PaginationRange from "../../UI/PaginationRange";
 
 const Container = styled.div`
   display: flex;
@@ -29,19 +29,24 @@ const CardContainer = styled.div`
 `;
 
 function PostList() {
-  const {currentTag, searchQuery, currentPage, cardsPerPage} = useSelector((state) => state.ui);
-  const category = currentTag === "AllPosts" ? "" : currentTag;
-  const arg = {category, search: searchQuery, page: currentPage, limit: cardsPerPage};
-  const {currentData = {}, isFetching, isLoading} = useGetPostsByConditionsQuery(arg);
-
+  //Hooks
   const dispatch = useDispatch();
   const allCards = useRef(null);
 
+  //获取UI state
+  const {currentTag, searchQuery, currentPage, cardsPerPage} = useSelector((state) => state.ui);
+  const category = currentTag === "AllPosts" ? "" : currentTag;
+
+  //获取后端数据
+  const arg = {category, search: searchQuery, page: currentPage, limit: cardsPerPage, fields: "category,id,description,title,createdAt,isPrivate"};
+  const {currentData = {}, isFetching, isLoading} = useGetPostsByConditionsQuery(arg);
   const posts = currentData?.data?.docs;
   const {totalPostsQuantity, postsQuantityByQuery} = currentData;
 
+  //Render Condition
   const showPagination = posts?.length !== 0 || !isFetching || !isLoading;
 
+  //同步帖子数量的数据
   useEffect(
     function () {
       dispatch(setTotalPostsQuantity(totalPostsQuantity));
@@ -50,6 +55,7 @@ function PostList() {
     [totalPostsQuantity, dispatch, postsQuantityByQuery]
   );
 
+  //设置视口交互逻辑
   useEffect(
     function () {
       if (!allCards?.current?.childNodes) return;
@@ -66,6 +72,7 @@ function PostList() {
 
       const cardObserver = new IntersectionObserver(revealCard, options);
 
+      //隐藏看不到的card
       if (!allCards?.current?.childNodes) return;
       Array.from(allCards?.current?.childNodes).forEach((card) => {
         card.setAttribute("style", "opacity: 0%");
@@ -78,15 +85,18 @@ function PostList() {
     [posts]
   );
 
+  //Render Loader
   if (isFetching || isLoading) return <Loader />;
 
+  //Render no posts found
   if (posts?.length === 0 && !isFetching)
     return (
       <Container>
-        <NoPostFound message="No post found, Click Add Post button to create one or empty the search keyword!" />
+        <NoPostFound message="No post found, Click Add Post button to create one or empty the search bar!" />
       </Container>
     );
 
+  //Render no posts found
   if (searchQuery !== "" && posts.length === 0 && !isFetching)
     return (
       <Container>
@@ -94,12 +104,13 @@ function PostList() {
       </Container>
     );
 
+  //Render Posts
   return (
     <Container>
-      {showPagination && <PaginationTop />}
+      {showPagination && <PaginationRange />}
       <CardContainer ref={allCards}>
         {posts?.map((post, i) => (
-          <PostCard post={post} fadeInTime={i} key={post.id} />
+          <PostCard post={post} fadeintime={i} key={post.id} />
         ))}
       </CardContainer>
       {showPagination && <Pagination />}
