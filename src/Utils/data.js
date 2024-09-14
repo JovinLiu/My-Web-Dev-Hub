@@ -9,7 +9,9 @@ export const postsApi = createApi({
     //returns posts with query and total number of posts and total number of posts by a category in the database
     getPostsByConditions: builder.query({
       query: (arg) => ({
-        url: `/posts?${arg.category ? `category=${arg.category}&` : ""}search=${arg.search}&page=${arg.page}&limit=${arg.limit}&fields=${arg.fields}`
+        url: `/posts?${arg.category ? `category=${arg.category}&` : ""}search=${arg.search}&page=${arg.page}&limit=${arg.limit}&fields=${
+          arg.fields
+        }&sort=${arg.sort}`
       }),
       providesTags: ["Post"]
     }),

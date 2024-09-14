@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialStateUI = {
+  showLatest: true,
   isWorking: false,
   signin: false,
   totalPostsQuantity: 0,
@@ -67,11 +68,15 @@ const uiSlice = createSlice({
     },
     setIsWorking: (state, action) => {
       state.isWorking = action.payload;
+    },
+    setShowLatest: (state) => {
+      state.showLatest = !state.showLatest;
     }
   }
 });
 
 export const {
+  setShowLatest,
   toggleShowSideBar,
   toggleShowEditor,
   toggleDarkMode,

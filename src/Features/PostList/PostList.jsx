@@ -34,11 +34,18 @@ function PostList() {
   const allCards = useRef(null);
 
   //获取UI state
-  const {currentTag, searchQuery, currentPage, cardsPerPage} = useSelector((state) => state.ui);
+  const {currentTag, searchQuery, currentPage, cardsPerPage, showLatest} = useSelector((state) => state.ui);
   const category = currentTag === "AllPosts" ? "" : currentTag;
 
   //获取后端数据
-  const arg = {category, search: searchQuery, page: currentPage, limit: cardsPerPage, fields: "category,id,description,title,createdAt,isPrivate"};
+  const arg = {
+    category,
+    search: searchQuery,
+    page: currentPage,
+    limit: cardsPerPage,
+    fields: "category,id,description,title,createdAt,isPrivate",
+    sort: showLatest ? "" : "createdAt"
+  };
   const {currentData = {}, isFetching, isLoading} = useGetPostsByConditionsQuery(arg);
   const posts = currentData?.data?.docs;
   const {totalPostsQuantity, postsQuantityByQuery} = currentData;

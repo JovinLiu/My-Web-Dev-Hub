@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
-import {setCardsPerPage} from "../Pages/uiSlice";
+import {setCardsPerPage, setShowLatest} from "../Pages/uiSlice";
 
 const Stats = styled.div`
   font-size: 1.5rem;
@@ -18,12 +18,22 @@ const Stats = styled.div`
 `;
 
 const Select = styled.select`
+  height: 2.2rem;
+  border: 1px solid;
   border-radius: 10px;
   background-color: var(--color-grey-100);
 `;
 
+const Button = styled.button`
+  padding: 0 1rem;
+  height: 2.2rem;
+  border-radius: 10px;
+  border: 1px solid;
+  background-color: var(--color-grey-100);
+`;
+
 function PaginationRange() {
-  const {currentPage, cardsPerPage, searchedPostsQuantity} = useSelector((state) => state.ui);
+  const {currentPage, cardsPerPage, searchedPostsQuantity, showLatest} = useSelector((state) => state.ui);
   const dispatch = useDispatch();
   const start = (currentPage - 1) * cardsPerPage + 1;
   const end = currentPage * cardsPerPage < searchedPostsQuantity ? currentPage * cardsPerPage : searchedPostsQuantity;
@@ -32,6 +42,10 @@ function PaginationRange() {
 
   function handleSetCardsPerPage(e) {
     dispatch(setCardsPerPage(e.target.value));
+  }
+
+  function handleClickSort() {
+    dispatch(setShowLatest());
   }
 
   return (
@@ -49,6 +63,7 @@ function PaginationRange() {
         </Select>
         <span> posts per page</span>
       </div>
+      <Button onClick={handleClickSort}>show {showLatest ? "earliest" : "latest"}</Button>
     </Stats>
   );
 }
