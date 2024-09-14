@@ -13,12 +13,12 @@ import {Toaster} from "react-hot-toast";
 
 import AppLayout from "./Pages/AppLayout";
 import PostList from "./Features/PostList/PostList.jsx";
-import EmptyPostViewer from "./Features/PostEditor/EmptyPostViewer.jsx";
 import PostViewer from "./Features/PostViewer/PostViewer.jsx";
 import PageNotFound from "./Pages/PageNotFound";
 import GlobalStyles from "./Styles/GlobalStyles";
 import store from "./store.js";
 import HomePage from "./Pages/HomePage.jsx";
+import PostPreviewer from "./Features/PostEditor/PostPreviewer.jsx";
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
           <Route path="/app" element={<AppLayout />}>
             <Route index element={<Navigate replace to="posts" />} />
             <Route path="posts" element={<PostList />} />
-            <Route path="editor" element={<EmptyPostViewer />} />
+            <Route path="editor" element={<PostPreviewer />} />
             <Route path="viewer/:id" element={<PostViewer />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />

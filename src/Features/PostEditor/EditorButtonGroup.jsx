@@ -143,16 +143,17 @@ function EditorButtonGroup({categoryLower, currentPost}) {
         const blob = new Blob([new Uint8Array(arr)], {type: imgType});
         formdata.append("imagefiles", blob, imgName);
       });
+
       //图片名称放入formData
-      formdata.append("images", imgNameArr);
       formdata.append("title", currentPost.title);
-      formdata.append("createdAt", currentPost.createdAt);
-      formdata.append("updatedAt", currentPost.updatedAt);
+      formdata.append("createdAt", currentPost.createdAt || "");
+      formdata.append("updatedAt", currentPost.updatedAt || "");
       formdata.append("description", currentPost.description);
       formdata.append("category", currentPost.category);
       formdata.append("topic", currentPost.topic);
       formdata.append("isPrivate", currentPost.isPrivate);
       formdata.append("isMarkdown", currentPost.isMarkdown);
+      formdata.append("images", imgNameArr);
       // form.append("user", currentPost.user);
 
       let htmlStr = currentPost.content;
@@ -165,13 +166,13 @@ function EditorButtonGroup({categoryLower, currentPost}) {
               `<img src="http://localhost:3000/images/post/${imgName}" alt="image">`
             ))
         );
-      //
+
       formdata.append("content", htmlStr);
 
       let res;
 
       if (id) {
-        console.log(id);
+        console.log("updating:", id);
         res = await updatePost({id, formdata});
       } else {
         console.log("add new post");
@@ -180,10 +181,13 @@ function EditorButtonGroup({categoryLower, currentPost}) {
 
       if (res.data.status === "success") {
         toast.success("Post successfully saved!");
-        navigate("/app/posts");
-        dispatch(resetPost());
         dispatch(toggleShowEditor());
         dispatch(setIsWorking(false));
+
+        setTimeout(() => {
+          dispatch(resetPost());
+          navigate(`/app/viewer/${id}`);
+        }, 1500);
       }
     } catch (err) {
       toast.error(err.message);
