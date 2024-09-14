@@ -43,7 +43,7 @@ const uiSlice = createSlice({
       state.showSideBar = !state.showSideBar;
     },
     toggleShowEditor: (state, action) => {
-      state.showEditor = action.payload || !state.showEditor;
+      state.showEditor = action.payload !== undefined ? action.payload : !state.showEditor;
     },
     toggleDarkMode: (state, action) => {
       state.isDarkMode = action.payload;

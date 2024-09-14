@@ -32,14 +32,6 @@ function TextBox() {
   const {content} = useSelector((state) => state.currentPost);
   const {isWorking} = useSelector((state) => state.ui);
   const dispatch = useDispatch();
-
-  useEffect(function () {
-    document.querySelector(".quill").setAttribute("style", "height: calc(100vh - 31rem); display:flex; flex-direction: column;");
-    document.querySelector(".ql-toolbar").setAttribute("style", "background-color: var(--color-grey-50)");
-    document.querySelector(".ql-container").setAttribute("style", "background-color: var(--color-grey-50); flex-grow:1;overflow:scroll");
-    document.querySelector(".ql-editor").setAttribute("style", "font-size: 1.5rem; color: var(--color-grey-500); line-height: 2.5rem;");
-  }, []);
-
   const toolbar = {
     toolbar: [
       ["bold", "italic", "underline", "strike"],
@@ -62,6 +54,29 @@ function TextBox() {
   function handleSetCurrentContent() {
     dispatch(setContent(document.querySelector(".ql-editor").innerHTML));
   }
+
+  useEffect(() => {
+    const quill = document.querySelector(".quill");
+    const toolbar = document.querySelector(".ql-toolbar");
+    const container = document.querySelector(".ql-container");
+    const editor = document.querySelector(".ql-editor");
+
+    if (quill) {
+      quill.setAttribute("style", "height: calc(100vh - 31rem); display:flex; flex-direction: column;");
+    }
+
+    if (toolbar) {
+      toolbar.setAttribute("style", "background-color: var(--color-grey-50);");
+    }
+
+    if (container) {
+      container.setAttribute("style", "background-color: var(--color-grey-50); flex-grow: 1; overflow: scroll;");
+    }
+
+    if (editor) {
+      editor.setAttribute("style", "font-size: 1.5rem; color: var(--color-grey-500); line-height: 2.5rem;");
+    }
+  }, []);
 
   return (
     <Container>

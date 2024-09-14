@@ -39,12 +39,12 @@ function PostList() {
 
   //获取后端数据
   const arg = {
-    category,
     search: searchQuery,
     page: currentPage,
     limit: cardsPerPage,
     fields: "category,id,description,title,createdAt,isPrivate",
-    sort: showLatest ? "" : "createdAt"
+    sort: showLatest ? "" : "createdAt",
+    category
   };
   const {currentData = {}, isFetching, isLoading} = useGetPostsByConditionsQuery(arg);
   const posts = currentData?.data?.docs;
@@ -75,19 +75,19 @@ function PostList() {
         });
       };
 
-      const options = {root: null, thresholds: 2, rootMargin: "-100px"};
+      const options = {root: null, thresholds: 0.1, rootMargin: "-100px"};
 
       const cardObserver = new IntersectionObserver(revealCard, options);
 
       //隐藏看不到的card
-      if (!allCards?.current?.childNodes) return;
       Array.from(allCards?.current?.childNodes).forEach((card) => {
         card.setAttribute("style", "opacity: 0%");
-      });
-
-      allCards.current.childNodes.forEach((card) => {
         cardObserver.observe(card);
       });
+
+      return () => {
+        if (cardObserver) cardObserver.disconnect();
+      };
     },
     [posts]
   );

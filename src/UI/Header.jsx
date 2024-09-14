@@ -8,7 +8,7 @@ import Logo from "./Logo";
 import NightModeButton from "./Buttons/DarkModeButton";
 import SignInUpButton from "./Buttons/SignInUpButton";
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.nav`
   background-color: var(--color-grey-50);
   grid-column: 1 / -1;
   border-bottom: 1px solid var(--color-grey-500);
@@ -30,7 +30,7 @@ const FeatureContainer = styled.div`
   margin-right: 3rem;
 `;
 
-function Header({homepage}) {
+function Header({homepage, errorpage = false}) {
   return (
     <HeaderContainer>
       <StyledHeader>
@@ -39,18 +39,22 @@ function Header({homepage}) {
             <Logo />
           </Link>
         </nav>
-        {homepage ? null : <MenuList />}
-        <FeatureContainer>
-          {homepage ? (
-            <SignInUpButton />
-          ) : (
-            <>
-              <SearchBar />
-              <AddPostButton />
-            </>
-          )}
-          <NightModeButton />
-        </FeatureContainer>
+        {errorpage ? null : (
+          <>
+            {homepage ? null : <MenuList />}
+            <FeatureContainer>
+              {homepage ? (
+                <SignInUpButton />
+              ) : (
+                <>
+                  <SearchBar />
+                  <AddPostButton />
+                </>
+              )}
+              <NightModeButton />
+            </FeatureContainer>
+          </>
+        )}
       </StyledHeader>
     </HeaderContainer>
   );

@@ -28,6 +28,7 @@ export const postsApi = createApi({
       providesTags: ["Post"]
     }),
 
+    // Create a new post using a form data object
     addNewPost: builder.mutation({
       query: (formdata) => ({
         url: "/posts",
@@ -37,6 +38,7 @@ export const postsApi = createApi({
       invalidatesTags: ["Post"]
     }),
 
+    // Update an existing post by ID
     updatePost: builder.mutation({
       query: ({id, formdata}) => ({
         url: `/posts/${id}`,
@@ -46,6 +48,7 @@ export const postsApi = createApi({
       invalidatesTags: ["Post"]
     }),
 
+    // Delete a post by ID
     deletePost: builder.mutation({
       query: (id) => ({
         url: `/posts/${id}`,

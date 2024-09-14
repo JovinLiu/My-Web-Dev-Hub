@@ -1,5 +1,4 @@
 import {createSlice} from "@reduxjs/toolkit";
-//["id","title","createdAt","updatedAt","description","category","topic","content","images","isPrivate","user"]
 const initialStateCurrentPost = {
   id: "",
   title: "",
@@ -56,32 +55,9 @@ const currentPostSlice = createSlice({
       state.user = action.payload;
     },
     setPost: (state, action) => {
-      state.id = action.payload.id;
-      state.title = action.payload.title;
-      state.createdAt = action.payload.createdAt;
-      state.updatedAt = action.payload.updatedAt;
-      state.description = action.payload.description;
-      state.category = action.payload.category;
-      state.topic = action.payload.topic;
-      state.content = action.payload.content;
-      state.images = action.payload.images;
-      state.isPrivate = action.payload.isPrivate;
-      state.isMarkdown = action.payload.isMarkdown;
-      state.user = action.payload.user;
+      return {...state, ...action.payload};
     },
-    resetPost: (state) => {
-      state.id = "";
-      state.title = "";
-      state.createdAt = "";
-      state.updatedAt = "";
-      state.description = "";
-      state.category = "";
-      state.topic = "";
-      state.content = "";
-      state.images = [];
-      state.isPrivate = false;
-      state.user = "";
-    }
+    resetPost: () => initialStateCurrentPost
   }
 });
 

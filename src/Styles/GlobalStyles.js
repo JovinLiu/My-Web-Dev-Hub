@@ -133,7 +133,6 @@ const GlobalStyles = createGlobalStyle`
 
 html {
   font-size: 62.5%;
-  
 }
 
 *::-webkit-scrollbar {
@@ -193,7 +192,7 @@ input:focus,
 /* button:focus, */
 textarea:focus,
 select:focus {
-  outline: 2px solid var(--color-blue-1);
+  outline: 2px solid var(--color-grey-700);
   outline-offset: 2px;
 }
 
@@ -231,22 +230,3 @@ img {
 `;
 
 export default GlobalStyles;
-
-/* light blue Grey */
-/* --color-grey-800: #fff;
-    --color-grey-700: #F1F2F4;
-    --color-grey-600: #DCDFE4;
-    --color-grey-500: #B3B9C4;
-    --color-grey-400: #8590A2;
-    --color-grey-300: #758195;
-    --color-grey-200: #44546F;
-    --color-grey-100: #2C3E5D;
-    --color-grey-50: #172B4D;
-    --color-grey-0: #091E42; 
-    
-        --color-theme-100: #e7e6f7;
-    --color-theme-200: #e3d0d8;
-    --color-theme-300: #aea3b0;
-    --color-theme-400: #827081;
-    --color-theme-500: #c6d2ed;
-    */

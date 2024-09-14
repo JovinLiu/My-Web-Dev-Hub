@@ -14,8 +14,7 @@ import {htmlToText} from "html-to-text";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import Prism from "prismjs";
-import {useEffect} from "react";
+import useSyntaxHighlighter from "../../Hooks/useSyntaxHighlighter";
 
 const fadeIn = keyframes`
   from {
@@ -106,38 +105,7 @@ function PostViewer() {
     navigate("/app/posts");
   }
 
-  useEffect(() => {
-    // 函数用于高亮代码块
-    const highlightCode = (blocks, language) => {
-      blocks.forEach((block) => {
-        const htmlStr = Prism.highlight(block.textContent, Prism.languages[language], language);
-        block.innerHTML = htmlStr;
-      });
-    };
-
-    // 获取不同语言的代码块
-    const jsCodeBlocks = [
-      ...document.querySelectorAll(".language-js"),
-      ...document.querySelectorAll(".language-javascript"),
-      ...document.querySelectorAll(".ql-syntax")
-    ];
-    const htmlCodeBlocks = document.querySelectorAll(".language-html");
-    const cssCodeBlocks = document.querySelectorAll(".language-css");
-
-    // 对不同语言的代码块进行高亮处理
-    if (jsCodeBlocks.length) highlightCode(jsCodeBlocks, "javascript");
-    if (htmlCodeBlocks.length) highlightCode(htmlCodeBlocks, "html");
-    if (cssCodeBlocks.length) highlightCode(cssCodeBlocks, "css");
-
-    const qlCodeContainer = document.querySelectorAll(".ql-syntax");
-    if (qlCodeContainer.length)
-      qlCodeContainer.forEach((qlCodeBlock) =>
-        qlCodeBlock.setAttribute(
-          "style",
-          "background: #1f2937; box-shadow: none; max-width: 100rem; display: block; padding: 1rem; margin: 0 auto; border-radius: 10px;overflow-x: scroll;"
-        )
-      );
-  }, [isFetching, isLoading, id]); // 依赖项更新时重新执行
+  useSyntaxHighlighter(isFetching, isLoading, id);
 
   if (isLoading || isFetching) return <Loader />;
 
