@@ -27,9 +27,17 @@ const Select = styled.select`
 const Button = styled.button`
   padding: 0 1rem;
   height: 2.2rem;
+  width: 12rem;
+  color: var(--color-grey-50);
+  background-color: var(--color-blue-1);
+  border: none;
   border-radius: 10px;
-  border: 1px solid;
-  background-color: var(--color-grey-100);
+  transition: var(--transition-1);
+
+  &:hover {
+    color: var(--color-grey-700);
+    background-color: var(--color-blue-2);
+  }
 `;
 
 function PaginationRange() {
