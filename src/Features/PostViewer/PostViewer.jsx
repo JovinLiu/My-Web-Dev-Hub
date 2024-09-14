@@ -129,13 +129,15 @@ function PostViewer() {
     if (htmlCodeBlocks.length) highlightCode(htmlCodeBlocks, "html");
     if (cssCodeBlocks.length) highlightCode(cssCodeBlocks, "css");
 
-    const qlCodeContainer = document.querySelector(".ql-syntax");
-    if (qlCodeContainer)
-      qlCodeContainer.setAttribute(
-        "style",
-        "background: #1f2937; box-shadow: none; max-width: 100rem; display: block; padding: 1rem; margin: 0 auto; border-radius: 10px;overflow-x: scroll;"
+    const qlCodeContainer = document.querySelectorAll(".ql-syntax");
+    if (qlCodeContainer.length)
+      qlCodeContainer.forEach((qlCodeBlock) =>
+        qlCodeBlock.setAttribute(
+          "style",
+          "background: #1f2937; box-shadow: none; max-width: 100rem; display: block; padding: 1rem; margin: 0 auto; border-radius: 10px;overflow-x: scroll;"
+        )
       );
-  }, [isFetching, isLoading]); // 依赖项更新时重新执行
+  }, [isFetching, isLoading, id]); // 依赖项更新时重新执行
 
   if (isLoading || isFetching) return <Loader />;
 
