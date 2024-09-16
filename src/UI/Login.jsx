@@ -162,7 +162,7 @@ function Login({onCloseModal}) {
         dispatch(setCurrentUserId(id));
         dispatch(setIsLoggedIn(true));
 
-        return navigate("/app/posts");
+        return navigate("/app");
       }
 
       if (res.error) {
