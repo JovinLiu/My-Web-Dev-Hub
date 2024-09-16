@@ -36,6 +36,7 @@ const types = {
   userRound: css`
     height: 3.5rem;
     width: 3.5rem;
+    padding-top: 0.5rem;
     font-size: 2rem;
     border-radius: 50%;
     color: var(--color-grey-400);

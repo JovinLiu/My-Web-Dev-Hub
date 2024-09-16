@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
+import {useDispatch, useSelector} from "react-redux";
+import styled from "styled-components";
 import {useEffect} from "react";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import styled from "styled-components";
+//Components
 import {setContent} from "./currentPostSlice";
-import {useDispatch, useSelector} from "react-redux";
 import Loader from "../../UI/Loader";
+import "react-quill/dist/quill.snow.css";
 
 const Container = styled.div`
   height: calc(100vh - 31rem);
@@ -74,7 +75,10 @@ function TextBox() {
     }
 
     if (editor) {
-      editor.setAttribute("style", "font-size: 1.5rem; color: var(--color-grey-500); line-height: 2.5rem;");
+      editor.setAttribute(
+        "style",
+        "font-size: 1.5rem; color: var(--color-grey-500); line-height: 2.5rem; overflow-x: scroll; word-wrap: break-word;"
+      );
     }
   }, []);
 

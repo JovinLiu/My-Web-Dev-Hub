@@ -1,7 +1,8 @@
 import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
-import {toggleDarkMode} from "../../Pages/uiSlice";
 import {useEffect} from "react";
+//components
+import {toggleDarkMode} from "../../Pages/uiSlice";
 
 const Container = styled.div`
   color: var(--color-grey-400);

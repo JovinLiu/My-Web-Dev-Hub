@@ -1,9 +1,10 @@
+import {useEffect, useRef} from "react";
 import {Link, useNavigate} from "react-router-dom";
+//Components
 import Header from "../UI/Header";
 import styled from "styled-components";
 import Logo from "../UI/Logo";
 import HomePageCard from "../UI/HomePageCard";
-import {useEffect, useRef} from "react";
 
 const Section = styled.section`
   height: ${({height}) => height};

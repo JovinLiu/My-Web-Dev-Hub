@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import styled, {keyframes} from "styled-components";
 import {Link} from "react-router-dom";
+//Components
 import CardLine from "../../UI/CardLine";
 import Icon from "../../UI/Icon";
 import TitleContainer from "../../UI/TitleContainer";

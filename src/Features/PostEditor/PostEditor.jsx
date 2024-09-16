@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import HideButton from "../../UI/Buttons/HideButtonLeft";
+import {useSelector} from "react-redux";
+//Components
+import HideButton from "../../UI/Buttons/HideButton";
 import TextBox from "./TextBox";
 import TitleForm from "./TitleForm";
-import {useSelector} from "react-redux";
 
 const LeftSide = styled.aside`
   width: 100%;
@@ -28,7 +29,7 @@ function PostEditor() {
 
   return (
     <LeftSide>
-      <HideButton />
+      <HideButton position="left" />
       {showEditor && (
         <Container showEditor={showEditor}>
           <TitleForm>

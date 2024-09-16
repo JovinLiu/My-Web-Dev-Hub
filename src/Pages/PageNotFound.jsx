@@ -1,6 +1,7 @@
 import {useNavigate} from "react-router-dom";
-import Header from "../UI/Header";
 import styled from "styled-components";
+//Components
+import Header from "../UI/Header";
 
 const Section = styled.section`
   height: ${({height}) => height};

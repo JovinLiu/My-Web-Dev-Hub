@@ -1,15 +1,16 @@
 /* eslint-disable react/prop-types */
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
 import toast from "react-hot-toast";
-import Modal from "../../UI/Modal";
-import Confirm from "../../UI/Confirm";
+//Components
+import {useAddNewPostMutation, useUpdatePostMutation} from "../../Services/PostsApi";
 import {setIsWorking, toggleShowEditor} from "../../Pages/uiSlice";
 import {setPost, setIsPrivate, setIsMarkdown, resetPost} from "./currentPostSlice";
-import {useAddNewPostMutation, useUpdatePostMutation} from "../../Utils/data";
-import {useDispatch, useSelector} from "react-redux";
+import Modal from "../../UI/Modal";
+import Confirm from "../../UI/Confirm";
 import GeneralButton from "../../UI/Buttons/GeneralButton";
-import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
 
 const ButtonContainer = styled.div`
   margin-top: auto;
@@ -186,7 +187,8 @@ function EditorButtonGroup({categoryLower, currentPost}) {
 
         setTimeout(() => {
           dispatch(resetPost());
-          navigate(`/app/viewer/${id}`);
+          const postId = id;
+          navigate(`/app/viewer/${postId}`);
         }, 1500);
       }
     } catch (err) {

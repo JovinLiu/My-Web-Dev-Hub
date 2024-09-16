@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
-import {toggleShowEditor} from "../../Pages/uiSlice";
 import {useNavigate, useLocation} from "react-router-dom";
+//Components
+import {toggleShowEditor} from "../../Pages/uiSlice";
 
 const Button = styled.button`
   color: var(--color-grey-50);

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styled, {keyframes} from "styled-components";
 
 const rotateA = keyframes`
@@ -23,21 +24,24 @@ const Spinner = styled.div`
   border-radius: 50%;
   border: 13px solid var(--color-blue-1);
   animation: ${rotateA} 0.8s infinite linear alternate, ${rotateB} 1.6s infinite linear;
-  position: absolute;
-  top: calc(50vh - 14rem);
-  left: 47%;
+  position: ${({fullscreen}) => (fullscreen ? "absolute" : "")};
+  top: ${({fullscreen}) => (fullscreen ? "calc(50vh - 14rem)" : "")};
+  left: ${({fullscreen}) => (fullscreen ? "47%" : "")};
 `;
 
 const FullScreen = styled.div`
   position: relative;
 `;
 
-function Loader() {
-  return (
-    <FullScreen>
-      <Spinner />
-    </FullScreen>
-  );
+function Loader({fullscreen = true}) {
+  if (fullscreen)
+    return (
+      <FullScreen>
+        <Spinner fullscreen={fullscreen} />
+      </FullScreen>
+    );
+
+  if (!fullscreen) return <Spinner fullscreen={fullscreen} />;
 }
 
 export default Loader;

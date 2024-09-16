@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
+import styled from "styled-components";
 import {Outlet} from "react-router-dom";
+import {useSelector} from "react-redux";
+//Components
 import Header from "../UI/Header";
 import SideBar from "../UI/SideBar";
-import styled from "styled-components";
-import {useSelector} from "react-redux";
 import Main from "../UI/Main";
 import PostEditor from "../Features/PostEditor/PostEditor";
 

@@ -15,6 +15,8 @@ const Stats = styled.div`
   margin-left: auto;
   border-radius: 10px;
   background-color: var(--color-grey-50);
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 const Select = styled.select`
@@ -25,9 +27,8 @@ const Select = styled.select`
 `;
 
 const Button = styled.button`
-  padding: 0 1rem;
   height: 2.2rem;
-  width: 12rem;
+  width: 11rem;
   color: var(--color-grey-50);
   background-color: var(--color-blue-1);
   border: none;
@@ -69,7 +70,7 @@ function PaginationRange() {
             </option>
           ))}
         </Select>
-        <span> posts per page</span>
+        <span> posts/page</span>
       </div>
       <Button onClick={handleClickSort}>show {showLatest ? "earliest" : "latest"}</Button>
     </Stats>

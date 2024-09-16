@@ -3,12 +3,13 @@ import styled from "styled-components";
 import toast from "react-hot-toast";
 import {useDispatch, useSelector} from "react-redux";
 import {htmlToText} from "html-to-text";
+import {useNavigate} from "react-router-dom";
+//Components
+import {useDeletePostMutation} from "../../Services/PostsApi";
+import {toggleShowEditor} from "../../Pages/uiSlice";
+import {setPost} from "../PostEditor/currentPostSlice";
 import Modal from "../../UI/Modal";
 import Confirm from "../../UI/Confirm";
-import {useDeletePostMutation} from "../../Utils/data";
-import {setPost} from "../PostEditor/currentPostSlice";
-import {toggleShowEditor} from "../../Pages/uiSlice";
-import {useNavigate} from "react-router-dom";
 import GeneralButton from "../../UI/Buttons/GeneralButton";
 
 const ButtonContainer = styled.div`

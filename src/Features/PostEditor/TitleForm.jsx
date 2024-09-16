@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
 // 可以安装image-to-base64把图片转换成base64
+import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
+//Components
+import {toggleShowEditor} from "../../Pages/uiSlice";
 import GeneralButton from "../../UI/Buttons/GeneralButton";
 import TitleContainer from "../../UI/TitleContainer";
-import {useNavigate} from "react-router-dom";
 import CardLine from "../../UI/CardLine";
-import {useDispatch, useSelector} from "react-redux";
-import {toggleShowEditor} from "../../Pages/uiSlice";
 import {setTitle, setCategory, setTopic, setDescription} from "./currentPostSlice";
 import EditorButtonGroup from "./EditorButtonGroup";
 

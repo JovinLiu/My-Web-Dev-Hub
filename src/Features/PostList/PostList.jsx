@@ -1,11 +1,11 @@
+import {useEffect, useRef} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
-import {useGetPostsByConditionsQuery} from "../../Utils/data";
+//Components
+import {useGetPostsByConditionsQuery} from "../../Services/PostsApi";
+import {setSearchedPostsQuantity, setTotalPostsQuantity} from "../../Pages/uiSlice";
 import PostCard from "./PostCard";
 import Loader from "../../UI/Loader";
-import {useEffect, useRef} from "react";
-import {useDispatch} from "react-redux";
-import {useSelector} from "react-redux";
-import {setSearchedPostsQuantity, setTotalPostsQuantity} from "../../Pages/uiSlice";
 import NoPostFound from "../../UI/NoPostFound";
 import Pagination from "../../UI/Pagination";
 import PaginationRange from "../../UI/PaginationRange";
@@ -46,6 +46,7 @@ function PostList() {
     sort: showLatest ? "" : "createdAt",
     category
   };
+
   const {currentData = {}, isFetching, isLoading} = useGetPostsByConditionsQuery(arg);
   const posts = currentData?.data?.docs;
   const {totalPostsQuantity, postsQuantityByQuery} = currentData;

@@ -1,14 +1,17 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
-import HideButton from "./Buttons/HideButtonRight";
-import {useGetTopicStatsQuery} from "../Utils/data";
+import HideButton from "./Buttons/HideButton";
+import {useGetTopicStatsQuery} from "../Services/PostsApi";
 import Loader from "./Loader";
 import TopicListItem from "./TopicListItem";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useRef} from "react";
 import GeneralButton from "./Buttons/GeneralButton";
 import SignInUpButton from "./Buttons/SignInUpButton";
 import {useSearchParams} from "react-router-dom";
+import Cookies from "js-cookie";
+import {setCurrentUser, setCurrentUserId, setIsLoggedIn} from "../Pages/uiSlice";
+import {useGetUserByIdQuery} from "../Services/UserApi";
 
 const Container = styled.aside`
   height: calc(100vh - 6rem);
@@ -91,15 +94,28 @@ const Hr = styled.hr`
 `;
 
 function SideBar() {
-  const {showSideBar, signin} = useSelector((state) => state.ui);
+  const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
-
   const category = searchParams.get("category");
+  const {showSideBar, isLoggedIn, currentUser, currentUserId} = useSelector((state) => state.ui);
   const {currentData, isLoading, isFetching} = useGetTopicStatsQuery(category);
+  const {currentData: currentUserData = {}} = useGetUserByIdQuery(currentUserId);
+  const {user} = currentUserData;
 
-  const src = "/default-user.jpg";
+  const src = isLoggedIn && currentUser ? `http://localhost:3000/images/user/${currentUser.photo}` : "/default-user.jpg";
   const time = useRef(null);
   const topics = currentData?.data?.stats;
+
+  function handleClickLogout() {
+    Cookies.remove("jwt");
+    dispatch(setCurrentUser({}));
+    dispatch(setCurrentUserId(undefined));
+    dispatch(setIsLoggedIn(false));
+  }
+
+  useEffect(() => {
+    dispatch(setCurrentUser(user));
+  }, [isLoggedIn, user, dispatch, currentUserId]);
 
   useEffect(function () {
     const currentHour = new Intl.DateTimeFormat(navigator.language, {
@@ -115,14 +131,14 @@ function SideBar() {
   if (isLoading || isFetching)
     return (
       <Container showSideBar={showSideBar}>
-        <HideButton />
+        <HideButton position="right" />
         <Loader />
       </Container>
     );
 
   return (
     <Container showSideBar={showSideBar}>
-      <HideButton />
+      <HideButton position="right" />
       <Nav showSideBar={showSideBar}>
         <Avatar src={src} alt="user-avatar" />
         {showSideBar && (
@@ -130,14 +146,14 @@ function SideBar() {
             <Greeting showSideBar={showSideBar}>
               Good {time.current}
               <br />
-              {signin ? "Jovin" : ""}
+              {isLoggedIn ? `${currentUser?.name}` : ""}
             </Greeting>
-            {signin ? (
+            {isLoggedIn ? (
               <>
                 <GeneralButton type="userRound">
                   <ion-icon name="person-outline" />
                 </GeneralButton>
-                <GeneralButton type="userRound">
+                <GeneralButton type="userRound" onClick={handleClickLogout}>
                   <ion-icon name="log-out-outline" />
                 </GeneralButton>
               </>

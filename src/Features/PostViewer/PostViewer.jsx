@@ -1,19 +1,20 @@
 import styled, {keyframes} from "styled-components";
 import {useNavigate, useParams} from "react-router-dom";
+import parse from "html-react-parser";
+import {htmlToText} from "html-to-text";
+import remarkGfm from "remark-gfm";
+import Markdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import {useSelector} from "react-redux";
+//Components
+import {useGetPostByIdQuery} from "../../Services/PostsApi";
 import Loader from "../../UI/Loader";
 import TitleContainer from "../../UI/TitleContainer";
 import CardLine from "../../UI/CardLine";
 import Icon from "../../UI/Icon";
 import GeneralButton from "../../UI/Buttons/GeneralButton";
-import parse from "html-react-parser";
-import {useSelector} from "react-redux";
-import {useGetPostByIdQuery} from "../../Utils/data";
 import timeFormat from "../../Utils/timeFormat";
 import ViewerButtonGroup from "./ViewerButtonGroup";
-import {htmlToText} from "html-to-text";
-import Markdown from "react-markdown";
-import rehypeRaw from "rehype-raw";
-import remarkGfm from "remark-gfm";
 import useSyntaxHighlighter from "../../Hooks/useSyntaxHighlighter";
 
 const fadeIn = keyframes`

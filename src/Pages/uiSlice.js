@@ -1,9 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialStateUI = {
+  currentUserId: undefined,
+  currentUser: {},
   showLatest: true,
   isWorking: false,
-  signin: false,
+  isLoggedIn: false,
   totalPostsQuantity: 0,
   cardsPerPage: 50,
   showSideBar: true,
@@ -71,11 +73,21 @@ const uiSlice = createSlice({
     },
     setShowLatest: (state) => {
       state.showLatest = !state.showLatest;
+    },
+    setIsLoggedIn: (state, action) => {
+      state.isLoggedIn = action.payload;
+    },
+    setCurrentUser: (state, action) => {
+      state.currentUser = action.payload;
+    },
+    setCurrentUserId: (state, action) => {
+      state.currentUserId = action.payload;
     }
   }
 });
 
 export const {
+  setCurrentUser,
   setShowLatest,
   toggleShowSideBar,
   toggleShowEditor,
@@ -86,7 +98,9 @@ export const {
   setCurrentPage,
   setTotalPostsQuantity,
   setCardsPerPage,
-  setIsWorking
+  setIsWorking,
+  setIsLoggedIn,
+  setCurrentUserId
 } = uiSlice.actions;
 //使用default export导出reducer
 export default uiSlice.reducer;
