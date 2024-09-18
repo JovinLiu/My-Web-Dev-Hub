@@ -26,7 +26,7 @@ const Spinner = styled.div`
   animation: ${rotateA} 0.8s infinite linear alternate, ${rotateB} 1.6s infinite linear;
   position: ${({fullscreen}) => (fullscreen ? "absolute" : "")};
   top: ${({fullscreen}) => (fullscreen ? "calc(50vh - 14rem)" : "")};
-  left: ${({fullscreen}) => (fullscreen ? "47%" : "")};
+  left: ${({fullscreen}) => (fullscreen ? "50%" : "")};
 `;
 
 const FullScreen = styled.div`

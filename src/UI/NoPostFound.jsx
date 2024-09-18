@@ -2,6 +2,7 @@
 import styled from "styled-components";
 import {setGoHome} from "../Pages/uiSlice";
 import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 const Div = styled.div`
   display: flex;
@@ -34,8 +35,10 @@ const Button = styled.button`
 
 function NoPostFound({message}) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   function handleClickGoBack() {
     dispatch(setGoHome());
+    navigate("/app/posts");
   }
 
   return (

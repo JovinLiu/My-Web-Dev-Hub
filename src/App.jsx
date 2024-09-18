@@ -12,9 +12,11 @@ import {Provider} from "react-redux";
 import {Toaster} from "react-hot-toast";
 
 import AppLayout from "./Pages/AppLayout";
+import AccountLayout from "./Pages/AccountLayout";
 import PostList from "./Features/PostList/PostList.jsx";
 import PostViewer from "./Features/PostViewer/PostViewer.jsx";
 import PageNotFound from "./Pages/PageNotFound";
+import PasswordReset from "./Pages/PasswordReset.jsx";
 import GlobalStyles from "./Styles/GlobalStyles";
 import store from "./store.js";
 import HomePage from "./Pages/HomePage.jsx";
@@ -32,6 +34,9 @@ function App() {
             <Route path="posts" element={<PostList />} />
             <Route path="editor" element={<PostPreviewer />} />
             <Route path="viewer/:id" element={<PostViewer />} />
+          </Route>
+          <Route path="/account" element={<AccountLayout />}>
+            <Route path="resetPassword/:token" element={<PasswordReset />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>

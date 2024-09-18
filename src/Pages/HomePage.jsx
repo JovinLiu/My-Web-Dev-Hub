@@ -209,7 +209,7 @@ function HomePage() {
 
   return (
     <>
-      <Header homepage={true} />
+      <Header page="homepage" />
       <Section height="calc(100vh - 10rem)">
         <TextContainer>
           <Div>

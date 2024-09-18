@@ -3,7 +3,7 @@ import styled, {css} from "styled-components";
 import toast from "react-hot-toast";
 import {useNavigate} from "react-router-dom";
 // Api;
-import {useCheckingMutation, useSigninMutation, useSignupMutation} from "../Services/UsersApi";
+import {useCheckingMutation, useSigninMutation, useSignupMutation, useForgetPasswordMutation} from "../Services/UsersApi";
 // Components;
 import GeneralButton from "./Buttons/GeneralButton";
 import Loader from "../UI/Loader";
@@ -87,15 +87,18 @@ function Login({onCloseModal}) {
   const [checking, {isLoading: isChecking}] = useCheckingMutation();
   const [signup, {isLoading: isSigningUp}] = useSignupMutation();
   const [signin, {isLoading: isSigningIn}] = useSigninMutation();
+  const [forgetPassword, {isLoading: isSending}] = useForgetPasswordMutation();
 
-  function handleClickForgetPassword(e) {
+  async function handleClickForgetPassword(e) {
     e.preventDefault();
+    if (!email) return toast.error("Please provide a vaild email to reset password.");
     try {
+      const res = await forgetPassword(email);
+      if (res.error) throw new Error(res.error.data.message);
       toast.success("The reset token has been sent to your email!");
-    } catch (err) {
-      toast.error("Something went wrong with sending the reset token, please try it later.");
-    } finally {
       onCloseModal();
+    } catch (err) {
+      toast.error(err.message);
     }
   }
 
@@ -157,6 +160,7 @@ function Login({onCloseModal}) {
       }
 
       if (res.data?.status === "success") {
+        dispatch(setCurrentUserId(res.data.user.id));
         const message = accountPage === "signup" ? `Welcome to myWebDevHub, an email has been sent to email` : `Welcome back, ${res.data.user.name}`;
         toast.success(message);
         onCloseModal();
@@ -164,10 +168,9 @@ function Login({onCloseModal}) {
         const expiresAtDate = new Date(res.data.tokenExpires);
         Cookies.set("jwt", res.data.token, {expires: expiresAtDate});
 
-        const {id} = res.data.user;
-        dispatch(setCurrentUserId(id));
         dispatch(setIsLoggedIn(true));
 
+        //BUG解决登录时不显示用户的帖子的问题
         return navigate("/app");
       }
 
@@ -186,7 +189,7 @@ function Login({onCloseModal}) {
     onCloseModal();
   }
 
-  if (isChecking || isSigningIn || isSigningUp) return <Loader fullscreen={false} />;
+  if (isChecking || isSigningIn || isSigningUp || isSending) return <Loader fullscreen={false} />;
 
   if (accountPage === "inactive")
     return (

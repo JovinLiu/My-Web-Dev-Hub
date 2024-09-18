@@ -65,7 +65,7 @@ function PageNotFound() {
   }
   return (
     <>
-      <Header errorpage={true} />
+      <Header showLogoOnly={true} />
       <Section height="calc(100vh - 10rem)">
         <Div>
           <Span>Page Not Found</Span>

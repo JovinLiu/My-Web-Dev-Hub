@@ -36,7 +36,7 @@ const FeatureContainer = styled.div`
   margin-right: 3rem;
 `;
 
-function Header({homepage, errorpage = false}) {
+function Header({page, showLogoOnly = false}) {
   const {isLoggedIn} = useSelector((state) => state.ui);
   const dispatch = useDispatch();
 
@@ -93,11 +93,11 @@ function Header({homepage, errorpage = false}) {
             <Logo />
           </Link>
         </nav>
-        {errorpage ? null : (
+        {showLogoOnly ? null : (
           <>
-            {homepage ? null : <MenuList />}
+            {page === "homepage" ? null : <MenuList />}
             <FeatureContainer>
-              {homepage ? (
+              {page === "homepage" ? (
                 isLoggedIn ? (
                   ""
                 ) : (
