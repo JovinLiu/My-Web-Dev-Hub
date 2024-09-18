@@ -170,7 +170,7 @@ function HomePage() {
   const navigate = useNavigate();
 
   function handleClick() {
-    navigate("/app");
+    navigate("/app/posts");
   }
 
   useEffect(function () {

@@ -20,17 +20,21 @@ const ButtonContainer = styled.div`
   gap: 1rem;
 `;
 
-function ViewerButtonGroup({post, id, category}) {
-  const {isWorking} = useSelector((state) => state.ui);
+function ViewerButtonGroup({post, id, category, user}) {
+  const {isWorking, isLoggedIn, currentUserId} = useSelector((state) => state.ui);
+  //currentUserId
   const [deletePost] = useDeletePostMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isSameUser = currentUserId === user;
+
   async function handleClickClickToCopy() {
     navigator.clipboard.writeText(htmlToText(post.body));
     toast.success("Copied to clipboard!");
   }
 
   function handleUpdatePost() {
+    if (!isSameUser) return toast.error("You are not authorized to edit this post");
     dispatch(setPost(post));
     navigate("/app/editor");
     dispatch(toggleShowEditor(true));
@@ -42,6 +46,8 @@ function ViewerButtonGroup({post, id, category}) {
   }
 
   async function handleDeletePost() {
+    if (!isSameUser) return toast.error("You are not authorized to delete this post");
+
     try {
       await deletePost(id);
       toast.success("Post has been deleted successfully!");
@@ -50,27 +56,32 @@ function ViewerButtonGroup({post, id, category}) {
       toast.error(err.message);
     }
   }
+
   return (
     <ButtonContainer>
       <GeneralButton category={category} type="primary" onClick={handleClickClickToCopy} disabled={isWorking}>
         <ion-icon name="copy-outline" />
       </GeneralButton>
-      <GeneralButton category={category} type="primary" onClick={handleUpdatePost} disabled={isWorking}>
-        <ion-icon name="create-outline" />
-      </GeneralButton>
       <GeneralButton category={category} type="primary" onClick={handleClickSharePost} disabled={isWorking}>
         <ion-icon name="mail-outline" />
       </GeneralButton>
-      <Modal>
-        <Modal.Open openCode="delete">
-          <GeneralButton category={category} type="primary" disabled={isWorking}>
-            <ion-icon name="trash-outline" />
+      {isLoggedIn && isSameUser && (
+        <>
+          <GeneralButton category={category} type="primary" onClick={handleUpdatePost} disabled={isWorking}>
+            <ion-icon name="create-outline" />
           </GeneralButton>
-        </Modal.Open>
-        <Modal.Window verifyCode="delete">
-          <Confirm onConfirm={handleDeletePost} action="Delete" />
-        </Modal.Window>
-      </Modal>
+          <Modal>
+            <Modal.Open openCode="delete">
+              <GeneralButton category={category} type="primary" disabled={isWorking}>
+                <ion-icon name="trash-outline" />
+              </GeneralButton>
+            </Modal.Open>
+            <Modal.Window verifyCode="delete">
+              <Confirm onConfirm={handleDeletePost} action="Delete" />
+            </Modal.Window>
+          </Modal>
+        </>
+      )}
     </ButtonContainer>
   );
 }

@@ -25,8 +25,7 @@ const StyledAppLayout = styled.div`
 
 //functions outside of Component
 function AppLayout() {
-  const showSideBar = useSelector((state) => state.ui.showSideBar);
-  const showEditor = useSelector((state) => state.ui.showEditor);
+  const {showSideBar, showEditor} = useSelector((state) => state.ui);
 
   return (
     <StyledAppLayout showEditor={showEditor} showSideBar={showSideBar}>

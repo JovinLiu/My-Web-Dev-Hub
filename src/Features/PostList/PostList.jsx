@@ -34,7 +34,7 @@ function PostList() {
   const allCards = useRef(null);
 
   //获取UI state
-  const {currentTag, searchQuery, currentPage, cardsPerPage, showLatest} = useSelector((state) => state.ui);
+  const {currentTag, searchQuery, currentPage, cardsPerPage, showLatest, currentUserId, onlyShowMyPosts} = useSelector((state) => state.ui);
   const category = currentTag === "AllPosts" ? "" : currentTag;
 
   //获取后端数据
@@ -44,10 +44,11 @@ function PostList() {
     limit: cardsPerPage,
     fields: "category,id,description,title,createdAt,isPrivate",
     sort: showLatest ? "" : "createdAt",
+    myposts: onlyShowMyPosts,
     category
   };
 
-  const {currentData = {}, isFetching, isLoading} = useGetPostsByConditionsQuery(arg);
+  const {currentData = {}, isFetching, isLoading, refetch} = useGetPostsByConditionsQuery(arg);
   const posts = currentData?.data?.docs;
   const {totalPostsQuantity, postsQuantityByQuery} = currentData;
 
@@ -62,6 +63,11 @@ function PostList() {
     },
     [totalPostsQuantity, dispatch, postsQuantityByQuery]
   );
+
+  //当用户登录时，重新刷新帖子
+  useEffect(() => {
+    refetch();
+  }, [currentUserId, refetch]);
 
   //设置视口交互逻辑
   useEffect(

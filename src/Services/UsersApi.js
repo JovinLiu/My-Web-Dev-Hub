@@ -1,9 +1,9 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 
-export const userApi = createApi({
-  reducerPath: "user",
+export const usersApi = createApi({
+  reducerPath: "users",
   baseQuery: fetchBaseQuery({baseUrl: "http://localhost:3000/api/v1"}),
-  tagTypes: ["User"],
+  tagTypes: ["Users"],
   endpoints: (builder) => ({
     getUserById: builder.query({
       query: (id) => `/users/${id}`
@@ -22,7 +22,8 @@ export const userApi = createApi({
         url: "/users/account/signin",
         method: "POST",
         body: signinInfo
-      })
+      }),
+      invalidatesTags: ["Posts"]
     }),
 
     signup: builder.mutation({
@@ -35,4 +36,4 @@ export const userApi = createApi({
   })
 });
 
-export const {useGetUserByIdQuery, useCheckingMutation, useSigninMutation, useSignupMutation} = userApi;
+export const {useGetUserByIdQuery, useCheckingMutation, useSigninMutation, useSignupMutation} = usersApi;

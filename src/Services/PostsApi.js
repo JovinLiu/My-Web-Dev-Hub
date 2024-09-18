@@ -15,30 +15,29 @@ const baseQuery = fetchBaseQuery({
 
 export const postsApi = createApi({
   reducerPath: "posts",
-  tagTypes: ["Post"],
+  tagTypes: ["Posts"],
   baseQuery,
-
   endpoints: (builder) => ({
     //returns posts with query and total number of posts and total number of posts by a category in the database
     getPostsByConditions: builder.query({
       query: (arg) => ({
         url: `/posts?${arg.category ? `category=${arg.category}&` : ""}search=${arg.search}&page=${arg.page}&limit=${arg.limit}&fields=${
           arg.fields
-        }&sort=${arg.sort}`
+        }&sort=${arg.sort}&myposts=${arg.myposts}`
       }),
-      providesTags: ["Post"]
+      providesTags: ["Posts"]
     }),
     //return aggregation pipeline results from the back end
     getTopicStats: builder.query({
       query: (category) => `/posts/topic-stats?category=${category || ""}`,
 
-      providesTags: ["Post"]
+      providesTags: ["Posts"]
     }),
 
     //return a single post by provided ID
     getPostById: builder.query({
       query: (id) => `/posts/${id}`,
-      providesTags: ["Post"]
+      providesTags: ["Posts"]
     }),
 
     // Create a new post using a form data object
@@ -48,7 +47,7 @@ export const postsApi = createApi({
         method: "POST",
         body: formdata
       }),
-      invalidatesTags: ["Post"]
+      invalidatesTags: ["Posts"]
     }),
 
     // Update an existing post by ID
@@ -58,7 +57,7 @@ export const postsApi = createApi({
         method: "PATCH",
         body: formdata
       }),
-      invalidatesTags: ["Post"]
+      invalidatesTags: ["Posts"]
     }),
 
     // Delete a post by ID
@@ -67,7 +66,7 @@ export const postsApi = createApi({
         url: `/posts/${id}`,
         method: "DELETE"
       }),
-      invalidatesTags: ["Post"]
+      invalidatesTags: ["Posts"]
     })
   })
 });

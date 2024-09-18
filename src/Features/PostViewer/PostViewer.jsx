@@ -118,6 +118,7 @@ function PostViewer() {
   const [category] = categories.filter((category) => category.split(" ").join("") === post?.category);
   const createdAtArr = timeFormat(post?.createdAt);
   const updatedAtArr = timeFormat(post?.updatedAt || "");
+  const {user} = post;
 
   return (
     <Container>
@@ -146,7 +147,7 @@ function PostViewer() {
 
           <Span>Tech Stack: {category}</Span>
         </InfoContainer>
-        <ViewerButtonGroup post={post} id={id} category={categoryLower} />
+        <ViewerButtonGroup post={post} id={id} category={categoryLower} user={user} />
       </TitleContainer>
       <BodyContainer>
         <DescriptionBox category={categoryLower}>{post?.description}</DescriptionBox>

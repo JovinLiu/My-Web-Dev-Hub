@@ -1,20 +1,23 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialStateUI = {
+  //user state
   currentUserId: undefined,
-  currentUser: {},
-  showLatest: true,
-  isWorking: false,
   isLoggedIn: false,
+  currentUser: {},
+  //UI
+  showLatest: true,
+  onlyShowMyPosts: false,
+  currentTag: "AllPosts",
+  currentPage: 1,
+  searchQuery: "",
+  isWorking: false,
   totalPostsQuantity: 0,
   cardsPerPage: 50,
   showSideBar: true,
   showEditor: false,
   isDarkMode: true,
   searchedPostsQuantity: 0,
-  currentTag: "AllPosts",
-  currentPage: 1,
-  searchQuery: "",
   categories: [
     "Web Basic",
     "Javascript",
@@ -82,6 +85,16 @@ const uiSlice = createSlice({
     },
     setCurrentUserId: (state, action) => {
       state.currentUserId = action.payload;
+    },
+    setOnlyShowMyPosts: (state) => {
+      state.onlyShowMyPosts = !state.onlyShowMyPosts;
+    },
+    setGoHome: (state) => {
+      state.showLatest = true;
+      state.onlyShowMyPosts = false;
+      state.currentTag = "AllPosts";
+      state.currentPage = 1;
+      state.searchQuery = "";
     }
   }
 });
@@ -100,7 +113,9 @@ export const {
   setCardsPerPage,
   setIsWorking,
   setIsLoggedIn,
-  setCurrentUserId
+  setCurrentUserId,
+  setOnlyShowMyPosts,
+  setGoHome
 } = uiSlice.actions;
 //使用default export导出reducer
 export default uiSlice.reducer;

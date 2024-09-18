@@ -23,14 +23,14 @@ const ButtonContainer = styled.div`
 function EditorButtonGroup({categoryLower, currentPost}) {
   //Hooks
   const [isMarkDownMode, setIsMarkDownMode] = useState(false);
-  const {isWorking} = useSelector((state) => state.ui);
+  const {isWorking, currentUserId} = useSelector((state) => state.ui);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [addNewPost, {isLoading: isCreating}] = useAddNewPostMutation();
   const [updatePost, {isLoading: isUpdating}] = useUpdatePostMutation();
 
   //get all fields
-  const {id, title, description, category, topic, content, isPrivate} = currentPost;
+  const {id, title, createdAt, updatedAt, isMarkdown, description, category, topic, content, isPrivate} = currentPost;
 
   //Save Condition
   const canSave = !title || !content || !category || !topic || !description;
@@ -146,16 +146,16 @@ function EditorButtonGroup({categoryLower, currentPost}) {
       });
 
       //图片名称放入formData
-      formdata.append("title", currentPost.title);
-      formdata.append("createdAt", currentPost.createdAt || "");
-      formdata.append("updatedAt", currentPost.updatedAt || "");
-      formdata.append("description", currentPost.description);
-      formdata.append("category", currentPost.category);
-      formdata.append("topic", currentPost.topic);
-      formdata.append("isPrivate", currentPost.isPrivate);
-      formdata.append("isMarkdown", currentPost.isMarkdown);
+      formdata.append("title", title);
+      formdata.append("createdAt", createdAt || "");
+      formdata.append("updatedAt", updatedAt || "");
+      formdata.append("description", description);
+      formdata.append("category", category);
+      formdata.append("topic", topic);
+      formdata.append("isPrivate", isPrivate);
+      formdata.append("isMarkdown", isMarkdown);
       formdata.append("images", imgNameArr);
-      // form.append("user", currentPost.user);
+      formdata.append("user", currentUserId);
 
       let htmlStr = currentPost.content;
 
@@ -184,12 +184,9 @@ function EditorButtonGroup({categoryLower, currentPost}) {
         toast.success("Post successfully saved!");
         dispatch(toggleShowEditor());
         dispatch(setIsWorking(false));
-
-        setTimeout(() => {
-          dispatch(resetPost());
-          const postId = id;
-          navigate(`/app/viewer/${postId}`);
-        }, 1500);
+        if (id) navigate(`/app/viewer/${id}/`);
+        if (!id) navigate(`/app/posts`);
+        dispatch(resetPost());
       }
     } catch (err) {
       toast.error(err.message);
@@ -221,9 +218,11 @@ function EditorButtonGroup({categoryLower, currentPost}) {
           <Confirm onConfirm={handleResetCurrentPost} action="Empty" />
         </Modal.Window>
       </Modal>
-      <GeneralButton category={categoryLower} type="primary" onClick={handleSavePost} disabled={isWorking}>
-        <ion-icon name="checkmark-outline" />
-      </GeneralButton>
+      {currentUserId && (
+        <GeneralButton category={categoryLower} type="primary" onClick={handleSavePost} disabled={isWorking}>
+          <ion-icon name="checkmark-outline" />
+        </GeneralButton>
+      )}
     </ButtonContainer>
   );
 }

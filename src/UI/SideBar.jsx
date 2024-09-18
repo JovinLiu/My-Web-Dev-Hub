@@ -11,7 +11,7 @@ import SignInUpButton from "./Buttons/SignInUpButton";
 import {useSearchParams} from "react-router-dom";
 import Cookies from "js-cookie";
 import {setCurrentUser, setCurrentUserId, setIsLoggedIn} from "../Pages/uiSlice";
-import {useGetUserByIdQuery} from "../Services/UserApi";
+import {useGetUserByIdQuery} from "../Services/UsersApi";
 
 const Container = styled.aside`
   height: calc(100vh - 6rem);
@@ -98,7 +98,7 @@ function SideBar() {
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category");
   const {showSideBar, isLoggedIn, currentUser, currentUserId} = useSelector((state) => state.ui);
-  const {currentData, isLoading, isFetching} = useGetTopicStatsQuery(category);
+  const {currentData, isLoading, isFetching, refetch} = useGetTopicStatsQuery(category);
   const {currentData: currentUserData = {}} = useGetUserByIdQuery(currentUserId);
   const {user} = currentUserData;
 
@@ -112,6 +112,10 @@ function SideBar() {
     dispatch(setCurrentUserId(undefined));
     dispatch(setIsLoggedIn(false));
   }
+
+  useEffect(() => {
+    refetch();
+  }, [currentUserId, refetch]);
 
   useEffect(() => {
     dispatch(setCurrentUser(user));

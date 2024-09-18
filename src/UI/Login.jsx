@@ -3,7 +3,7 @@ import styled, {css} from "styled-components";
 import toast from "react-hot-toast";
 import {useNavigate} from "react-router-dom";
 // Api;
-import {useCheckingMutation, useSigninMutation, useSignupMutation} from "../Services/UserApi";
+import {useCheckingMutation, useSigninMutation, useSignupMutation} from "../Services/UsersApi";
 // Components;
 import GeneralButton from "./Buttons/GeneralButton";
 import Loader from "../UI/Loader";
@@ -112,12 +112,18 @@ function Login({onCloseModal}) {
 
     const res = await checking({email});
 
+    console.log(res.data.status);
+
     if (res.data.status === "signup") {
       setAccountPage("signup");
     }
 
     if (res.data.status === "signin") {
       setAccountPage("signin");
+    }
+
+    if (res.data.status === "inactive") {
+      setAccountPage("inactive");
     }
   }
 
@@ -181,6 +187,17 @@ function Login({onCloseModal}) {
   }
 
   if (isChecking || isSigningIn || isSigningUp) return <Loader fullscreen={false} />;
+
+  if (accountPage === "inactive")
+    return (
+      <FormContainer onSubmit={handleClickSignInAndUp}>
+        <GeneralButton type="close" onClick={handleClickClose}>
+          <ion-icon name="close-outline" />
+        </GeneralButton>
+        <Heading as="h2">Inactive account</Heading>
+        <Heading as="h4">Please contact admin to reset your acccount.</Heading>
+      </FormContainer>
+    );
 
   if (accountPage === "signup")
     return (
