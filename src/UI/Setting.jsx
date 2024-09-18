@@ -16,6 +16,13 @@ const Container = styled.div`
   padding: 2rem;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 10rem;
+`;
+
 const Column = styled.div`
   display: flex;
   flex-direction: column;
@@ -116,9 +123,11 @@ const Input = styled.input`
 const Span = styled.span`
   font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
-  font-style: normal;
   word-wrap: break-word;
   white-space: break-spaces;
+  padding: 0.6rem 1.5rem;
+  background-color: var(--color-grey-200);
+  border-radius: 10px;
 `;
 
 const TextDiv = styled.div`
@@ -181,20 +190,20 @@ function Setting({onCloseModal}) {
         {openConfirmDelete ? (
           <ConfirmDelete deleteAccount={deleteAccount} setOpenConfirmDelete={setOpenConfirmDelete} />
         ) : (
-          <>
+          <ButtonContainer>
             <GeneralButton padding="0.5rem 1.5rem" fontSize="1.4rem" type="primary">
               Upload your photo
             </GeneralButton>
             <GeneralButton padding="0.5rem 1.5rem" fontSize="1.4rem" type="danger" onClick={handleClickCloseAccount}>
               Close account
             </GeneralButton>
-          </>
+          </ButtonContainer>
         )}
       </Profile>
       <FormContainer>
         <Column>
           <Label>Update your password</Label>
-          <Input type="password" placeholder="Previous Password" required="" minLength="8" maxLength="30" name="password" id="previousPassword" />
+          <Input type="password" placeholder="Current Password" required="" minLength="8" maxLength="30" name="password" id="previousPassword" />
           <Row>
             <Input type="password" placeholder="New Password" required="" minLength="8" maxLength="30" name="password" id="newPassword" />
             <GeneralButton fontSize="1.4rem" type="primary" onClick={handleClickUpdatePassword}>
@@ -213,7 +222,7 @@ function Setting({onCloseModal}) {
           </Row>
         </Column>
         <Column>
-          <Span>You have contributed 9812387 posts! </Span>
+          <Span>You have contributed 9812387 posts to myWebDevHub!</Span>
         </Column>
       </FormContainer>
     </Container>

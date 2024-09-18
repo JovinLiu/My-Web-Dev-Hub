@@ -26,6 +26,7 @@ const Button = styled.button`
   transition: var(--transition-1);
   padding: 0 1rem;
   border: 1px solid var(--color-grey-50);
+  white-space: nowrap;
 
   &:hover {
     color: var(--color-grey-700);

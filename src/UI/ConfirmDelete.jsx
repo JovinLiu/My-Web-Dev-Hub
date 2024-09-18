@@ -7,6 +7,7 @@ import GeneralButton from "./Buttons/GeneralButton";
 import styled from "styled-components";
 
 const Column = styled.div`
+  height: 10rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,7 +22,7 @@ const Row = styled.div`
 const Span = styled.span`
   font-family: "Roboto", sans-serif;
   width: 24rem;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-style: normal;
   word-wrap: break-word;
   white-space: break-spaces;
@@ -48,7 +49,7 @@ function ConfirmDelete({setOpenConfirmDelete, deleteAccount}) {
   }
   return (
     <Column>
-      <Span>Are you sure to close your account? You will not able to access all your posts if you close this account.</Span>
+      <Span>Are you sure to close your account? You will not be able to access all your posts if you close this account.</Span>
       <Row>
         <GeneralButton padding="0.5rem 1.5rem" fontSize="1.5rem" type="danger" onClick={handleClickCloseAccount}>
           Confirm
