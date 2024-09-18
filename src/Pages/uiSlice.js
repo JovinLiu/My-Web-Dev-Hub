@@ -95,6 +95,11 @@ const uiSlice = createSlice({
       state.currentTag = "AllPosts";
       state.currentPage = 1;
       state.searchQuery = "";
+    },
+    setLogOut: (state) => {
+      state.currentUser = {};
+      state.currentUserId = undefined;
+      state.isLoggedIn = false;
     }
   }
 });
@@ -115,7 +120,8 @@ export const {
   setIsLoggedIn,
   setCurrentUserId,
   setOnlyShowMyPosts,
-  setGoHome
+  setGoHome,
+  setLogOut
 } = uiSlice.actions;
 //使用default export导出reducer
 export default uiSlice.reducer;

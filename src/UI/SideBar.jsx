@@ -10,8 +10,10 @@ import GeneralButton from "./Buttons/GeneralButton";
 import SignInUpButton from "./Buttons/SignInUpButton";
 import {useSearchParams} from "react-router-dom";
 import Cookies from "js-cookie";
-import {setCurrentUser, setCurrentUserId, setIsLoggedIn} from "../Pages/uiSlice";
+import {setCurrentUser, setLogOut} from "../Pages/uiSlice";
 import {useGetUserByIdQuery} from "../Services/UsersApi";
+import Modal from "./Modal";
+import Setting from "./Setting";
 
 const Container = styled.aside`
   height: calc(100vh - 6rem);
@@ -108,9 +110,7 @@ function SideBar() {
 
   function handleClickLogout() {
     Cookies.remove("jwt");
-    dispatch(setCurrentUser({}));
-    dispatch(setCurrentUserId(undefined));
-    dispatch(setIsLoggedIn(false));
+    dispatch(setLogOut());
   }
 
   useEffect(() => {
@@ -154,9 +154,16 @@ function SideBar() {
             </Greeting>
             {isLoggedIn ? (
               <>
-                <GeneralButton type="userRound">
-                  <ion-icon name="person-outline" />
-                </GeneralButton>
+                <Modal>
+                  <Modal.Open openCode="setting">
+                    <GeneralButton type="userRound">
+                      <ion-icon name="person-outline" />
+                    </GeneralButton>
+                  </Modal.Open>
+                  <Modal.Window verifyCode="setting">
+                    <Setting />
+                  </Modal.Window>
+                </Modal>
                 <GeneralButton type="userRound" onClick={handleClickLogout}>
                   <ion-icon name="log-out-outline" />
                 </GeneralButton>

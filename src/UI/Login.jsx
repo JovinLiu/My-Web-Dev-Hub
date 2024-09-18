@@ -95,7 +95,7 @@ function Login({onCloseModal}) {
     try {
       const res = await forgetPassword(email);
       if (res.error) throw new Error(res.error.data.message);
-      toast.success("The reset token has been sent to your email!");
+      toast.success("The reset link has been sent to your email!");
       onCloseModal();
     } catch (err) {
       toast.error(err.message);

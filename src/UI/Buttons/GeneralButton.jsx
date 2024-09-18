@@ -60,7 +60,7 @@ const types = {
     }
   `,
   danger: css`
-    padding: 0.5rem 1rem;
+    padding: ${({padding}) => padding || "0.5rem 1rem;"};
     border-radius: 10px;
     font-size: 1.5rem;
     color: var(--color-grey-50);

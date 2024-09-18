@@ -48,9 +48,23 @@ export const usersApi = createApi({
         method: "PATCH",
         body: credentials
       })
+    }),
+
+    deleteAccount: builder.mutation({
+      query: (id) => ({
+        url: `/users/deleteMe/${id}`,
+        method: "DELETE"
+      })
     })
   })
 });
 
-export const {useGetUserByIdQuery, useCheckingMutation, useSigninMutation, useSignupMutation, useForgetPasswordMutation, useResetPasswordMutation} =
-  usersApi;
+export const {
+  useGetUserByIdQuery,
+  useCheckingMutation,
+  useSigninMutation,
+  useSignupMutation,
+  useForgetPasswordMutation,
+  useResetPasswordMutation,
+  useDeleteAccountMutation
+} = usersApi;
