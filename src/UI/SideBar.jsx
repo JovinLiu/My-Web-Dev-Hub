@@ -105,7 +105,7 @@ function SideBar() {
   const {currentData: currentUserData = {}} = useGetUserByIdQuery(currentUserId);
   const {user} = currentUserData;
 
-  const src = isLoggedIn && currentUser ? `http://${host}/images/user/${currentUser.photo}` : "/default-user.jpg";
+  const src = isLoggedIn && currentUser ? `${host}/images/user/${currentUser.photo}` : "/default-user.jpg";
   const time = useRef(null);
   const topics = currentData?.data?.stats;
 

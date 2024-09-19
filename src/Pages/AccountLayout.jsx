@@ -1,4 +1,3 @@
-//http://localhost:3000/resetPassword/873dd264f00aa7b663491af0908df67ac8031f6378deb1a5db89884da5248b8a
 import {Link, Outlet} from "react-router-dom";
 //Components
 import Header from "../UI/Header";

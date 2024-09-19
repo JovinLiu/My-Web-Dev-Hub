@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import {host} from "../Utils/config";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: `http://${host}/api/v1`,
+  baseUrl: `${host}/api/v1`,
   prepareHeaders: (headers) => {
     const token = Cookies.get("jwt");
     if (token) {

@@ -178,7 +178,7 @@ function Setting({onCloseModal}) {
   const [updateMyPhoto, {isLoading: isUpdatingPhoto}] = useUpdateMyPhotoMutation();
   const {currentData = {}, refetch} = useGetMyPostsStatsQuery();
 
-  const src = !photo.startsWith("default") ? `http://${host}/images/user/${photo}` : "/default-user.jpg";
+  const src = !photo.startsWith("default") ? `${host}/images/user/${photo}` : "/default-user.jpg";
 
   useEffect(() => {
     refetch();
