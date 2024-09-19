@@ -2,11 +2,15 @@
 import styled, {css} from "styled-components";
 // Components;
 import GeneralButton from "./Buttons/GeneralButton";
-import {useSelector} from "react-redux";
-import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect, useState} from "react";
 import Loader from "./Loader";
-import {useDeleteAccountMutation} from "../Services/UsersApi";
+import {useDeleteAccountMutation, useUpdateMeMutation, useUpdateMyPhotoMutation, useUpdatePasswordMutation} from "../Services/UsersApi";
 import ConfirmDelete from "./ConfirmDelete";
+import toast from "react-hot-toast";
+import {setCurrentUser} from "../Pages/uiSlice";
+import Cookies from "js-cookie";
+import {useGetMyPostsStatsQuery} from "../Services/PostsApi";
 
 const Container = styled.div`
   max-width: 80rem;
@@ -27,7 +31,7 @@ const Column = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin-left: 20%;
+  margin-left: 12%;
 `;
 
 const Row = styled.div`
@@ -36,14 +40,14 @@ const Row = styled.div`
 `;
 
 const FormContainer = styled.form`
-  width: calc(80rem - 25rem - 4rem);
+  width: calc(80rem - 30rem - 4rem);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
 
 const Profile = styled.div`
-  width: 25rem;
+  width: 30rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -109,6 +113,29 @@ const Label = styled.label`
   white-space: break-spaces;
 `;
 
+const PhotoButton = styled.label`
+  font-size: 1.4rem;
+  font-style: normal;
+  word-wrap: break-word;
+  white-space: break-spaces;
+  transition: var(--transition-1);
+  padding: 0.5rem 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--color-grey-50);
+  background-color: var(--color-blue-1);
+  &:hover {
+    color: var(--color-grey-700);
+    background-color: var(--color-blue-2);
+  }
+`;
+
+const PhotoInputHidden = styled.input`
+  position: absolute;
+  visibility: hidden;
+`;
+
 const Input = styled.input`
   width: 25rem;
   height: 3.6rem;
@@ -138,13 +165,23 @@ const TextDiv = styled.div`
 `;
 
 function Setting({onCloseModal}) {
-  const {currentUser} = useSelector((state) => state.ui);
+  const {currentUser, currentUserId} = useSelector((state) => state.ui);
   const {photo} = currentUser;
+  const dispatch = useDispatch();
   const [name, setName] = useState(currentUser.name);
+  const [bio, setBio] = useState(currentUser.bio);
   const [openConfirmDelete, setOpenConfirmDelete] = useState(false);
   const [deleteAccount, {isLoading: isDeleting}] = useDeleteAccountMutation();
+  const [updateMe, {isLoading: isUpdating}] = useUpdateMeMutation();
+  const [updatePassword, {isLoading: isUpdatingPassword}] = useUpdatePasswordMutation();
+  const [updateMyPhoto, {isLoading: isUpdatingPhoto}] = useUpdateMyPhotoMutation();
+  const {currentData = {}, refetch} = useGetMyPostsStatsQuery();
 
   const src = !photo.startsWith("default") ? `http://localhost:3000/images/user/${photo}` : "/default-user.jpg";
+
+  useEffect(() => {
+    refetch();
+  }, [currentUserId, refetch]);
 
   function handleClickClose(e) {
     e.preventDefault();
@@ -156,17 +193,66 @@ function Setting({onCloseModal}) {
     setName(e.target.value);
   }
 
-  function handleClickUpdatePassword(e) {
+  function handleSetBioChange(e) {
     e.preventDefault();
-
-    const oldPass = document.getElementById("previousPassword").value;
-    const newPass = document.getElementById("newPassword").value;
-    console.log(oldPass, newPass);
+    setBio(e.target.value);
   }
 
-  function handleClickUpdateName(e) {
+  async function handleClickUpdatePassword(e) {
     e.preventDefault();
-    console.log("update name");
+
+    const password = document.getElementById("currentPass").value;
+    const newPassword = document.getElementById("newPass").value;
+
+    if (!password || !newPassword) return toast.error("Please provide your current password and new password!");
+
+    const credentials = {currentUserId, password, newPassword};
+    const res = await updatePassword(credentials);
+
+    if (res.error) return toast.error("Something went wrong, please check your current password and new password!");
+
+    if (res.data?.status === "success") {
+      const message = "Password successfully changed";
+      toast.success(message);
+
+      const expiresAtDate = new Date(res.data.tokenExpires);
+      Cookies.set("jwt", res.data.token, {expires: expiresAtDate});
+    }
+  }
+
+  async function handleClickUpdateMe(e) {
+    e.preventDefault();
+    const userInfo = {id: currentUserId, name, bio};
+    const res = await updateMe(userInfo);
+
+    if (res.error) return toast.error("Something went wrong, please check your name and bio!");
+
+    // eslint-disable-next-line no-unused-vars
+    const {_id, __v, id, role, active, password, ...updatedUser} = res.data.updatedUser;
+
+    if (res.data.status === "success") {
+      dispatch(setCurrentUser(updatedUser));
+      toast.success("Account successfully updated");
+    }
+  }
+
+  async function handleClickUploadPhoto(e) {
+    const file = e.target.files[0];
+
+    if (!file) return toast.error("Something went wrong with uploading photo!");
+
+    const formdata = new FormData();
+    formdata.append("file", file);
+
+    let res;
+    if (file) res = await updateMyPhoto(formdata);
+
+    if (res.data.status === "success") {
+      const updatedUser = res.data.user;
+      console.log(updatedUser);
+      dispatch(setCurrentUser(updatedUser));
+      return toast.success("Photo successfully uploaded");
+    }
   }
 
   async function handleClickCloseAccount(e) {
@@ -174,7 +260,7 @@ function Setting({onCloseModal}) {
     setOpenConfirmDelete(!openConfirmDelete);
   }
 
-  if (isDeleting) return <Loader fullscreen={false} />;
+  if (isDeleting || isUpdating || isUpdatingPassword || isUpdatingPhoto) return <Loader fullscreen={false} />;
 
   return (
     <Container>
@@ -185,15 +271,14 @@ function Setting({onCloseModal}) {
         <Avatar src={src} alt="User-avatar" />
         <TextDiv>
           <Heading as="h3">{currentUser.name}</Heading>
-          <Heading as="h4">A full stack web developer</Heading>
+          <Heading as="h4">{currentUser.bio || "No biography about you..."}</Heading>
         </TextDiv>
         {openConfirmDelete ? (
           <ConfirmDelete deleteAccount={deleteAccount} setOpenConfirmDelete={setOpenConfirmDelete} />
         ) : (
           <ButtonContainer>
-            <GeneralButton padding="0.5rem 1.5rem" fontSize="1.4rem" type="primary">
-              Upload your photo
-            </GeneralButton>
+            <PhotoButton for="photo">Upload photo</PhotoButton>
+            <PhotoInputHidden type="file" accept="image/*" id="photo" name="photo" onChange={handleClickUploadPhoto} />
             <GeneralButton padding="0.5rem 1.5rem" fontSize="1.4rem" type="danger" onClick={handleClickCloseAccount}>
               Close account
             </GeneralButton>
@@ -202,27 +287,29 @@ function Setting({onCloseModal}) {
       </Profile>
       <FormContainer>
         <Column>
-          <Label>Update your password</Label>
-          <Input type="password" placeholder="Current Password" required="" minLength="8" maxLength="30" name="password" id="previousPassword" />
+          <Label>Update password</Label>
+          <Input type="password" placeholder="Current Password" required="" minLength="8" maxLength="30" name="password" id="currentPass" />
           <Row>
-            <Input type="password" placeholder="New Password" required="" minLength="8" maxLength="30" name="password" id="newPassword" />
+            <Input type="password" placeholder="New Password" required="" minLength="8" maxLength="30" name="password" id="newPass" />
             <GeneralButton fontSize="1.4rem" type="primary" onClick={handleClickUpdatePassword}>
               Update Change
             </GeneralButton>
           </Row>
         </Column>
         <Column>
-          <Label>Update your name</Label>
+          <Label>Update profile</Label>
           <Input value={name} onChange={handleSetNameChange} maxLength="100" />
           <Row>
-            <Input placeholder="Some words to describe yourself" value={undefined} onChange={undefined} maxLength="200" />
-            <GeneralButton fontSize="1.4rem" type="primary" onClick={handleClickUpdateName}>
+            <Input placeholder="Your short biography" value={bio} onChange={handleSetBioChange} maxLength="100" />
+            <GeneralButton fontSize="1.4rem" type="primary" onClick={handleClickUpdateMe}>
               Update Change
             </GeneralButton>
           </Row>
         </Column>
         <Column>
-          <Span>You have contributed 9812387 posts to myWebDevHub!</Span>
+          <Span>
+            {currentData.data === 0 ? `You haven't posted anything yet!` : `You have contributed ${currentData.data} posts to myWebDevHub!`}
+          </Span>
         </Column>
       </FormContainer>
     </Container>

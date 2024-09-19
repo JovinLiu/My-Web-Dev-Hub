@@ -22,14 +22,14 @@ const types = {
     border-radius: 10px;
     font-size: ${({fontSize}) => fontSize || "2rem"};
     color: var(
-      ${({category, active}) => (category ? (active ? "--color-grey-50" : "--color-grey-800") : active ? "--color-grey-800" : "--color-grey-50")}
+      ${({category, active}) => (category ? (active ? "--color-grey-50" : "--color-grey-700") : active ? "--color-grey-700" : "--color-grey-50")}
     );
     background-color: var(
       ${({category, active}) =>
         category ? (active ? `--color-${category}-100` : `--color-${category}-20`) : active ? `--color-${category}-20` : "--color-blue-1"}
     );
     &:hover {
-      color: var(${({category}) => (category ? "--color-grey-50" : "--color-grey-800")});
+      color: var(${({category}) => (category ? "--color-grey-50" : "--color-grey-700")});
       background-color: var(${({category}) => (category ? `--color-${category}-100` : "--color-blue-2")});
     }
   `,

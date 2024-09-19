@@ -34,6 +34,11 @@ export const postsApi = createApi({
       providesTags: ["Posts"]
     }),
 
+    getMyPostsStats: builder.query({
+      query: () => `/posts/my-posts-stats`,
+      providesTags: ["Posts"]
+    }),
+
     //return a single post by provided ID
     getPostById: builder.query({
       query: (id) => `/posts/${id}`,
@@ -77,5 +82,6 @@ export const {
   useGetPostByIdQuery,
   useAddNewPostMutation,
   useUpdatePostMutation,
-  useDeletePostMutation
+  useDeletePostMutation,
+  useGetMyPostsStatsQuery
 } = postsApi;

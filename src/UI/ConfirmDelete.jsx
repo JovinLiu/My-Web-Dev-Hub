@@ -5,13 +5,14 @@ import Cookies from "js-cookie";
 import {useNavigate} from "react-router-dom";
 import GeneralButton from "./Buttons/GeneralButton";
 import styled from "styled-components";
+import toast from "react-hot-toast";
 
 const Column = styled.div`
   height: 10rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 `;
 
 const Row = styled.div`
@@ -26,6 +27,18 @@ const Span = styled.span`
   font-style: normal;
   word-wrap: break-word;
   white-space: break-spaces;
+  text-align: center;
+`;
+
+const Input = styled.input`
+  width: 21rem;
+  height: 4rem;
+  font-size: 1.3rem;
+  border-radius: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 2px solid var(--color-blue-1);
+  background-color: var(--color-grey-200);
 `;
 
 function ConfirmDelete({setOpenConfirmDelete, deleteAccount}) {
@@ -35,12 +48,19 @@ function ConfirmDelete({setOpenConfirmDelete, deleteAccount}) {
 
   async function handleClickCloseAccount(e) {
     e.preventDefault();
-    const res = await deleteAccount(currentUserId);
-    console.log(res.data.status);
+    const password = document.getElementById("closeAccountPassword").value;
+
+    if (!password) return toast.error("Please provide password to close account!");
+
+    const res = await deleteAccount({id: currentUserId, password});
+
+    if (res.error) return toast.error("Something went wrong, please check your password!");
+
     if (res.data.status === "success") {
       Cookies.remove("jwt");
       dispatch(setLogOut());
       navigate("/");
+      toast.success("Account successfully closed");
     }
   }
 
@@ -49,12 +69,21 @@ function ConfirmDelete({setOpenConfirmDelete, deleteAccount}) {
   }
   return (
     <Column>
-      <Span>Are you sure to close your account? You will not be able to access all your posts if you close this account.</Span>
+      <Span>Are you sure to close your account?</Span>
+      <Input
+        type="password"
+        placeholder="Provide password to confirm"
+        required=""
+        minLength="8"
+        maxLength="30"
+        name="password"
+        id="closeAccountPassword"
+      />
       <Row>
-        <GeneralButton padding="0.5rem 1.5rem" fontSize="1.5rem" type="danger" onClick={handleClickCloseAccount}>
+        <GeneralButton padding="0.5rem 2.2rem" fontSize="1.5rem" type="danger" onClick={handleClickCloseAccount}>
           Confirm
         </GeneralButton>
-        <GeneralButton padding="0.5rem 1.5rem" fontSize="1.5rem" type="primary" onClick={handleClickCancel}>
+        <GeneralButton padding="0.5rem 2.2rem" fontSize="1.5rem" type="primary" onClick={handleClickCancel}>
           Cancel
         </GeneralButton>
       </Row>
