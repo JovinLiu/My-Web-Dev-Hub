@@ -11,6 +11,7 @@ import {setPost, setIsPrivate, setIsMarkdown, resetPost} from "./currentPostSlic
 import Modal from "../../UI/Modal";
 import Confirm from "../../UI/Confirm";
 import GeneralButton from "../../UI/Buttons/GeneralButton";
+import {host} from "../../Utils/config";
 
 const ButtonContainer = styled.div`
   margin-top: auto;
@@ -164,7 +165,7 @@ function EditorButtonGroup({categoryLower, currentPost}) {
           (imgName) =>
             (htmlStr = htmlStr.replace(
               /<img[^>]*src=["']data:image\/[^'"]+;base64,[^'"]*["'][^>]*>/,
-              `<img src="http://localhost:3000/images/post/${imgName}" alt="image">`
+              `<img src="${host}/images/post/${imgName}" alt="image">`
             ))
         );
 

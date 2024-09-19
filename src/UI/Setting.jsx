@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import {setCurrentUser} from "../Pages/uiSlice";
 import Cookies from "js-cookie";
 import {useGetMyPostsStatsQuery} from "../Services/PostsApi";
+import {host} from "../Utils/config";
 
 const Container = styled.div`
   max-width: 80rem;
@@ -177,7 +178,7 @@ function Setting({onCloseModal}) {
   const [updateMyPhoto, {isLoading: isUpdatingPhoto}] = useUpdateMyPhotoMutation();
   const {currentData = {}, refetch} = useGetMyPostsStatsQuery();
 
-  const src = !photo.startsWith("default") ? `http://localhost:3000/images/user/${photo}` : "/default-user.jpg";
+  const src = !photo.startsWith("default") ? `http://${host}/images/user/${photo}` : "/default-user.jpg";
 
   useEffect(() => {
     refetch();

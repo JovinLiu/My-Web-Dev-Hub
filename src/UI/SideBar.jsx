@@ -14,6 +14,7 @@ import {setCurrentUser, setLogOut} from "../Pages/uiSlice";
 import {useGetUserByIdQuery} from "../Services/UsersApi";
 import Modal from "./Modal";
 import Setting from "./Setting";
+import {host} from "../Utils/config";
 
 const Container = styled.aside`
   height: calc(100vh - 6rem);
@@ -104,7 +105,7 @@ function SideBar() {
   const {currentData: currentUserData = {}} = useGetUserByIdQuery(currentUserId);
   const {user} = currentUserData;
 
-  const src = isLoggedIn && currentUser ? `http://localhost:3000/images/user/${currentUser.photo}` : "/default-user.jpg";
+  const src = isLoggedIn && currentUser ? `http://${host}/images/user/${currentUser.photo}` : "/default-user.jpg";
   const time = useRef(null);
   const topics = currentData?.data?.stats;
 
