@@ -83,7 +83,7 @@ function Login({onCloseModal}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [accountPage, setAccountPage] = useState("checking");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("hello@example.com");
   const [checking, {isLoading: isChecking}] = useCheckingMutation();
   const [signup, {isLoading: isSigningUp}] = useSignupMutation();
   const [signin, {isLoading: isSigningIn}] = useSigninMutation();
@@ -236,7 +236,7 @@ function Login({onCloseModal}) {
         <Heading as="h2">Sign in your account</Heading>
         <InputField>
           <label htmlFor="loginPassword">Password</label>
-          <Input type="password" placeholder="••••••••" value="pass1234" required="" minLength="8" name="password" id="loginPassword" />
+          <Input type="password" placeholder="••••••••" value="pass1234" required minLength="8" name="password" id="loginPassword" />
         </InputField>
         <ButtonContainer>
           <GeneralButton type="primary" fontSize="1.5rem" padding="0.7rem 1rem 0.7rem 1rem">
@@ -257,7 +257,7 @@ function Login({onCloseModal}) {
       <Heading as="h2">Sign in/up your account</Heading>
       <InputField>
         <label htmlFor="loginEmail">Email Address</label>
-        <Input type="email" placeholder="example@example.com" name="email" id="loginEmail" value="example@example.com" onChange={handleSetEmail} />
+        <Input type="email" placeholder="example@example.com" name="email" id="loginEmail" value={email} onChange={handleSetEmail} />
       </InputField>
       <ButtonContainer>
         <GeneralButton type="primary" fontSize="1.5rem" padding="0.7rem 1rem 0.7rem 1rem" onClick={handleClickCheckingEmail}>
