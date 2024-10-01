@@ -78,5 +78,5 @@ export const {
   resetPost
 } = currentPostSlice.actions;
 
-//使用default export导出reducer
+//用default export导出reducer
 export default currentPostSlice.reducer;
