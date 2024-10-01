@@ -20,6 +20,7 @@ const ButtonContainer = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
 `;
+//slice
 
 function EditorButtonGroup({categoryLower, currentPost}) {
   //Hooks
@@ -122,12 +123,19 @@ function EditorButtonGroup({categoryLower, currentPost}) {
       const formdata = new FormData();
 
       const images = document.querySelector(".ql-editor").getElementsByTagName("img");
+      // images is a HTML collction
 
       const imgNameArr = [];
       //https://blog.csdn.net/qq_16946803/article/details/121080836
       Array.from(images).map((image, i) => {
+        //image is a <img src=""/>
         if (!image.outerHTML.match(/:(.*?);/)) return;
+
         const imgType = image.outerHTML.match(/:(.*?);/)[1];
+
+        if (!imgType.startsWith("image")) return;
+        //如果是现有的图片=>//localhost:3000/images/post/img-66fb767381b953517606ed80-1727755936891-2.jpeg" alt="image" style="color: var(--color-grey-500)
+        //如果是新图片
 
         const imgFormat = imgType.split("/")[1];
         const imgStr = image.outerHTML.split(",")[1].slice(0, -2);

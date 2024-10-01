@@ -208,6 +208,9 @@ function Setting({onCloseModal}) {
     if (!password || !newPassword) return toast.error("Please provide your current password and new password!");
 
     const credentials = {currentUserId, password, newPassword};
+
+    console.log(credentials);
+
     const res = await updatePassword(credentials);
 
     if (res.error) return toast.error("Something went wrong, please check your current password and new password!");

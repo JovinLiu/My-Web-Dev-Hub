@@ -227,6 +227,10 @@ img {
   /* For dark mode */
   filter: grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
 }
+
+.ql-syntax {
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+}
 `;
 
 export default GlobalStyles;
