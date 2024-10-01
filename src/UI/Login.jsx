@@ -11,7 +11,7 @@ import {useState} from "react";
 import Cookies from "js-cookie";
 import {setCurrentUserId, setIsLoggedIn} from "../Pages/uiSlice";
 import {useDispatch} from "react-redux";
-
+//sign in/up
 const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
@@ -114,8 +114,6 @@ function Login({onCloseModal}) {
     }
 
     const res = await checking({email});
-
-    console.log(res.data.status);
 
     if (res.data.status === "signup") {
       setAccountPage("signup");
@@ -238,7 +236,7 @@ function Login({onCloseModal}) {
         <Heading as="h2">Sign in your account</Heading>
         <InputField>
           <label htmlFor="loginPassword">Password</label>
-          <Input type="password" placeholder="••••••••" required="" minLength="8" name="password" id="loginPassword" />
+          <Input type="password" placeholder="••••••••" value="pass1234" required="" minLength="8" name="password" id="loginPassword" />
         </InputField>
         <ButtonContainer>
           <GeneralButton type="primary" fontSize="1.5rem" padding="0.7rem 1rem 0.7rem 1rem">
@@ -259,7 +257,7 @@ function Login({onCloseModal}) {
       <Heading as="h2">Sign in/up your account</Heading>
       <InputField>
         <label htmlFor="loginEmail">Email Address</label>
-        <Input type="email" placeholder="example@example.com" name="email" id="loginEmail" onChange={handleSetEmail} />
+        <Input type="email" placeholder="example@example.com" name="email" id="loginEmail" value="example@example.com" onChange={handleSetEmail} />
       </InputField>
       <ButtonContainer>
         <GeneralButton type="primary" fontSize="1.5rem" padding="0.7rem 1rem 0.7rem 1rem" onClick={handleClickCheckingEmail}>
