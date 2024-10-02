@@ -47,7 +47,7 @@ const TextButton = styled.button`
   border: none;
   background: none;
   color: var(--color-grey-700);
-  white-space: nowrap;
+  white-space: pre-wrap;
   transition: var(--transition-1);
   &:hover {
     color: var(--color-grey-500);

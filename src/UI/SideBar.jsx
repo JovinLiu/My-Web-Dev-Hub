@@ -36,7 +36,7 @@ const ListContainer = styled.div`
   list-style: none;
   height: calc(100vh - 6rem - 12rem);
   display: ${(props) => (props.showSideBar ? "block" : "none")};
-  overflow: scroll;
+  overflow-y: scroll;
 `;
 
 const Transparent = styled.div`
