@@ -48,6 +48,7 @@ const TextButton = styled.button`
   background: none;
   color: var(--color-grey-700);
   white-space: pre-wrap;
+  text-align: left;
   transition: var(--transition-1);
   &:hover {
     color: var(--color-grey-500);
