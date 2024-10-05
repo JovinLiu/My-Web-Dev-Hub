@@ -11,7 +11,8 @@ function timeFormat(dateInput, short = false) {
     hour12: false,
     timeZoneName: "short"
   };
-  const locale = navigator.language;
+  const locale = "en-US";
+  // const locale = navigator.language;
   //Tuesday, August 10, 2021 at 19:30:00 GMT+10
   const timeArr = new Intl.DateTimeFormat(locale, options).format(new Date(dateInput)).split(", ");
 

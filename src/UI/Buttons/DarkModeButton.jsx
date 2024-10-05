@@ -32,7 +32,7 @@ function DarkModeButton() {
 
   useEffect(
     function () {
-      const currentHour = new Intl.DateTimeFormat(navigator.language, {
+      const currentHour = new Intl.DateTimeFormat("en-US", {
         hour: "numeric",
         hour12: false
       }).format(new Date());
