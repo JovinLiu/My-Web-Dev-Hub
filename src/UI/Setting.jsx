@@ -151,8 +151,7 @@ const Input = styled.input`
 const Span = styled.span`
   font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
-  word-wrap: break-word;
-  white-space: break-spaces;
+  white-space: nowrap;
   padding: 0.6rem 1.5rem;
   background-color: var(--color-grey-200);
   border-radius: 10px;
