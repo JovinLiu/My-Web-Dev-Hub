@@ -103,7 +103,8 @@ function SideBar() {
   const {showSideBar, isLoggedIn, currentUser, currentUserId} = useSelector((state) => state.ui);
   const {currentData, isLoading, isFetching, refetch} = useGetTopicStatsQuery(category);
   const {currentData: currentUserData = {}} = useGetUserByIdQuery(currentUserId);
-  const {user} = currentUserData;
+  let user;
+  if (currentUserData.user) user = currentUserData.user;
 
   const src = isLoggedIn && currentUser ? `${host}/images/user/${currentUser.photo}` : "/default-user.jpg";
   const time = useRef(null);
@@ -119,7 +120,7 @@ function SideBar() {
   }, [currentUserId, refetch]);
 
   useEffect(() => {
-    dispatch(setCurrentUser(user));
+    if (user) dispatch(setCurrentUser(user));
   }, [isLoggedIn, user, dispatch, currentUserId]);
 
   useEffect(function () {
