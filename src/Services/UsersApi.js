@@ -20,7 +20,7 @@ export const usersApi = createApi({
   baseQuery,
   endpoints: (builder) => ({
     getUserById: builder.query({
-      query: (id) => `/users/${id}`
+      query: (id) => `${id !== undefined ? `/users/${id}` : "/users/nouser"}`
     }),
 
     checking: builder.mutation({
