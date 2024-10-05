@@ -152,7 +152,7 @@ function SideBar() {
             <Greeting showSideBar={showSideBar}>
               Good {time.current}
               <br />
-              {isLoggedIn ? `${currentUser?.name}` : ""}
+              {isLoggedIn && currentUser.name ? `${currentUser?.name}` : ""}
             </Greeting>
             {isLoggedIn ? (
               <>
