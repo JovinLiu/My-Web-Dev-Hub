@@ -119,7 +119,7 @@ function PostCard({post, fadeintime}) {
         </Private>
       ) : null}
       <CardLine category={categoryLower} height={"5%"} />
-      <TextContainer>{description.slice(0, 200)}</TextContainer>
+      <TextContainer>{description?.slice(0, 200)}</TextContainer>
       <TitleContainer category={categoryLower} height={"30%"} gap={"1rem"} padding={"1.4rem"} flexDirection={"row"} alignItems={"center"} link={Link}>
         <Info>
           <Title>
