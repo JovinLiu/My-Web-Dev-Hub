@@ -236,7 +236,7 @@ function Login({onCloseModal}) {
         <Heading as="h2">Sign in your account</Heading>
         <InputField>
           <label htmlFor="loginPassword">Password</label>
-          <Input type="password" placeholder="••••••••" value="pass1234" required minLength="8" name="password" id="loginPassword" />
+          <Input type="password" placeholder="••••••••" defaultValue="pass1234" required minLength="8" name="password" id="loginPassword" />
         </InputField>
         <ButtonContainer>
           <GeneralButton type="primary" fontSize="1.5rem" padding="0.7rem 1rem 0.7rem 1rem">
