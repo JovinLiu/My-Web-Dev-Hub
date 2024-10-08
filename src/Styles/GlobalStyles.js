@@ -84,6 +84,7 @@ const GlobalStyles = createGlobalStyle`
   /* Feature Color*/
   --color-webbasic-100: rgb(7, 89, 133);
   --color-javascript-100: rgb(255, 214, 0);
+  --color-typescript-100: rgb(0, 122, 204);
   --color-html-100: rgb(255, 109, 0);
   --color-css-100: rgb(3, 155, 229);
   --color-sass-100: rgb(240, 98, 146);
@@ -91,14 +92,23 @@ const GlobalStyles = createGlobalStyle`
   --color-react-100: rgb(83, 193, 222);
   --color-redux-100: rgb(108, 78, 176);
   --color-nodejs-100: rgb(33, 163, 102);
+  --color-express-100: rgb(0,0,0);
   --color-reactrouter-100: rgb(244, 66, 80);
-  --color-reactquery-100: rgb(239, 68, 68 );
+  --color-reactquery-100: rgb(239, 68, 68);
   --color-git-100: rgb(241, 78, 50);
   --color-github-100: rgb(0,0,0);
+  --color-vercel-100: rgb(0,0,0);
+  --color-heroku-100: rgb(81, 74, 143);
+  --color-supabase-100: rgb(56, 200, 123);
+  --color-mongodb-100: rgb(91, 160, 57);
+  --color-mongoose-100: rgb(116, 0, 2);
+  --color-postman-100: rgb(243, 81, 42);
+  --color-styledcomponents-100: rgb(230, 91, 154);
 
   /* Feature Color translucent*/
-  --color-webbasic-20: rgb(7, 89, 133,0.2);
+  --color-webbasic-20: rgb(7, 89, 133, 0.2);
   --color-javascript-20: rgb(255, 214, 0, 0.2);
+  --color-typescript-20: rgb(0, 122, 204, 0.2);
   --color-html-20: rgb(255, 109, 0, 0.2);
   --color-css-20: rgb(3, 155, 229, 0.2);
   --color-sass-20: rgb(240, 98, 146, 0.2);
@@ -106,10 +116,18 @@ const GlobalStyles = createGlobalStyle`
   --color-react-20: rgb(83, 193, 222, 0.2);
   --color-redux-20: rgb(108, 78, 176, 0.2);
   --color-nodejs-20: rgb(33, 163, 102, 0.2);
+  --color-express-20: rgb(0,0,0, 0.2);
   --color-reactrouter-20: rgb(244, 66, 80, 0.2);
   --color-reactquery-20: rgb(239, 68, 68, 0.2);
   --color-git-20: rgb(241, 78, 50, 0.2);
-  --color-github-20: rgb(0,0,0,0.2);
+  --color-github-20: rgb(0,0,0, 0.2);
+  --color-vercel-20: rgb(0,0,0, 0.2);
+  --color-heroku-20: rgb(81, 74, 143, 0.2);
+  --color-supabase-20: rgb(56, 200, 123, 0.2);
+  --color-mongodb-20: rgb(91, 160, 57, 0.2);
+  --color-mongoose-20: rgb(116, 0, 2, 0.2);
+  --color-postman-20: rgb(243, 81, 42, 0.2);
+  --color-styledcomponents-20: rgb(230, 91, 154, 0.2);
 
   --transition-1: all 0.2s ease-in-out;
 

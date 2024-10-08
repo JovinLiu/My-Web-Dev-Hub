@@ -37,7 +37,7 @@ function MenuList() {
   const {categories} = useSelector((state) => state.ui);
   const navigate = useNavigate();
 
-  const categoryLength = categories.join("").length;
+  const categoryLength = categories.join("").length + 40;
 
   function handleClickTag(e) {
     const category = e.target.value;
