@@ -187,7 +187,7 @@ function EditorButtonGroup({categoryLower, currentPost}) {
         console.log("updating:", id);
         res = await updatePost({id, formdata});
       } else {
-        console.log("add new post");
+        console.log("add new post", id);
         res = await addNewPost(formdata);
       }
 
