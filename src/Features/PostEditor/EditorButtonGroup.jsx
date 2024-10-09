@@ -154,6 +154,8 @@ function EditorButtonGroup({categoryLower, currentPost}) {
         formdata.append("imagefiles", blob, imgName);
       });
 
+      console.log(createdAt);
+
       //图片名称放入formData
       formdata.append("title", title);
       formdata.append("createdAt", createdAt || "");

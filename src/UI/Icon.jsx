@@ -36,7 +36,7 @@ function Icon({category, position, top, left, scale}) {
 
   if (category === "typescript")
     return (
-      <Svg xmlns="http://www.w3.org/2000/svg" aria-label="TypeScript" role="img" viewBox="0 0 512 512" width="38" height="38">
+      <Svg xmlns="http://www.w3.org/2000/svg" aria-label="TypeScript" role="img" viewBox="0 0 512 512" width="35" height="35">
         <rect width="512" height="512" rx="15%" fill="white" />
         <path
           fill="rgb(0, 122, 204)"
