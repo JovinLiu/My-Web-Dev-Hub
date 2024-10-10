@@ -13,12 +13,12 @@ function useSyntaxHighlighter(dep1, dep2, dep3) {
     // Function to highlight different languages
     const highlightAllLanguages = () => {
       const jsCodeBlocks = [
-        ...document.querySelectorAll(".language-js"),
-        ...document.querySelectorAll(".language-javascript"),
-        ...document.querySelectorAll(".ql-syntax")
+        ...document.querySelectorAll("main .language-js"),
+        ...document.querySelectorAll("main .language-javascript"),
+        ...document.querySelectorAll("main .ql-syntax")
       ];
-      const htmlCodeBlocks = document.querySelectorAll(".language-html");
-      const cssCodeBlocks = document.querySelectorAll(".language-css");
+      const htmlCodeBlocks = document.querySelectorAll("main .language-html");
+      const cssCodeBlocks = document.querySelectorAll("main .language-css");
 
       if (jsCodeBlocks.length) highlightCode(jsCodeBlocks, "javascript");
       if (htmlCodeBlocks.length) highlightCode(htmlCodeBlocks, "html");
@@ -27,7 +27,7 @@ function useSyntaxHighlighter(dep1, dep2, dep3) {
 
     // Set custom styles for Quill code blocks
     const styleQuillSyntax = () => {
-      const qlCodeContainer = document.querySelectorAll(".ql-syntax");
+      const qlCodeContainer = document.querySelectorAll("main .ql-syntax");
       if (qlCodeContainer.length) {
         qlCodeContainer.forEach((qlCodeBlock) =>
           qlCodeBlock.setAttribute(
