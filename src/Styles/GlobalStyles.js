@@ -98,6 +98,7 @@ const GlobalStyles = createGlobalStyle`
   --color-git-100: rgb(241, 78, 50);
   --color-github-100: rgb(0,0,0);
   --color-vercel-100: rgb(0,0,0);
+  --color-nextjs-100: rgb(0,0,0);
   --color-heroku-100: rgb(81, 74, 143);
   --color-supabase-100: rgb(56, 200, 123);
   --color-mongodb-100: rgb(91, 160, 57);
@@ -122,6 +123,7 @@ const GlobalStyles = createGlobalStyle`
   --color-git-20: rgb(241, 78, 50, 0.2);
   --color-github-20: rgb(0,0,0, 0.2);
   --color-vercel-20: rgb(0,0,0, 0.2);
+  --color-nextjs-20: rgb(0,0,0, 0.2);
   --color-heroku-20: rgb(81, 74, 143, 0.2);
   --color-supabase-20: rgb(56, 200, 123, 0.2);
   --color-mongodb-20: rgb(91, 160, 57, 0.2);

@@ -46,7 +46,7 @@ const StyledCardWithLink = styled(Link)`
 const TextContainer = styled.p`
   height: 67%;
   padding: 1.2rem 2rem;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   z-index: 0;
   overflow: hidden;
   color: var(--color-grey-400);
