@@ -82,7 +82,7 @@ function PostList() {
         });
       };
 
-      const options = {root: null, thresholds: 0.1, rootMargin: "100px"};
+      const options = {root: null, thresholds: 1, rootMargin: "0px"};
 
       const cardObserver = new IntersectionObserver(revealCard, options);
 
