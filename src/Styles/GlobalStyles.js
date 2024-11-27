@@ -97,6 +97,7 @@ const GlobalStyles = createGlobalStyle`
   --color-reactquery-100: rgb(239, 68, 68);
   --color-git-100: rgb(241, 78, 50);
   --color-github-100: rgb(0,0,0);
+  --color-githubcopilot-100: rgb(0,0,0);
   --color-vercel-100: rgb(0,0,0);
   --color-nextjs-100: rgb(0,0,0);
   --color-heroku-100: rgb(81, 74, 143);
@@ -105,7 +106,12 @@ const GlobalStyles = createGlobalStyle`
   --color-mongoose-100: rgb(116, 0, 2);
   --color-postman-100: rgb(243, 81, 42);
   --color-styledcomponents-100: rgb(230, 91, 154);
+  --color-pug-100: rgb(243, 81, 42);
+  --color-bootstrap-100: rgb(76,11,206);
+  --color-docker-100: rgb(6,109,165);
+  --color-netlify-100: rgb(32, 198, 183);
 
+  
   /* Feature Color translucent*/
   --color-webbasic-20: rgb(7, 89, 133, 0.2);
   --color-javascript-20: rgb(255, 214, 0, 0.2);
@@ -122,6 +128,7 @@ const GlobalStyles = createGlobalStyle`
   --color-reactquery-20: rgb(239, 68, 68, 0.2);
   --color-git-20: rgb(241, 78, 50, 0.2);
   --color-github-20: rgb(0,0,0, 0.2);
+  --color-githubcopilot-20: rgb(0,0,0, 0.2);
   --color-vercel-20: rgb(0,0,0, 0.2);
   --color-nextjs-20: rgb(0,0,0, 0.2);
   --color-heroku-20: rgb(81, 74, 143, 0.2);
@@ -130,6 +137,10 @@ const GlobalStyles = createGlobalStyle`
   --color-mongoose-20: rgb(116, 0, 2, 0.2);
   --color-postman-20: rgb(243, 81, 42, 0.2);
   --color-styledcomponents-20: rgb(230, 91, 154, 0.2);
+  --color-pug-20: rgb(243, 81, 42, 0.2);
+  --color-bootstrap-20: rgb(76,11,206,0.2);
+  --color-docker-20: rgb(6,109,165,0.2);
+  --color-netlify-20: rgb(32, 198, 183,0.2);
 
   --transition-1: all 0.2s ease-in-out;
 

@@ -39,15 +39,13 @@ const initialStateUI = {
     "Bootstrap",
     "Git",
     "Github",
-    "Github Coplit",
+    "Github Copilot",
     "Docker",
     "Vercel",
     "Netlify",
     "Heroku",
     "Supabase",
-    "Firebase",
     "Pug",
-    "Axios",
     "Postman"
   ]
 };
