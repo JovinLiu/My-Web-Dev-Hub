@@ -106,7 +106,7 @@ const GlobalStyles = createGlobalStyle`
   --color-mongoose-100: rgb(116, 0, 2);
   --color-postman-100: rgb(243, 81, 42);
   --color-styledcomponents-100: rgb(230, 91, 154);
-  --color-pug-100: rgb(243, 81, 42);
+  --color-pug-100: rgb(168, 100, 84);
   --color-bootstrap-100: rgb(76,11,206);
   --color-docker-100: rgb(6,109,165);
   --color-netlify-100: rgb(32, 198, 183);
@@ -137,7 +137,7 @@ const GlobalStyles = createGlobalStyle`
   --color-mongoose-20: rgb(116, 0, 2, 0.2);
   --color-postman-20: rgb(243, 81, 42, 0.2);
   --color-styledcomponents-20: rgb(230, 91, 154, 0.2);
-  --color-pug-20: rgb(243, 81, 42, 0.2);
+  --color-pug-20: rgb(168, 100, 84, 0.2);
   --color-bootstrap-20: rgb(76,11,206,0.2);
   --color-docker-20: rgb(6,109,165,0.2);
   --color-netlify-20: rgb(32, 198, 183,0.2);
