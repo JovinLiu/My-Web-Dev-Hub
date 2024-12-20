@@ -110,6 +110,11 @@ const GlobalStyles = createGlobalStyle`
   --color-bootstrap-100: rgb(76,11,206);
   --color-docker-100: rgb(6,109,165);
   --color-netlify-100: rgb(32, 198, 183);
+  --color-sql-100: rgb(0, 188, 242);
+  --color-postgresql-100: rgb(51, 103, 145);
+  --color-jquery-100: rgb(18, 102, 169);
+  --color-graphql-100: rgb(229, 53, 171);
+  --color-aws-100: rgb(255, 153, 51);
 
   
   /* Feature Color translucent*/
@@ -141,6 +146,11 @@ const GlobalStyles = createGlobalStyle`
   --color-bootstrap-20: rgb(76,11,206,0.2);
   --color-docker-20: rgb(6,109,165,0.2);
   --color-netlify-20: rgb(32, 198, 183,0.2);
+  --color-sql-20: rgb(0, 188, 242,0.2);
+  --color-postgresql-20: rgb(51, 103, 145,0.2);
+  --color-jquery-20: rgb(18, 102, 169,0.2);
+  --color-graphql-20: rgb(229, 53, 171,0.2);
+  --color-aws-20: rgb(255, 153, 51,0.2);
 
   --transition-1: all 0.2s ease-in-out;
 

@@ -46,7 +46,12 @@ const initialStateUI = {
     "Heroku",
     "Supabase",
     "Pug",
-    "Postman"
+    "Postman",
+    "SQL",
+    "PostgreSQL",
+    "jQuery",
+    "GraphQL",
+    "AWS"
   ]
 };
 
