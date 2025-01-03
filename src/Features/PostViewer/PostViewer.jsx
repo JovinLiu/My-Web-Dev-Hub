@@ -49,6 +49,23 @@ const BodyContainer = styled.div`
   overflow-y: scroll;
   word-wrap: break-word;
   word-break: break-all;
+
+  & li {
+    position: relative;
+    padding-left: 20px;
+  }
+
+  & li::before {
+    content: "•"; /* 自定义标记 */
+    position: absolute;
+    left: 0rem;
+  }
+
+  & img {
+    max-width: 100rem;
+    display: flex;
+    justify-self: center;
+  }
 `;
 
 const IconLarge = styled.div`

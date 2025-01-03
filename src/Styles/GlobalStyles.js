@@ -251,6 +251,10 @@ ul {
   list-style: none;
 }
 
+ol {
+  list-style: none;
+}
+
 p,
 h1,
 h2,

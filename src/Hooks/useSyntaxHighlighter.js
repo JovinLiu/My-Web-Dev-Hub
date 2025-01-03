@@ -32,7 +32,7 @@ function useSyntaxHighlighter(dep1, dep2, dep3) {
         qlCodeContainer.forEach((qlCodeBlock) =>
           qlCodeBlock.setAttribute(
             "style",
-            "color: #e5e7eb; font-size: 1.25rem; background: #1f2937; box-shadow: none; max-width: 100rem; display: block; padding: 1rem; margin: 0 auto; border-radius: 10px; overflow-x: scroll; overflow-wrap:anywhere"
+            "color: #e5e7eb; font-size: 1.25rem; background: #1f2937; box-shadow: none; max-width: 100rem; display: block; padding: 1rem; margin: 0 auto; margin-top: 2rem; border-radius: 10px; overflow-x: scroll; overflow-wrap:anywhere"
           )
         );
       }
