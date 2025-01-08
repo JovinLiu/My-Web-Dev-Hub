@@ -62,7 +62,6 @@ const BodyContainer = styled.div`
   }
 
   & img {
-    max-width: 100rem;
     display: flex;
     justify-self: center;
   }
